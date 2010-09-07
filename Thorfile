@@ -5,7 +5,7 @@ class Monk < Thor
 
   desc "test", "Run all the tests"
   def test
-    verify "config/settings.example.yml"
+    verify "config/settings.yml"
 
     $:.unshift File.join(File.dirname(__FILE__), "test")
 

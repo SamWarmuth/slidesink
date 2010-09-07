@@ -1,0 +1,21 @@
+!!!
+%head
+  %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", :type => "text/javascript"}
+  
+  :css
+    #{sass :style}
+%body{:style => "margin: 0; padding: 0;"}
+  = haml :frame
+  .page{:style => "height: 100%"}
+    = haml :welcome
+:javascript
+  $(document).ready(function(){
+    $('a').click(function(){
+      
+      $.get("google.com/", function(data){
+        alert(data);
+        $(".page").html(data);
+      });
+      return false;
+    });
+  });

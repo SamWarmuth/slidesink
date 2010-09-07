@@ -20,7 +20,7 @@ class Main < Monk::Glue
 end
 
 # Connect to couchdb.
-couchdb_url = settings(:couchdb)[:url]
+couchdb_url = monk_settings(:couchdb)[:url]
 COUCHDB_SERVER = CouchRest.database!(couchdb_url)
 
 
