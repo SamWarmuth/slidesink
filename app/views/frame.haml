@@ -1,10 +1,16 @@
-#frame{:style => " height: 20px; background: #DDD; font-family: Arial; font-size: 15px; padding: 3px 10px 15px 0px; overflow: hidden;"}
-  .live_box{:style => "text-weight: bold; margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #D33; font-size: 2em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -5px; left: 3px"} LIVE
-  .status{:style => "display: inline-block; position: relative; top: -10px; left: 3px;"}
-    .button{:style => "display: inline-block; position: relative; top: -3px"}
-      %a.awesome.small.black{:href => "/", :style => "margin-left: 0px; padding: 2px 5px"} wander
-    %h3{:style => "display: inline-block; width: 250px; margin-left: 20px;"} Sam Warmuth's Presentation
-  .controls{:style => "float: right; display: inline-block; position: relative; top: 3px; left: 3px"}
-    .button{:style => "display: inline-block; position: relative;"}
-      %a.awesome.medium.blue{:href => "http://www.google.com", :style => "margin-left: 400px;"} Share Presentation
+#frame{:style => " height: 20px; background: #AAA; font-family: Arial; font-size: 15px; padding: 3px 10px 15px 0px; overflow: hidden;"}
+  -if @show
+    .live_box{:style => "text-weight: bold; margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #E11; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} LIVE
+    .status{:style => "display: inline-block; position: relative; top: -10px; left: 3px;"}
+      .button{:style => "display: inline-block; position: relative; top: -3px"}
+        %a.awesome.small.black{:href => "/", :style => "margin-left: 0px; padding: 2px 5px"} Stop Following
+      %h3{:style => "display: inline-block; width: 250px; margin-left: 20px;"}= @show.title
+      
+    .controls{:style => "float: right; display: inline-block; position: relative; top: 3px; left: 3px"}
+      .button{:style => "display: inline-block; position: relative;"}
+        %a.awesome.medium.green{:href => "/new" } New Presentation
+        %a.awesome.medium.yellow{:href => "/edit/#{@show.url}"} Edit Presentation
+        %a.awesome.medium.blue{:href => "/share/#{@show.url}"} Share Presentation
+    
+    
     

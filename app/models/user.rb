@@ -18,6 +18,7 @@ class User < CouchRest::ExtendedDocument
 
   property :password_hash
   property :salt
+  property :challenges
 
 
 end

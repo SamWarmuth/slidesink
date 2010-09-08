@@ -1,0 +1,21 @@
+!!!
+%head
+  :css
+    #{sass :style}
+%body{:style => 'background: #ddd'}
+  %form{:action => "/edit", :method => "post", :style => 'width: 800px; margin: auto'}
+    %input{:name => "show_id", :value => @show.id, :type => "hidden"}
+    %h1{:style => 'text-align: center'} Edit #{@show.title}
+    %p
+      %label.label{:for => "title"} Presentation Title
+      %input#title.textfield{:name => "title", :type => "text", :value => @show.title}
+    %p
+      %label.label{:for => "url"} URL
+      %input#url.textfield{:name => "url", :type => "text", :value => @show.url}
+      slidesink.com/your_url
+    %p
+      %label.label{:for => "content"} Content
+      %textarea#content{:name => "content", :type => "text", :style => "width: 308px; height: 300px;"}= @show.content
+      %a{:href => "#"} Content Guide
+    %br
+    %input.awesome.green.medium{:type => "submit", :value => "Save Presentation", :style => "margin-left: 235px; width: 315px"}

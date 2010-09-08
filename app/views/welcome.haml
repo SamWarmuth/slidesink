@@ -1,7 +1,17 @@
-%h1 Welcome to followAlong. 
-%br 
-Current Presentations:
-
-
-%br
-%a.awesome.green.large{:href => "http://www.google.com"} Create a New Presentation
+.content{:style => 'padding: 10px; width: 600px; margin: auto;'}
+  %h1{:style => "display: inline-block; background: white; border-radius: 5px; padding: 10px; width: 400px; font-size: 3em;"}
+    %img{:src => "/images/slidesink-small.png", :style => 'vertical-align: middle; width: 64px; height: 64px; padding-right: 25px'}
+    SlideSink
+  %br 
+  Current Presentations:
+  %br
+  %br
+  .indent{:style => "margin-left: 50px"}
+    - Slideshow.all.each do |slide|
+      %p
+        %a{:href => "/shows/" + slide.url, :style => "font-weight: bold;"}= slide.title
+        = slide.date_created
+  
+  
+  %br
+  %a.awesome.green.large Create a New Presentation

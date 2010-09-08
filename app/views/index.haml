@@ -1,17 +1,42 @@
 !!!
 %head
-  %script{:src => "http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js", :type => "text/javascript"}
+  %script{:src => "/js/jquery-1.4.2.min.js", :type => "text/javascript"}  
+  %script{:src => "/js/jquery-ui-1.8.4.custom.min.js", :type => "text/javascript"}
   
   :css
     #{sass :style}
-%body{:style => "margin: 0; padding: 0;"}
+%body{:style => "margin: 0; padding: 0; background: #ddd;"}
   = haml :frame
-  .page{:style => "height: 100%"}
+  -if @show.nil?
     = haml :welcome
+  - else
+    .page{:style => "height: 600px; width: 880px; white-space: nowrap; overflow: hidden; margin: auto;"}
+      = haml :show
+    .slideshow_controls{:style => "height: 64px; width: 840px; white-space: nowrap; overflow: hidden; margin: auto; padding: 20px"}
+      .leftarrow{:style => "float: left"}
+        %img{:src => "/images/left.png", :style => "width: 64px; height: 64px;"}
+      .rightarrow{:style => "float: right"}
+        %img{:src => "/images/right.png", :style => "width: 64px; height: 64px;"}
 :javascript
   $(document).ready(function(){
-    $('a').click(function(){
-      
-      return false;
+    arrow = {left: 37, up: 38, right: 39, down: 40 };
+    $(".leftarrow").click(function(){
+      slideLeft();
+    });
+    $(".rightarrow").click(function(){
+      slideright();
+    });
+
+    $(document).bind('keydown', function(e) {
+      if (e.keyCode == arrow.left) slideLeft();
+      if (e.keyCode == arrow.right) slideRight();
     });
   });
+  
+  function slideLeft(){
+    $('#slideshow').animate({left: '+=886'}, 500);
+    
+  }
+  function slideRight(){
+    $('#slideshow').animate({left: '-=886'}, 500);
+  }

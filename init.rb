@@ -13,7 +13,7 @@ require "couchrest"
 require "haml"
 require "sass"
 require "json"
-require 'kramdown'
+require "kramdown"
 
 class Main < Monk::Glue
   set :app_file, __FILE__

@@ -1,7 +1,8 @@
 class Slideshow < CouchRest::ExtendedDocument
   use_database COUCHDB_SERVER
   
-  property :name
+  property :title
+  property :url
   property :user_id
   
   property :content

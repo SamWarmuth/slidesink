@@ -1,0 +1,21 @@
+!!!
+%head
+  :css
+    #{sass :style}
+%body
+  %form.table{:action => "login", :method => "post"}
+    / Default forms (table layout)
+    .inner-form
+      %table{:cellspacing => "0"}
+        %tr
+          %th
+            %label{:for => "some1"} Email
+          %td
+            %input#some1.txt{:name => "email", :type => "text"}/
+        %tr
+          %th
+            %label{:for => "some3"} Password
+          %td
+            %input#some3.txt.pwd{:name => "password", :type => "password"}/
+      %br
+      %input.awesome.green.medium{:type => "submit", :value => "Log in", :style => "margin-left: 55px; width: 325px"}
