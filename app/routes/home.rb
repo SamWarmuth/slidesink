@@ -4,8 +4,34 @@ class Main
   end
   get "/shows/:show_url" do
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
+    @presenting = false
+    @following = false
     haml :index
   end
+  get "/shows/:show_url/follow" do
+    @show = Slideshow.all.find{|s| s.url == params[:show_url]}
+    @presenting = false
+    @following = true
+    haml :index
+  end
+  get "/shows/:show_url/present" do
+    redirect "/login" unless logged_in?
+    @show = Slideshow.all.find{|s| s.url == params[:show_url]}
+    redirect "/404" if @show.nil?
+    redirect "/shows/#{params[:show_url]}" unless @user.id == @show.user_id
+    @presenting = true
+    @following = false
+    haml :index
+  end
+  get "/shows/:show_id/present/slide-change" do
+    redirect "/login" unless logged_in?
+    @show = Slideshow.get(params[:show_id])
+    redirect "/404" if @show.nil?
+    redirect "/shows/#{params[:show_url]}" unless @user.id == @show.user_id
+    Pusher['main'].trigger('slideChange', params[:slide].to_s)
+    return ""
+  end
+
   get "/new" do
     redirect "/login" unless logged_in?
     haml :new

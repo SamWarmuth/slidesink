@@ -2,6 +2,7 @@
 %head
   %script{:src => "/js/jquery-1.4.2.min.js", :type => "text/javascript"}  
   %script{:src => "/js/jquery-ui-1.8.4.custom.min.js", :type => "text/javascript"}
+  %script{:src => "http://js.pusherapp.com/1.6/pusher.min.js", :type => "text/javascript"}
   
   :css
     #{sass :style}
@@ -17,9 +18,23 @@
         %img{:src => "/images/left.png", :style => "width: 64px; height: 64px;"}
       .rightarrow{:style => "float: right"}
         %img{:src => "/images/right.png", :style => "width: 64px; height: 64px;"}
+
 :javascript
+  var arrow = {left: 37, up: 38, right: 39, down: 40 };
+  var current_slide = 0;
+  var presenting = #{@presenting.to_s};
+  var following = #{@following.to_s};
+
   $(document).ready(function(){
-    arrow = {left: 37, up: 38, right: 39, down: 40 };
+    
+    if (following == true){
+      var server = new Pusher('9f35849b3fdcf6710529', 'main');
+      server.bind('slideChange', function(data) {
+        current_slide = parseInt(data);
+        goToSlide(current_slide);
+      });
+    }
+    
     $(".leftarrow").click(function(){
       slideLeft();
     });
@@ -32,11 +47,26 @@
       if (e.keyCode == arrow.right) slideRight();
     });
   });
+  function pushCurrentLocation(){
+    $.get("/shows/#{@show.id}/present/slide-change?slide="+current_slide);
+  }
+  
+  function goToSlide(slideNumber){
+    position = 882 * slideNumber * -1;
+    positionDifference = Math.abs(position - parseInt($('#slideshow').css('left').slice(0,-2)));
+    $('#slideshow').animate({left: position+"px"}, (positionDifference/2), 'easeInOutQuad');
+    if (presenting == true) pushCurrentLocation();
+  }
   
   function slideLeft(){
-    $('#slideshow').animate({left: '+=882'}, 400);
-    
+    current_slide -= 1;
+    goToSlide(current_slide);    
   }
   function slideRight(){
-    $('#slideshow').animate({left: '-=882'}, 400);
+    current_slide += 1;
+    goToSlide(current_slide);
   }
+
+  
+  
+  
