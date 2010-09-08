@@ -1,16 +1,18 @@
 #frame{:style => " height: 20px; background: #AAA; font-family: Arial; font-size: 15px; padding: 3px 10px 15px 0px; overflow: hidden;"}
+  %a{:href => "/"}
+    %img{:src => "/images/slidesink-tiny.png", :style => 'display: block-inline; width: 32px; height: 32px; margin-left: 5px; position: relative; top: -2px;'}
   -if @show
-    .live_box{:style => "text-weight: bold; margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #E11; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} LIVE
+    .live_box{:style => "text-weight: bold; margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #E11; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} BROADCASTING
     .status{:style => "display: inline-block; position: relative; top: -10px; left: 3px;"}
       .button{:style => "display: inline-block; position: relative; top: -3px"}
-        %a.awesome.small.black{:href => "/", :style => "margin-left: 0px; padding: 2px 5px"} Stop Following
-      %h3{:style => "display: inline-block; width: 250px; margin-left: 20px;"}= @show.title
+        %a.awesome.small.black{:href => "/", :style => "margin-left: 0px; padding: 2px 5px"} I'm Done
+      %h3{:style => "display: inline-block; margin-left: 50px; margin-right: 10px"}= @show.title
       
     .controls{:style => "float: right; display: inline-block; position: relative; top: 3px; left: 3px"}
       .button{:style => "display: inline-block; position: relative;"}
-        %a.awesome.medium.green{:href => "/new" } New Presentation
-        %a.awesome.medium.yellow{:href => "/edit/#{@show.url}"} Edit Presentation
-        %a.awesome.medium.blue{:href => "/share/#{@show.url}"} Share Presentation
+        %a.awesome.medium.green{:href => "/new" } New Show
+        %a.awesome.medium.yellow{:href => "/edit/#{@show.url}"} Edit this show
+        %a.awesome.medium.blue{:href => "/share/#{@show.url}"} Share
     
     
     

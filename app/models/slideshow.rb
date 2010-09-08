@@ -13,6 +13,8 @@ class Slideshow < CouchRest::ExtendedDocument
   
   property :date_created
   
+  property :events #array: [[ms_from_start, event_type], ...]
+  
   save_callback :before, :regenerate_presentation
   
   
