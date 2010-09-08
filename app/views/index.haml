@@ -12,7 +12,7 @@
   - else
     .page{:style => "height: 600px; width: 880px; white-space: nowrap; overflow: hidden; margin: auto;"}
       = haml :show
-    .slideshow_controls{:style => "height: 64px; width: 840px; white-space: nowrap; overflow: hidden; margin: auto; padding: 20px"}
+    .slideshow_controls{:style => "height: 64px; width: 840px; white-space: nowrap; overflow: hidden; margin: auto; padding: 0 20px"}
       .leftarrow{:style => "float: left"}
         %img{:src => "/images/left.png", :style => "width: 64px; height: 64px;"}
       .rightarrow{:style => "float: right"}
@@ -34,9 +34,9 @@
   });
   
   function slideLeft(){
-    $('#slideshow').animate({left: '+=886'}, 500);
+    $('#slideshow').animate({left: '+=882'}, 400);
     
   }
   function slideRight(){
-    $('#slideshow').animate({left: '-=886'}, 500);
+    $('#slideshow').animate({left: '-=882'}, 400);
   }

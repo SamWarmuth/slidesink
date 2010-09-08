@@ -3,7 +3,7 @@
   :css
     #{sass :style}
 %body{:style => 'background: #ddd'}
-  %form{:action => "/edit", :method => "post", :style => 'width: 800px; margin: auto'}
+  %form{:action => "/edit", :method => "post", :style => 'width: 700px; margin: 40px auto; background: white; padding: 10px; border-radius: 5px;'}
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}
     %h1{:style => 'text-align: center'} Edit #{@show.title}
     %p
@@ -18,4 +18,6 @@
       %textarea#content{:name => "content", :type => "text", :style => "width: 308px; height: 300px;"}= @show.content
       %a{:href => "#"} Content Guide
     %br
-    %input.awesome.green.medium{:type => "submit", :value => "Save Presentation", :style => "margin-left: 235px; width: 315px"}
+    %input.awesome.green.large{:type => "submit", :value => "Save Presentation", :style => "display: block; margin: auto; width: 200px"}
+    %br
+    %br
