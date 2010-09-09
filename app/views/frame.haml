@@ -2,26 +2,31 @@
 
   %a{:href => "/"}
     %img{:src => "/images/slidesink-tiny.png", :style => 'display: block-inline; width: 32px; height: 32px; margin-left: 5px; position: relative; top: -2px;'}
-
+  -# .window_height{:style => 'display: inline-block'} 1234
   -if @show
     -if @presenting
       .live_box{:style => "margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #E11; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} PRESENTING
     -elsif @following
-      .live_box{:style => "margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #1E1; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} FOLLOWING
+      .live_box{:style => "margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #ffC615; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} FOLLOWING
     -else
       .live_box{:style => "margin-right: 10px; text-shadow: #777 1px 1px 1px; color: #FFF; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} Browsing
       .controls{:style => "display: inline-block; position: relative; top: -13px; left: -3px"}
         .button{:style => "display: inline-block; position: relative;"}
           - if @user && (@user.id == @show.user_id)
-            %a.awesome.medium.green{:href => "/shows/#{@show.url}/present"} Present
-          %a.awesome.medium.yellow{:href => "/shows/#{@show.url}/follow"} Follow
+            %a.awesome.medium.green{:href => "/show/#{@show.url}/present"} Present
+          %a.awesome.medium.yellow{:href => "/show/#{@show.url}/follow"} Follow
       
 
     .status{:style => "display: inline-block; position: relative; top: -10px; left: 3px;"}
       -if @presenting || @following
         .button{:style => "display: inline-block; position: relative; top: -3px"}
-          %a.awesome.small.black{:href => "/shows/#{@show.url}", :style => "margin-left: 0px; padding: 2px 5px"} I'm Done
-      %h3{:style => "display: inline-block; margin-left: 50px; margin-right: 10px"}= @show.title
+          %a.awesome.small.black{:href => "/show/#{@show.url}", :style => "margin-left: 0px; padding: 2px 5px"} stop #{@presenting ? "presenting" : "following"}
+      %h3{:style => "display: inline-block; margin-left: 50px; margin-right: 10px"}
+        - creator = User.get(@show.user_id)
+        - if creator
+          %a{:href => "/user/" + creator.name.gsub(" ", "")} #{creator.name}
+          \ -
+        = @show.title
       
     .controls{:style => "float: right; display: inline-block; position: relative; top: 3px; left: 3px"}
       .button{:style => "display: inline-block; position: relative;"}

@@ -8,7 +8,10 @@
   %form{:action => "/edit", :method => "post", :style => 'width: 700px; margin: 40px auto; background: white; padding: 10px; border-radius: 5px;'}
     -@show = Slideshow.new if @show.nil?
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}
-    %h1{:style => 'text-align: center'} Edit #{@show.title}
+    -if @show.new_document?
+      %h1{:style => 'text-align: center'} New Show
+    -else
+      %h1{:style => 'text-align: center'} Edit #{@show.title}
     %p
       %label.label{:for => "title"} Presentation Title
       %input#title.textfield{:name => "title", :type => "text", :value => @show.title}
@@ -23,7 +26,7 @@
       %a{:href => "/help/content-guide"} Content Guide
     %p
       %label.label Parser
-      %input#haml{:type => "radio", :name => "parser", :value => "haml", :checked => (@show.parser == "haml")}
+      %input#haml{:type => "radio", :name => "parser", :value => "haml", :checked => (@show.parser == "haml" || @show.parser.nil?)}
       %label{:for => "haml"} Haml
       %input#markdown{:type => "radio", :name => "parser", :value => "markdown", :checked => (@show.parser == "markdown")}
       %label{:for => "markdown"} Markdown
@@ -39,11 +42,7 @@
 
   $(document).ready(function(){
     $(".tabarea").keydown(function(e){
-      
       if (e.keyCode == 9){
-        e = jQuery.Event("keypress");
-        new_e.keyCode = 73;
-        $(".tabarea").trigger(new_e);
         return false;
       }
     });

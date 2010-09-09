@@ -3,15 +3,12 @@
     %img{:src => "/images/slidesink-small.png", :style => 'vertical-align: middle; width: 64px; height: 64px; padding-right: 25px'}
     SlideSink
   %br 
-  Current Presentations:
+  #{@selected_user.name}'s Presentations:
   %br
-  %br
+  
   .indent{:style => "margin-left: 50px"}
-    - Slideshow.all.each do |show|
+    -@shows.each do |show|
       %p
         %a{:href => "/show/" + show.url, :style => "font-weight: bold;"}= show.title
         = show.date_created
-  
-  
   %br
-  %a.awesome.green.large{:href => "/new", :style => "margin-left: 150px"} Create a New Presentation
