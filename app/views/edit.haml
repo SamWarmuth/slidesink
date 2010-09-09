@@ -1,9 +1,12 @@
 !!!
 %head
+  %script{:src => "/js/jquery-1.4.2.min.js", :type => "text/javascript"}  
+  %script{:src => "/js/jquery-ui-1.8.4.custom.min.js", :type => "text/javascript"}
   :css
     #{sass :style}
 %body{:style => 'background: #ddd'}
   %form{:action => "/edit", :method => "post", :style => 'width: 700px; margin: 40px auto; background: white; padding: 10px; border-radius: 5px;'}
+    -@show = Slideshow.new if @show.nil?
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}
     %h1{:style => 'text-align: center'} Edit #{@show.title}
     %p
@@ -15,15 +18,33 @@
       slidesink.com/your_url
     %p
       %label.label{:for => "content"} Content
-      %textarea#content{:name => "content", :type => "text", :style => "width: 400px; height: 300px;"}= @show.content
+      %textarea#content.tabarea{:name => "content", :type => "text", :style => "width: 400px; height: 300px; font-family: monospace;"}= @show.content
     %p
       %a{:href => "/help/content-guide"} Content Guide
     %p
       %label.label Parser
-      %input{:type => "radio", :name => "parser", :value => "haml", :checked => (@show.parser == "haml")} Haml
-      %input{:type => "radio", :name => "parser", :value => "markdown", :checked => (@show.parser == "markdown")} Markdown
+      %input#haml{:type => "radio", :name => "parser", :value => "haml", :checked => (@show.parser == "haml")}
+      %label{:for => "haml"} Haml
+      %input#markdown{:type => "radio", :name => "parser", :value => "markdown", :checked => (@show.parser == "markdown")}
+      %label{:for => "markdown"} Markdown
+      
       
     %br
     %input.awesome.green.large{:type => "submit", :value => "Save Presentation", :style => "display: block; margin: auto; width: 200px"}
     %br
     %br
+    
+    
+:javascript
+
+  $(document).ready(function(){
+    $(".tabarea").keydown(function(e){
+      
+      if (e.keyCode == 9){
+        e = jQuery.Event("keypress");
+        new_e.keyCode = 73;
+        $(".tabarea").trigger(new_e);
+        return false;
+      }
+    });
+  });

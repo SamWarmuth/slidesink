@@ -30,24 +30,26 @@ class Main
     @show = Slideshow.get(params[:show_id])
     redirect "/404" if @show.nil?
     redirect "/shows/#{params[:show_url]}" unless @user.id == @show.user_id
-    Pusher['main'].trigger('slideChange', params[:slide].to_s)
+    Pusher[@show.id].trigger('slideChange', params[:slide].to_s)
     return ""
   end
 
   get "/new" do
     redirect "/login" unless logged_in?
-    haml :new
+    haml :edit
   end
   post "/new" do
     redirect "/login" unless logged_in?
     
     slideshow = Slideshow.new
     slideshow.title = params[:title]
+    params[:url] = slideshow.title if params[:url].empty?
     slideshow.url = params[:url]
     slideshow.content = params[:content]
+    slideshow.parser = params[:parser].downcase
     slideshow.user_id = @user.id
     slideshow.save
-    redirect "/"
+    redirect "/shows/#{slideshow.url}"
   end
   
   get "/edit/:show_url" do
@@ -61,19 +63,24 @@ class Main
   
   post "/edit" do
     redirect "/login" unless logged_in?
-    slideshow = Slideshow.get(params[:show_id])
-    redirect "/404" if slideshow.nil?
-    redirect "/shows/#{params[:show_url]}" unless @user.id == slideshow.user_id
-    
-    slideshow.title = params[:title]
-    slideshow.url = params[:url]
-    slideshow.content = params[:content]
-    if slideshow.parser != params[:parser].downcase
-      slideshow.parser = params[:parser].downcase
-      slideshow.content_checksum = nil
+    if params[:show_id].empty?
+      @show = Slideshow.new
+      @show.user_id = @user.id
+    else
+      @show = Slideshow.get(params[:show_id])
+      redirect "/404" if @show.nil?
+      redirect "/shows/#{params[:show_url]}" unless @user.id == @show.user_id
     end
-    slideshow.save
-    redirect "/shows/#{slideshow.url}"
+    @show.title = params[:title]
+    @show.url = params[:url]
+    @show.content = params[:content]
+    if @show.parser != params[:parser].downcase
+      @show.parser = params[:parser].downcase
+      @show.content_checksum = nil
+    end
+    @show.save
+    Pusher[@show.id].trigger('updateSlides', (haml :show))
+    redirect "/shows/#{@show.url}"
   end
   
   

@@ -29,11 +29,18 @@
 
   $(document).ready(function(){
     resizeSlides();
+    if (window.location.hash.slice(1).length != 0){
+      current_slide = parseInt((window.location.hash).slice(1));
+      goToSlide(current_slide);
+    }
     if (following == true){
-      var server = new Pusher('9f35849b3fdcf6710529', 'main');
+      var server = new Pusher('9f35849b3fdcf6710529', '#{@show.id}');
       server.bind('slideChange', function(data) {
         current_slide = parseInt(data);
         goToSlide(current_slide);
+      });
+      server.bind('updateSlides', function(data) {
+        $("#slideshow").html(data);
       });
     }
     
@@ -45,8 +52,14 @@
     });
 
     $(document).bind('keydown', function(e) {
-      if (e.keyCode == arrow.left) slideLeft();
-      if (e.keyCode == arrow.right) slideRight();
+      if (e.keyCode == arrow.left){
+        slideLeft();
+        return false;
+      }
+      if (e.keyCode == arrow.right){
+        slideRight();
+        return false;
+      }
     });
     
     $(window).resize(function(){
@@ -61,7 +74,11 @@
     slide = $(".slide")
     slide.css("font-size", (width/800.0)+"em");
     slide.css("width", (width*0.75)+'px');
-    slide.css("height", (width*0.75*0.5625)+'px')
+    slide.css("height", (width*0.75*0.5625)+'px');
+
+    //update slide location
+    position = slide_width * current_slide * -1;
+    $('#slideshow').css('left', position+"px");
   }
   function pushCurrentLocation(){
     $.get("/shows/#{@show.id}/present/slide-change?slide="+current_slide);
@@ -72,6 +89,7 @@
     positionDifference = Math.abs(position - parseInt($('#slideshow').css('left').slice(0,-2)));
     time_difference = (positionDifference / $(window).width())*300;
     $('#slideshow').animate({left: position+"px"}, time_difference, 'easeInOutQuad');
+    window.location.hash = slideNumber;
     if (presenting == true) pushCurrentLocation();
   }
   
