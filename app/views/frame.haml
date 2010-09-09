@@ -9,11 +9,18 @@
     -elsif @following
       .live_box{:style => "margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #1E1; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} FOLLOWING
     -else
-      .live_box{:style => "margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #666; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} Browsing
+      .live_box{:style => "margin-right: 10px; text-shadow: #777 1px 1px 1px; color: #FFF; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} Browsing
+      .controls{:style => "display: inline-block; position: relative; top: -13px; left: -3px"}
+        .button{:style => "display: inline-block; position: relative;"}
+          - if @user && (@user.id == @show.user_id)
+            %a.awesome.medium.green{:href => "/shows/#{@show.url}/present"} Present
+          %a.awesome.medium.yellow{:href => "/shows/#{@show.url}/follow"} Follow
+      
 
     .status{:style => "display: inline-block; position: relative; top: -10px; left: 3px;"}
-      .button{:style => "display: inline-block; position: relative; top: -3px"}
-        %a.awesome.small.black{:href => "/", :style => "margin-left: 0px; padding: 2px 5px"} I'm Done
+      -if @presenting || @following
+        .button{:style => "display: inline-block; position: relative; top: -3px"}
+          %a.awesome.small.black{:href => "/shows/#{@show.url}", :style => "margin-left: 0px; padding: 2px 5px"} I'm Done
       %h3{:style => "display: inline-block; margin-left: 50px; margin-right: 10px"}= @show.title
       
     .controls{:style => "float: right; display: inline-block; position: relative; top: 3px; left: 3px"}

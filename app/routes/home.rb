@@ -3,12 +3,14 @@ class Main
     haml :index
   end
   get "/shows/:show_url" do
+    logged_in?
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     @presenting = false
     @following = false
     haml :index
   end
   get "/shows/:show_url/follow" do
+    logged_in?
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     @presenting = false
     @following = true
@@ -66,6 +68,10 @@ class Main
     slideshow.title = params[:title]
     slideshow.url = params[:url]
     slideshow.content = params[:content]
+    if slideshow.parser != params[:parser].downcase
+      slideshow.parser = params[:parser].downcase
+      slideshow.content_checksum = nil
+    end
     slideshow.save
     redirect "/shows/#{slideshow.url}"
   end

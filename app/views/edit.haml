@@ -16,8 +16,13 @@
     %p
       %label.label{:for => "content"} Content
       %textarea#content{:name => "content", :type => "text", :style => "width: 400px; height: 300px;"}= @show.content
-      %br
+    %p
       %a{:href => "/help/content-guide"} Content Guide
+    %p
+      %label.label Parser
+      %input{:type => "radio", :name => "parser", :value => "haml", :checked => (@show.parser == "haml")} Haml
+      %input{:type => "radio", :name => "parser", :value => "markdown", :checked => (@show.parser == "markdown")} Markdown
+      
     %br
     %input.awesome.green.large{:type => "submit", :value => "Save Presentation", :style => "display: block; margin: auto; width: 200px"}
     %br

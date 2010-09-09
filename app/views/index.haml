@@ -13,10 +13,11 @@
   - else
     .page{:style => "height: 600px; width: 880px; white-space: nowrap; overflow: hidden; margin: auto;"}
       = haml :show
-    .slideshow_controls{:style => "height: 64px; width: 840px; white-space: nowrap; overflow: hidden; margin: auto; padding: 0 20px"}
-      .leftarrow{:style => "float: left"}
+    /
+      .slideshow_controls{:style => "height: 64px; width: 840px;  overflow: hidden; margin: auto; padding: 0 20px"}
+        .leftarrow{:style => "float: left"}
         %img{:src => "/images/left.png", :style => "width: 64px; height: 64px;"}
-      .rightarrow{:style => "float: right"}
+        .rightarrow{:style => "float: right"}
         %img{:src => "/images/right.png", :style => "width: 64px; height: 64px;"}
 
 :javascript
@@ -24,9 +25,10 @@
   var current_slide = 0;
   var presenting = #{@presenting.to_s};
   var following = #{@following.to_s};
+  var slide_width = 882;
 
   $(document).ready(function(){
-    
+    resizeSlides();
     if (following == true){
       var server = new Pusher('9f35849b3fdcf6710529', 'main');
       server.bind('slideChange', function(data) {
@@ -39,26 +41,42 @@
       slideLeft();
     });
     $(".rightarrow").click(function(){
-      slideright();
+      slideRight();
     });
 
     $(document).bind('keydown', function(e) {
       if (e.keyCode == arrow.left) slideLeft();
       if (e.keyCode == arrow.right) slideRight();
     });
+    
+    $(window).resize(function(){
+      resizeSlides();
+    });
   });
+  function resizeSlides(){
+    var width = $(window).width()
+    //$('body').prepend('<div>' + width/400.0 + '</div>');
+    $(".page").css("width", (width*0.75+80)).css("height", (width*0.75*.5625+80));
+    slide_width = (width*0.75+80)+1.5;
+    slide = $(".slide")
+    slide.css("font-size", (width/800.0)+"em");
+    slide.css("width", (width*0.75)+'px');
+    slide.css("height", (width*0.75*0.5625)+'px')
+  }
   function pushCurrentLocation(){
     $.get("/shows/#{@show.id}/present/slide-change?slide="+current_slide);
   }
   
   function goToSlide(slideNumber){
-    position = 882 * slideNumber * -1;
+    position = slide_width * slideNumber * -1;
     positionDifference = Math.abs(position - parseInt($('#slideshow').css('left').slice(0,-2)));
-    $('#slideshow').animate({left: position+"px"}, (positionDifference/2), 'easeInOutQuad');
+    time_difference = (positionDifference / $(window).width())*300;
+    $('#slideshow').animate({left: position+"px"}, time_difference, 'easeInOutQuad');
     if (presenting == true) pushCurrentLocation();
   }
   
   function slideLeft(){
+    if (current_slide <= 0) return false;
     current_slide -= 1;
     goToSlide(current_slide);    
   }

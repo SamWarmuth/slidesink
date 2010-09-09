@@ -7,7 +7,7 @@ class Slideshow < CouchRest::ExtendedDocument
   
   property :content
   property :content_checksum
-  property :content_type
+  property :parser
   
   property :generated
   
@@ -23,7 +23,14 @@ class Slideshow < CouchRest::ExtendedDocument
     current_checksum = (Digest::SHA2.new(512) << self.content).to_s
     return true if self.content_checksum == current_checksum
     self.content_checksum = current_checksum
-    self.generated = Kramdown::Document.new(self.content).to_html
+    if self.parser == "markdown"
+      self.generated = Kramdown::Document.new(self.content).to_html
+    elsif self.parser = "haml"
+      self.generated = Haml::Engine.new(self.content).render
+    else
+      self.parser = "haml"
+      self.generated = Haml::Engine.new(self.content).render
+    end
     self.save
   end
   
