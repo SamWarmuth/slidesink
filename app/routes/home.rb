@@ -30,7 +30,7 @@ class Main
     @show = Slideshow.get(params[:show_id])
     redirect "/404" if @show.nil?
     redirect "/shows/#{params[:show_url]}" unless @user.id == @show.user_id
-    Pusher[@show.id].trigger('slideChange', params[:slide].to_s)
+    Thread.new{Pusher[@show.id].trigger('slideChange', params[:slide].to_s)}
     return ""
   end
 
@@ -79,7 +79,7 @@ class Main
       @show.content_checksum = nil
     end
     @show.save
-    Pusher[@show.id].trigger('updateSlides', (haml :show))
+    Thread.new{Pusher[@show.id].trigger('updateSlides', (haml :show))}
     redirect "/shows/#{@show.url}"
   end
   

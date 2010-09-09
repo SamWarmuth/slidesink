@@ -41,6 +41,7 @@
       });
       server.bind('updateSlides', function(data) {
         $("#slideshow").html(data);
+        resizeSlides();
       });
     }
     
