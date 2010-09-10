@@ -43,7 +43,7 @@ class Main
 
   get "/new" do
     redirect "/login" unless logged_in?
-    haml :guiedit
+    haml :edit
   end
   
   get "/edit/:show_url" do
@@ -51,12 +51,12 @@ class Main
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?
     redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
-    haml :guiedit    
+    haml :edit    
   end
   
 
   
-  post "/edit" do
+  get "/save" do
     redirect "/login" unless logged_in?
     if params[:show_id].empty?
       @show = Slideshow.new
@@ -64,19 +64,24 @@ class Main
     else
       @show = Slideshow.get(params[:show_id])
       redirect "/404" if @show.nil?
-      redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
+      redirect "/show/#{@show.url}" unless @user.id == @show.user_id
     end
+    return false if (params[:title].empty? || params[:url].empty?)
     @show.title = params[:title]
     @show.url = params[:url]
-    @show.content = params[:content]
-    if @show.parser != params[:parser].downcase
-      @show.parser = params[:parser].downcase
-      @show.content_checksum = nil
+    @show.slides = []
+    params.to_a.sort_by{|name| name[0]}.each do |name, val|
+      if name.include?("slide")
+        slide = ShowSlide.new
+        slide.markdown = val.gsub("LiNeBrEaK", "\n")
+        @show.slides << slide
+      end
     end
     @show.save
     Thread.new{Pusher[@show.id].trigger('updateSlides', (haml :show))}
     redirect "/show/#{@show.url}"
   end
+
   
   
   get "/login" do
