@@ -13,18 +13,15 @@
     #{sass :style}
 %body{:style => "margin: 0; padding: 0; background: #ddd;"}
   = haml :frame
-  -if @show.nil?
-    = haml :welcome
-  - else
-    .page{:style => "height: 600px; width: 880px; white-space: nowrap; overflow: hidden; margin: auto;"}
-      = haml :show
-    /
-      .slideshow_controls{:style => "height: 64px; width: 840px;  overflow: hidden; margin: auto; padding: 0 20px"}
-        .leftarrow{:style => "float: left"}
-        %img{:src => "/images/left.png", :style => "width: 64px; height: 64px;"}
-        .rightarrow{:style => "float: right"}
-        %img{:src => "/images/right.png", :style => "width: 64px; height: 64px;"}
-
+  .page{:style => "height: 600px; width: 880px; white-space: nowrap; overflow: hidden; margin: auto;"}
+    = haml :show
+  /
+    .slideshow_controls{:style => "height: 64px; width: 840px;  overflow: hidden; margin: auto; padding: 0 20px"}
+      .leftarrow{:style => "float: left"}
+      %img{:src => "/images/left.png", :style => "width: 64px; height: 64px;"}
+      .rightarrow{:style => "float: right"}
+      %img{:src => "/images/right.png", :style => "width: 64px; height: 64px;"}
+  
 :javascript
   var arrow = {left: 37, up: 38, right: 39, down: 40 };
   var current_slide = 0;

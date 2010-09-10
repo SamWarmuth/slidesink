@@ -7,20 +7,20 @@
     -if @presenting
       .live_box{:style => "margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #E11; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} PRESENTING
     -elsif @following
-      .live_box{:style => "margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #ffC615; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} FOLLOWING
+      .live_box{:style => "margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #ffC615; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} ATTENDING
     -else
       .live_box{:style => "margin-right: 10px; text-shadow: #777 1px 1px 1px; color: #FFF; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} Browsing
       .controls{:style => "display: inline-block; position: relative; top: -13px; left: -3px"}
         .button{:style => "display: inline-block; position: relative;"}
           - if @user && (@user.id == @show.user_id)
             %a.awesome.medium.green{:href => "/show/#{@show.url}/present"} Present
-          %a.awesome.medium.yellow{:href => "/show/#{@show.url}/follow"} Follow
+          %a.awesome.medium.yellow{:href => "/show/#{@show.url}/follow"} Attend
       
 
     .status{:style => "display: inline-block; position: relative; top: -10px; left: 3px;"}
       -if @presenting || @following
         .button{:style => "display: inline-block; position: relative; top: -3px"}
-          %a.awesome.small.black{:href => "/show/#{@show.url}", :style => "margin-left: 0px; padding: 2px 5px"} stop #{@presenting ? "presenting" : "following"}
+          %a.awesome.small.black{:href => "/show/#{@show.url}", :style => "margin-left: 0px; padding: 2px 5px"} #{@presenting ? "End Presentation" : "Leave Audience"}
       %h3{:style => "display: inline-block; margin-left: 50px; margin-right: 10px"}
         - creator = User.get(@show.user_id)
         - if creator

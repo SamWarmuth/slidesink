@@ -20,16 +20,20 @@
     %h1{:style => 'text-align: center'} Edit #{@show.title}
   %form#basics{:action => "/edit", :method => "post", :style => 'width: 900px; margin: 20px auto; background: white; padding: 10px; border-radius: 5px;'}
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}
-    %p
-      %label{:for => "title", :style => 'margin-left: 50px; margin-right: 15px'} Presentation Title
-      %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 180px"}
-      %label{:for => "url", :style => "margin-left: 50px; margin-right: 15px"} URL
-      %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 150px"}
-      %i{:style => "margin-left: 20px"} slidesink.com/your_url
-  .guiedit{:style => "margin: 10px auto; width: 920px; height: 450px; position: relative;"}
+    %label{:for => "title", :style => 'margin-right: 5px'} Presentation Title
+    %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 180px"}
+    %label{:for => "url", :style => "margin-left: 50px; margin-right: 5px"} URL
+    %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 150px"}
+    
+    %em{:style => "margin-left: 10px"} slidesink.com/
+    #url-preview{:style => "display: inline; font-weight: bold; margin: 0; padding: 0"}your_url
+      
+  .guiedit{:style => "margin: 10px auto; width: 920px; height: 620px; position: relative;"}
+  
     %div{:style => "position: absolute; top: 0; left: 858px; z-index: 100;"}
-      #add-slide.awesome.green.large{:style => "width: 35px; height: 82px; padding-top: 62px; text-align: center; border-radius: 0 5px 5px 0; -webkit-box-shadow: none;"} New Slide
-    #slide-list{:style => "white-space: nowrap; display: inline-block; width: 818px; height: 134px; margin-bottom: 10px; background: #BBB; position: relative; border-radius: 5px 0 0 5px; padding: 10px 20px; overflow: auto;"}
+      #add-slide.awesome.green.large{:style => "width: 35px; height: 85px; padding-top: 62px; text-align: center; border-radius: 0 5px 5px 0; -webkit-box-shadow: none;"} New Slide
+      
+    #slide-list{:style => "white-space: nowrap; display: inline-block; width: 818px; height: 135px; margin-bottom: 5px; background: #BBB; position: relative; border-radius: 5px 0 0 5px; padding: 10px 20px; overflow: auto; border: 1px solid #999;"}
       -if @show.slides.empty?
         .slide-group{:style => "display: inline-block"}
           .tiny-slide
@@ -47,20 +51,7 @@
       #active-mark{:style => "display: none"} Initial
       
           
-  %br
-  %br
-  %br
-  %br
-  %br
-  %br
-  %br
-  %br
-  %br
-  %br
-  %br
-  %br
-  %br
-  .clear{:style => "clear: both;"}
+
   .buttons{:style => "width: 600px; margin: auto; text-align: center;"}
     %a#discard-changes.awesome.red.large{:href => "/show/#{@show.url}", :style => "display: inline-block; width: 175px;"} Discard Changes
     %a#save-changes.awesome.green.large{:href => "save", :style => "display: inline-block; width: 175px; margin-left: 20px"} Save Presentation
@@ -70,9 +61,26 @@
 :javascript
   var showdown = new Showdown.converter();
   
-
+  $(document).ready(function(){
+    var custom_url = false;
+    $("#title").focus();
+    
+    $("#title").keyup(function(){
+      if (custom_url == false){
+        $("#url").val($(this).val().replace(/ /g,""));
+        $("#url-preview").text($('#url').val());
+      }
+    });
+    $("#url").keyup(function(){
+      custom_url = true;
+      $("#url-preview").text($(this).val());
+    });
+  });
+  
+  
   $(document).ready(function(){   
     $(".markdown").each(function(m){$(this).html($(this).html().replace(/LiNeBrEaK/g, "\n"))});
+    
     var firstSlide = $(".tiny-slide").first();
     firstSlide.addClass("selected");
     $("#active-slide").html(firstSlide.html());
@@ -89,13 +97,13 @@
     });
     
     $(".tiny-slide").live('click', function(){
+      $("#edit-field").focus();
       $(".tiny-slide").removeClass("selected");
       $(this).addClass("selected");
       $("#active-slide").html($(this).html());
       $("#active-mark").html($('.tiny-slide.selected').siblings(".markdown").html());
-      $("#edit-field").val($("#active-mark").html());      
-      $("#edit-field").focus();
-    });
+      $("#edit-field").val($("#active-mark").html());
+     });
     
     $("#edit-field").keyup(function(){
       markdown = $(this).val();
@@ -108,11 +116,10 @@
     });
     
     $("#save-changes").click(function(){
-      // is this line still necessary?
-      $(".tiny-slide.selected").siblings(".markdown").html($("#code-cover textarea").val());
-          
-      output = $.map($(".markdown"), function(m){return ($(m).attr('name')+"="+$(m).html())}).join("&").replace(/\n/g,"LiNeBrEaK");
-      window.location = ("/save?"+$("#basics").serialize()+"&"+output);
+
+      output = $.map($(".markdown"), function(m){return ($(m).attr('name')+"="+$(m).html().replace(/=/g,"EqUaLs").replace(/&/g, "aMp").replace(/#/g, "hAsH"))}).join("&").replace(/\n/g,"LiNeBrEaK");
+      
+      window.location = ("/save?"+ output + "&" + $("#basics").serialize());
       return false;
     });
     

@@ -5,16 +5,22 @@ class Slideshow < CouchRest::ExtendedDocument
   property :url
   property :user_id
   
+  property :deleted
+  
+  def delete
+    self.deleted = true
+    self.save
+  end
   
   property :slides, :cast_as => ['ShowSlide'] # markdown, html, checksum
   
+  property :current_slide
   property :date_created
   property :last_edited
   
   property :events #array: [[ms_from_start, event_type], ...]
   
   save_callback :before, :regenerate_presentation
-  
   
   def regenerate_presentation
     return false if slides.nil? || slides.empty?

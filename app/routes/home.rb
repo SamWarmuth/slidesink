@@ -1,6 +1,6 @@
 class Main
   get "/" do
-    haml :index
+    haml :welcome
   end
   get "/show/:show_url" do
     logged_in?
@@ -61,6 +61,9 @@ class Main
     if params[:show_id].empty?
       @show = Slideshow.new
       @show.user_id = @user.id
+      @show.slides = []
+      @show.current_slide = 0
+      @show.date_created = Time.now.to_s
     else
       @show = Slideshow.get(params[:show_id])
       redirect "/404" if @show.nil?
@@ -70,15 +73,15 @@ class Main
     @show.title = params[:title]
     @show.url = params[:url]
     @show.slides = []
-    params.to_a.sort_by{|name| name[0]}.each do |name, val|
+    params.to_a.sort_by{|name| name[0].gsub("slide", "").to_i}.each do |name, val|
       if name.include?("slide")
         slide = ShowSlide.new
-        slide.markdown = val.gsub("LiNeBrEaK", "\n")
+        slide.markdown = val.gsub("LiNeBrEaK", "\n").gsub("EqUaLs", "=").gsub("aMp", "&").gsub("hAsH", "#")
         @show.slides << slide
       end
     end
     @show.save
-    Thread.new{Pusher[@show.id].trigger('updateSlides', (haml :show))}
+    #Thread.new{Pusher[@show.id].trigger('updateSlides', (haml :show))}
     redirect "/show/#{@show.url}"
   end
 
