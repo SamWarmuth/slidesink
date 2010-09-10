@@ -18,11 +18,14 @@
       %label{:for => "url", :style => "margin-left: 50px"} URL
       %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 150px"}
       slidesink.com/your_url
-  .guiedit{:style => "margin: 10px auto; width: 795px; height: 450px"}
-    .slide-list{:style => "display: inline-block; width: 150px; height: 424px; background: #999; position: relative; border-radius: 5px;"}
-      .awesome.green.medium{:style => "position: absolute; bottom: 5px; left: 32px;"} New Slide
+  .guiedit{:style => "margin: 10px auto; width: 795px; height: 450px; position: relative;"}
+    %div{:style => "position: absolute; bottom: 30px; left: 32px; z-index: 100;"}
+      #add-slide.awesome.green.medium New Slide
+    #slide-list{:style => "display: inline-block; width: 150px; height: 369px; margin-bottom: 35px; background: #999; position: relative; border-radius: 5px; padding: 10px 0; overflow: auto;"}
+      .tiny-slide Look ma, no hands!
+      
     .slide-viewer{:style => "display: inline-block; width: 640px; height: 424px; position: relative; padding: 0; margin: 0"}
-      .slide{:style => "margin: 0"} Look ma, no hands!
+      #active-slide.slide{:style => "margin: 0"} Look ma, no hands!
     
     .clear{:style => "clear: both;"}
   .buttons{:style => "width: 500px; margin: auto"}
@@ -35,9 +38,14 @@
 :javascript
 
   $(document).ready(function(){
-    $(".tabarea").keydown(function(e){
-      if (e.keyCode == 9){
-        return false;
-      }
+    $("#add-slide").click(function(){
+      $("#slide-list").append("<div class='tiny-slide'><div class='center-title'>hi!</div></div>");
+      return false;
     });
+    $(".tiny-slide").live('click', function(){
+      $(".tiny-slide").removeClass("selected");
+      $(this).addClass("selected");
+      $("#active-slide").html($(this).html());
+    });
+    
   });
