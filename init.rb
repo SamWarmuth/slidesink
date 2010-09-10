@@ -13,6 +13,7 @@ require "couchrest"
 require "haml"
 require "sass"
 require "json"
+require "nokogiri"
 require "kramdown"
 require "pusher"
 

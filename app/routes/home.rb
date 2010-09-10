@@ -43,7 +43,7 @@ class Main
 
   get "/new" do
     redirect "/login" unless logged_in?
-    haml :edit
+    haml :guiedit
   end
   
   get "/edit/:show_url" do
@@ -51,12 +51,7 @@ class Main
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?
     redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
-    if params[:gui] == "true"
-      haml :guiedit
-    else
-      haml :edit
-    end
-    
+    haml :guiedit    
   end
   
 

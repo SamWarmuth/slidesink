@@ -5,13 +5,11 @@ class Slideshow < CouchRest::ExtendedDocument
   property :url
   property :user_id
   
-  property :content
-  property :content_checksum
-  property :parser
   
-  property :generated
+  property :slides, :cast_as => ['ShowSlide'] # markdown, html, checksum
   
   property :date_created
+  property :last_edited
   
   property :events #array: [[ms_from_start, event_type], ...]
   
@@ -19,19 +17,22 @@ class Slideshow < CouchRest::ExtendedDocument
   
   
   def regenerate_presentation
-    return false if content.nil?
-    current_checksum = (Digest::SHA2.new(512) << self.content).to_s
-    return true if self.content_checksum == current_checksum
-    self.content_checksum = current_checksum
-    if self.parser == "markdown"
-      self.generated = Kramdown::Document.new(self.content).to_html
-    elsif self.parser = "haml"
-      self.generated = Haml::Engine.new(self.content).render
-    else
-      self.parser = "haml"
-      self.generated = Haml::Engine.new(self.content).render
+    return false if slides.nil? || slides.empty?
+    self.slides.each do |slide|
+      checksum = (Digest::SHA2.new(512) << slide.markdown).to_s
+      next if slide.checksum == checksum
+      
+      slide.checksum == checksum
+      slide.html = Kramdown::Document.new(slide.markdown).to_html
     end
-    self.save
   end
   
+end
+
+class ShowSlide < Hash
+  include CouchRest::CastedModel
+
+  property :markdown
+  property :checksum
+  property :html
 end
