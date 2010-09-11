@@ -14,11 +14,7 @@
   :css
     #{sass :style}
 %body{:style => 'background: #ddd'}
-  -if @show.new_document?
-    %h1{:style => 'text-align: center'} New Show
-  -else
-    %h1{:style => 'text-align: center'} Edit #{@show.title}
-  %form#basics{:action => "/edit", :method => "post", :style => 'width: 900px; margin: 20px auto; background: white; padding: 10px; border-radius: 5px;'}
+  %form#basics{:action => "/edit", :method => "post", :style => 'width: 900px; margin: 0 auto; background: white; padding: 10px; border-radius: 5px 5px 0 0;'}
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}
     %label{:for => "title", :style => 'margin-right: 5px'} Presentation Title
     %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 180px"}
@@ -27,13 +23,17 @@
     
     %em{:style => "margin-left: 10px"} slidesink.com/
     #url-preview{:style => "display: inline; font-weight: bold; margin: 0; padding: 0"}your_url
-      
-  .guiedit{:style => "margin: 10px auto; width: 920px; height: 620px; position: relative;"}
+  .menubar{:style => "margin: 0 auto; width: 920px; position: relative; "}
+    %a#discard-changes.awesome.red.large{:href => "/show/#{@show.url}", :style => "display: inline-block; width: 175px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Discard Changes
+    %a#add-slide.awesome.green.large{:href => "save", :style => "display: inline-block; width: 75px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Add Slide
+    %a#save-changes.awesome.green.large{:href => "save", :style => "display: inline-block; width: 175px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Save Changes
+    %a.awesome.grey.large{:href => "save", :style => "display: inline-block; width: 175px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Formatting Help
+    %a.awesome.grey.large{:href => "save", :style => "display: inline-block; width: 176px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Other Things
+  .guiedit{:style => "margin: 0 auto; width: 920px; height: 620px; position: relative;"}
   
     %div{:style => "position: absolute; top: 0; left: 858px; z-index: 100;"}
-      #add-slide.awesome.green.large{:style => "width: 35px; height: 85px; padding-top: 62px; text-align: center; border-radius: 0 5px 5px 0; -webkit-box-shadow: none;"} New Slide
-      
-    #slide-list{:style => "white-space: nowrap; display: inline-block; width: 818px; height: 135px; margin-bottom: 5px; background: #BBB; position: relative; border-radius: 5px 0 0 5px; padding: 10px 20px; overflow: auto; border: 1px solid #999;"}
+      #add-slide.awesome.green.large{:style => "width: 35px; height: 85px; padding-top: 62px; text-align: center; border-radius: 0 5px 5px 0; -webkit-box-shadow: none; font-size: 5em"} >
+    #slide-list{:style => "white-space: nowrap; display: inline-block; width: 818px; height: 135px; background: #BBB; position: relative; padding: 10px 20px; overflow: auto; border: 1px solid #BBB;"}
       -if @show.slides.empty?
         .slide-group{:style => "display: inline-block"}
           .tiny-slide
@@ -41,12 +41,12 @@
       -@show.slides.each_with_index do |slide, i|
         .slide-group{:style => "display: inline-block"}
           .tiny-slide!= slide.html
-          .markdown{:style => "display: none", :name => "slide#{i}"} #{slide.markdown.gsub("\n", "LiNeBrEaK").to_s}
+          .markdown{:style => "display: none", :name => "slide#{i}"}= slide.markdown.gsub("\n", "LiNeBrEaK")
     %br
     
     %textarea#edit-field.tabarea{:style => "display: inline-block; font-size: 1em; font-family: monospace; width: 249px; height: 404px; padding: 10px; border: 1px solid #CCC; background: #eee; border-radius: 5px; margin-right: 5px; position: relative; top: 2px;"}
     
-    .slide-viewer{:style => "display: inline-block; width: 640px; height: 424px; position: relative; padding: 0; margin: 0"}
+    .slide-viewer{:style => "display: inline-block; width: 640px; height: 424px; position: relative; padding: 0; margin: 0;"}
       #active-slide.slide{:style => "margin: 0"}
       #active-mark{:style => "display: none"} Initial
       

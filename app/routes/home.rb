@@ -2,9 +2,17 @@ class Main
   get "/" do
     haml :welcome
   end
+  get "/style.css" do
+    content_type 'text/css', :charset => 'utf-8'
+    sass :style
+  end
+  get "/404" do
+    haml :not_found
+  end
   get "/show/:show_url" do
     logged_in?
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
+    redirect "/404" if @show.nil?
     @presenting = false
     @following = false
     haml :index
@@ -12,6 +20,7 @@ class Main
   get "/show/:show_url/follow" do
     logged_in?
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
+    redirect "/404" if @show.nil?
     @presenting = false
     @following = true
     haml :index

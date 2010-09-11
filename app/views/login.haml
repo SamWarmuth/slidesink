@@ -1,10 +1,9 @@
 !!!
 %head
-  :css
-    #{sass :style}
+  %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
+  %title SlideSink - Log In
 %body
   %form.table{:action => "login", :method => "post"}
-    / Default forms (table layout)
     .inner-form
       %table{:cellspacing => "0"}
         %tr
