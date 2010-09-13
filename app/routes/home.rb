@@ -6,6 +6,10 @@ class Main
     content_type 'text/css', :charset => 'utf-8'
     sass :style
   end
+  get "/templates.css" do
+    content_type 'text/css', :charset => 'utf-8'
+    sass :templates
+  end
   get "/404" do
     haml :not_found
   end
@@ -63,8 +67,6 @@ class Main
     haml :edit    
   end
   
-
-  
   get "/save" do
     redirect "/login" unless logged_in?
     if params[:show_id].empty?
@@ -93,6 +95,35 @@ class Main
     #Thread.new{Pusher[@show.id].trigger('updateSlides', (haml :show))}
     redirect "/show/#{@show.url}"
   end
+  
+  post "/save-show" do
+    return false unless logged_in?
+    return false if (params[:title].empty? || params[:url].empty?)
+    if params[:show_id].empty?
+      @show = Slideshow.new
+      @show.user_id = @user.id
+      @show.slides = []
+      @show.current_slide = 0
+      @show.date_created = Time.now.to_s
+    else
+      @show = Slideshow.get(params[:show_id])
+      redirect "/404" if @show.nil?
+      redirect "/show/#{@show.url}" unless @user.id == @show.user_id
+    end
+    @show.title = params[:title]
+    @show.url = params[:url]
+    @show.slides = []
+    params.to_a.sort_by{|name| name[0].gsub("slide", "").to_i}.each do |name, val|
+      if name.include?("slide")
+        slide = ShowSlide.new
+        slide.markdown = val.gsub("LiNeBrEaK", "\n").gsub("EqUaLs", "=").gsub("aMp", "&").gsub("hAsH", "#")
+        @show.slides << slide
+      end
+    end
+    @show.save
+    #Thread.new{Pusher[@show.id].trigger('updateSlides', (haml :show))}
+    return true
+  end
 
   
   
@@ -120,7 +151,7 @@ class Main
         :httponly => true,
         :value => user.challenges.last
       })
-      redirect "/new"
+      redirect "/"
     else
       redirect "/login" #TODO show an error
     end

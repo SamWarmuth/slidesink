@@ -3,6 +3,8 @@
   %script{:src => "/js/jquery-1.4.2.min.js", :type => "text/javascript"}  
   %script{:src => "/js/jquery-ui-1.8.4.custom.min.js", :type => "text/javascript"}
   %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
+  %link{:href => "/templates.css", :rel => "stylesheet", :type => "text/css"}
+  
   
   -if @following
     %script{:src => "http://js.pusherapp.com/1.6/pusher.min.js", :type => "text/javascript"}
@@ -42,7 +44,6 @@
         resizeSlides();
       });
     }
-    
     $(".leftarrow").click(function(){
       slideLeft();
     });

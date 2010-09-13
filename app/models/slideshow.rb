@@ -5,12 +5,9 @@ class Slideshow < CouchRest::ExtendedDocument
   property :url
   property :user_id
   
-  property :deleted
+  property :template
   
-  def delete
-    self.deleted = true
-    self.save
-  end
+  property :deleted
   
   property :slides, :cast_as => ['ShowSlide'] # markdown, html, checksum
   
@@ -18,9 +15,14 @@ class Slideshow < CouchRest::ExtendedDocument
   property :date_created
   property :last_edited
   
-  property :events #array: [[ms_from_start, event_type], ...]
+  property :recordings #array: [[ms_from_start, event_type], ...]
   
   save_callback :before, :regenerate_presentation
+  
+  def force_regen
+    self.slides.each{|slide| slide.checksum = nil}
+    self.save
+  end
   
   def regenerate_presentation
     return false if slides.nil? || slides.empty?
@@ -28,11 +30,15 @@ class Slideshow < CouchRest::ExtendedDocument
       checksum = (Digest::SHA2.new(512) << slide.markdown).to_s
       next if slide.checksum == checksum
       
-      slide.checksum == checksum
+      slide.checksum = checksum
       slide.html = Kramdown::Document.new(slide.markdown).to_html
     end
   end
   
+  def delete
+    self.deleted = true
+    self.save
+  end
 end
 
 class ShowSlide < Hash
@@ -41,4 +47,6 @@ class ShowSlide < Hash
   property :markdown
   property :checksum
   property :html
+  
+  
 end

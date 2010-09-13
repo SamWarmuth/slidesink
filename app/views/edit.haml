@@ -6,15 +6,25 @@
   %script{:src => "/js/jquery-1.4.2.min.js", :type => "text/javascript"}  
   %script{:src => "/js/jquery-ui-1.8.4.custom.min.js", :type => "text/javascript"}
   %script{:src => "/js/showdown.js", :type => "text/javascript"}
+  %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
+  %link{:href => "/templates.css", :rel => "stylesheet", :type => "text/css"}
+  
+  
 
   -if @show.new_document?
     %title SlideSink - New Show
   -else
     %title SlideSink - Edit #{@show.title}
-  :css
-    #{sass :style}
 %body{:style => 'background: #ddd'}
-  %form#basics{:action => "/edit", :method => "post", :style => 'width: 900px; margin: 0 auto; background: white; padding: 10px; border-radius: 5px 5px 0 0;'}
+  .menubar{:style => "margin: 0 auto; width: 920px; position: relative; "}
+    %a.awesome.blue.large{:href => "save", :style => "display: inline-block; width: 100px; -webkit-box-shadow: none; border-radius: 5px 0 0 0; text-align: center;"} New Show
+    %a.awesome.blue.large{:href => "/show/#{@show.url}", :style => "display: inline-block; width: 75px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Open Show
+    %a#add-slide.awesome.blue.large{:href => "save", :style => "display: inline-block; width: 75px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Add Slide
+    %a.awesome.blue.large{:href => "save", :style => "display: inline-block; width: 150px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Change Template
+    %a.awesome.blue.large{:href => "save", :style => "display: inline-block; width: 100px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Save and Exit
+    %a#post-save.awesome.green.large{:href => "save", :style => "display: inline-block; width: 176px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0 5px 0 0; text-align: center;"} Save
+  
+  %form#basics{:action => "/edit", :method => "post", :style => 'width: 898px; margin: 0 auto; background: white; padding: 10px; border-radius: 0 0 5px 5px; border: 1px solid #fff;'}
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}
     %label{:for => "title", :style => 'margin-right: 5px'} Presentation Title
     %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 180px"}
@@ -22,47 +32,37 @@
     %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 150px"}
     
     %em{:style => "margin-left: 10px"} slidesink.com/
-    #url-preview{:style => "display: inline; font-weight: bold; margin: 0; padding: 0"}your_url
-  .menubar{:style => "margin: 0 auto; width: 920px; position: relative; "}
-    %a#discard-changes.awesome.red.large{:href => "/show/#{@show.url}", :style => "display: inline-block; width: 175px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Discard Changes
-    %a#add-slide.awesome.green.large{:href => "save", :style => "display: inline-block; width: 75px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Add Slide
-    %a#save-changes.awesome.green.large{:href => "save", :style => "display: inline-block; width: 175px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Save Changes
-    %a.awesome.grey.large{:href => "save", :style => "display: inline-block; width: 175px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Formatting Help
-    %a.awesome.grey.large{:href => "save", :style => "display: inline-block; width: 176px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0; text-align: center;"} Other Things
-  .guiedit{:style => "margin: 0 auto; width: 920px; height: 620px; position: relative;"}
-  
-    %div{:style => "position: absolute; top: 0; left: 858px; z-index: 100;"}
-      #add-slide.awesome.green.large{:style => "width: 35px; height: 85px; padding-top: 62px; text-align: center; border-radius: 0 5px 5px 0; -webkit-box-shadow: none; font-size: 5em"} >
-    #slide-list{:style => "white-space: nowrap; display: inline-block; width: 818px; height: 135px; background: #BBB; position: relative; padding: 10px 20px; overflow: auto; border: 1px solid #BBB;"}
+    #url-preview{:style => "display: inline; font-weight: bold; margin: 0; padding: 0"}= (@show.new_document? ? "your_url" : @show.url)
+  .guiedit{:style => "margin: 0 auto; width: 920px; position: relative; white-space: nowrap;"}
+    
+    #slide-left.awesome.large{:style => "width: 25px; height: 86px; padding: 40px 12px 10px 8px; border-radius: 5px 0 0 5px; -webkit-box-shadow: none; font-size: 2em; float: left;"} &#9664; 
+    
+    #slide-list{:style => "white-space: nowrap; float: left; width: 788px; height: 115px; background: #BBB; padding: 10px 20px; overflow: hidden; border: 1px solid #BBB;"}
       -if @show.slides.empty?
         .slide-group{:style => "display: inline-block"}
           .tiny-slide
           .markdown{:style => "display: none", :name => "slide0"}
       -@show.slides.each_with_index do |slide, i|
         .slide-group{:style => "display: inline-block"}
-          .tiny-slide!= slide.html
+          .tiny-slide{:class => "tmplt-" + @show.template.to_s}!= slide.html
           .markdown{:style => "display: none", :name => "slide#{i}"}= slide.markdown.gsub("\n", "LiNeBrEaK")
-    %br
     
-    %textarea#edit-field.tabarea{:style => "display: inline-block; font-size: 1em; font-family: monospace; width: 249px; height: 404px; padding: 10px; border: 1px solid #CCC; background: #eee; border-radius: 5px; margin-right: 5px; position: relative; top: 2px;"}
+    #slide-right.awesome.large{:style => "width: 25px; height: 82px; padding: 44px 10px 10px 10px; border-radius: 0 5px 5px 0; -webkit-box-shadow: none; font-size: 2em; float: left;"} &#9654;
     
-    .slide-viewer{:style => "display: inline-block; width: 640px; height: 424px; position: relative; padding: 0; margin: 0;"}
-      #active-slide.slide{:style => "margin: 0"}
+    %br{:style => "clear: both"}
+    
+    %textarea#edit-field.tabarea{:style => "outline: none; display: inline-block; font-size: 1em; font-family: monospace; width: 249px; height: 404px; resize: none; padding: 10px; border: 1px solid #CCC; background: #eee; border-radius: 5px; margin-right: 5px; position: relative; top: 2px;"}
+    
+    .slide-viewer{:style => "display: inline-block; width: 640px; height: 424px; position: relative; padding: 0; margin: 0;white-space: normal;"}
+      #active-slide.slide{:style => "margin: 0", :class => "tmplt-" + @show.template.to_s}
       #active-mark{:style => "display: none"} Initial
-      
-          
 
-  .buttons{:style => "width: 600px; margin: auto; text-align: center;"}
-    %a#discard-changes.awesome.red.large{:href => "/show/#{@show.url}", :style => "display: inline-block; width: 175px;"} Discard Changes
-    %a#save-changes.awesome.green.large{:href => "save", :style => "display: inline-block; width: 175px; margin-left: 20px"} Save Presentation
-  %br
-  %br
     
 :javascript
   var showdown = new Showdown.converter();
   
   $(document).ready(function(){
-    var custom_url = false;
+    var custom_url = #{@show.new_document? ? "false" : "true"};
     $("#title").focus();
     
     $("#title").keyup(function(){
@@ -121,6 +121,17 @@
       
       window.location = ("/save?"+ output + "&" + $("#basics").serialize());
       return false;
+    });
+    
+    $("#post-save").click(function(){
+      output = $("#basics").serialize() + "&" + $.map($(".markdown"), function(m){return ($(m).attr('name') + "=" + $(m).html())}).join("&");
+      
+      $.post("/save-show", output);
+      return false;
+    });
+    
+    $("#slide-left").click(function(){
+      
     });
     
     $(".tabarea").keydown(function(e){
