@@ -11,4 +11,4 @@ spawn git://github.com/soveran/spawn.git
 stories 0.1.1 (test) git://github.com/citrusbyte/stories.git
 webrat 0.5.1 (test) git://github.com/brynary/webrat.git
 couchrest git://github.com/couchrest/couchrest.git
-json 1.1.7 git://github.com/genki/json.git
+json git://github.com/genki/json.git
