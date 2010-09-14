@@ -86,6 +86,10 @@
   }
   
   function goToSlide(slideNumber){
+    if (slideNumber >= total_slides){
+      slideNumber = (total_slides - 1);
+      current_slide = slideNumber;
+    }
     position = slide_width * slideNumber * -1;
     positionDifference = Math.abs(position - parseInt($('#slideshow').css('left').slice(0,-2)));
     if (positionDifference ==  0) return false;

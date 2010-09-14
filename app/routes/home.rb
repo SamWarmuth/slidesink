@@ -1,4 +1,9 @@
 class Main
+  before do
+    logged_in?
+  end
+  
+  
   get "/" do
     haml :welcome
   end
@@ -14,7 +19,6 @@ class Main
     haml :not_found
   end
   get "/show/:show_url" do
-    logged_in?
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?
     @presenting = false
@@ -22,7 +26,6 @@ class Main
     haml :index
   end
   get "/show/:show_url/follow" do
-    logged_in?
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?
     @presenting = false
@@ -30,7 +33,7 @@ class Main
     haml :index
   end
   get "/show/:show_url/present" do
-    redirect "/login" unless logged_in?
+    redirect "/login" unless @user
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?
     redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
@@ -39,7 +42,7 @@ class Main
     haml :index
   end
   get "/show/:show_id/present/slide-change" do
-    redirect "/login" unless logged_in?
+    redirect "/login" unless @user
     @show = Slideshow.get(params[:show_id])
     return "" if @show.nil?
     redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
@@ -47,7 +50,6 @@ class Main
     return ""
   end
   get "/user/:user_name" do
-    logged_in?
     @selected_user = User.all.find{|u| u.name.gsub(" ", "") == params[:user_name]}
     @shows = Slideshow.all.find_all{|s| s.user_id == @selected_user.id}
     redirect "/" if @selected_user.nil?
@@ -55,12 +57,12 @@ class Main
   end
 
   get "/new" do
-    redirect "/login" unless logged_in?
+    redirect "/login" unless @user
     haml :edit
   end
   
   get "/edit/:show_url" do
-    redirect "/login" unless logged_in?
+    redirect "/login" unless @user
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?
     redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
@@ -68,7 +70,7 @@ class Main
   end
   
   get "/save" do
-    redirect "/login" unless logged_in?
+    redirect "/login" unless @user
     if params[:show_id].empty?
       @show = Slideshow.new
       @show.user_id = @user.id
@@ -97,7 +99,7 @@ class Main
   end
   
   post "/save-show" do
-    return false unless logged_in?
+    return false unless @user
     return false if (params[:title].empty? || params[:url].empty?)
     if params[:show_id].empty?
       @show = Slideshow.new
@@ -128,7 +130,7 @@ class Main
   
   
   get "/login" do
-    redirect "/new" if logged_in?
+    redirect "/user/#{@user.name.gsub(' ','')}" if @user
     haml :login, :layout => false
   end
   post "/login" do
