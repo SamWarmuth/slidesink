@@ -92,7 +92,7 @@ class Main
     params.to_a.sort_by{|name| name[0].gsub("slide", "").to_i}.each do |name, val|
       if name.include?("slide")
         slide = ShowSlide.new
-        slide.markdown = val.gsub("LiNeBrEaK", "\n").gsub("EqUaLs", "=").gsub("aMp", "&").gsub("hAsH", "#")
+        slide.markdown = val
         @show.slides << slide
       end
     end
