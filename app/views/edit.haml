@@ -133,7 +133,7 @@
     });
     
     $("#post-save").click(function(){
-      output = $("#basics").serialize() + "&" + $.map($(".markdown"), function(m){return ($(m).attr('name') + "=" + $(m).text())}).join("&");
+      output = $("#basics").serialize() + "&" + $.map($(".markdown"), function(m){return ($(m).attr('name') + "=" + $(m).text().replace(/&/g, "aMpEr"))}).join("&");
       $.post("/save-show", output, function(data){
         humanMsg.displayMsg('<strong>Show Saved</strong>');
       });

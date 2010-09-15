@@ -92,7 +92,7 @@ class Main
     params.to_a.sort_by{|name| name[0].gsub("slide", "").to_i}.each do |name, val|
       if name.include?("slide")
         slide = ShowSlide.new
-        slide.markdown = val
+        slide.markdown = val.gsub("AmPeR", "&")
         @show.slides << slide
       end
     end
