@@ -43,6 +43,10 @@
       server.bind('updateSlides', function(data) {
         $("#slideshow").html(data);
         total_slides = $("#slideshow").children(".slide").size();
+        if (current_slide >= total_slides){
+          current_slide = total_slides - 1;
+          goToSlide(current_slide);
+        }
         resizeSlides();
       });
     }
