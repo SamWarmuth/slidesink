@@ -29,7 +29,7 @@
     %label{:for => "url", :style => "margin-left: 25px; margin-right: 3px"} URL
     %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 150px"}
     %a#show-link{:href => "http://www.slidesink.com/show/#{@show.url}"}<
-      %em{:style => "font-size: 0.75em"}>www.slidesink.com/
+      %em{:style => "font-size: 0.75em"}>www.slidesink.com/show/
       #url-preview{:style => "display: inline; font-weight: bold; margin: 0; padding: 0; font-size: 0.75em"}= (@show.new_document? ? "your_url" : @show.url)
     %a.awesome.blue.medium{:href => "save", :style => "display: inline-block; width: 120px; margin-left: 10px; -webkit-box-shadow: none; text-align: center;"} Change Template
     %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; position: relative; top: -3px"} Save
