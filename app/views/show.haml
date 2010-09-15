@@ -1,3 +1,2 @@
-#slideshow{:style => "position: relative; top: 0; left: 0; width: 5000000px; font-size: 22px; white-space: normal; "}
-  -@show.slides.each do |slide|
+-@show.slides.each do |slide|
     .slide{:class => "tmplt-" + @show.template.to_s}!= slide.html

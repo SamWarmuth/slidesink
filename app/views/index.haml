@@ -15,7 +15,8 @@
 %body{:style => "margin: 0; padding: 0; background: #ddd;"}
   = haml :frame
   .page{:style => "height: 600px; width: 880px; white-space: nowrap; overflow: hidden; margin: auto;"}
-    = haml :show
+    #slideshow{:style => "position: relative; top: 0; left: 0; width: 5000000px; font-size: 22px; white-space: normal; "}
+      = haml :show
   
 :javascript
   var arrow = {left: 37, up: 38, right: 39, down: 40 };
@@ -41,6 +42,7 @@
       });
       server.bind('updateSlides', function(data) {
         $("#slideshow").html(data);
+        total_slides = $("#slideshow").children(".slide").size();
         resizeSlides();
       });
     }
