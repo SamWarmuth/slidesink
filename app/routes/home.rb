@@ -133,6 +133,7 @@ class Main
     redirect "/user/#{@user.name.gsub(' ','')}" if @user
     haml :login, :layout => false
   end
+  
   post "/login" do
     user = User.all.find{|u| u.email == params[:email].downcase}
     
@@ -157,5 +158,21 @@ class Main
     else
       redirect "/login" #TODO show an error
     end
+  end
+  
+  get "/logout" do
+    response.set_cookie("user", {
+      :path => "/",
+      :expires => Time.now + 2**20,
+      :httponly => true,
+      :value => ""
+    })
+    response.set_cookie("user_challenge", {
+      :path => "/",
+      :expires => Time.now + 2**20,
+      :httponly => true,
+      :value => ""
+    })
+    redirect "/login"
   end
 end

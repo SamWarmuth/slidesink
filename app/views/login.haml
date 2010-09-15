@@ -2,9 +2,9 @@
 %head
   %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
   %title SlideSink - Log In
-%body
+%body{:style => "background: #ccc; text-align: center"}
   %form.table{:action => "login", :method => "post"}
-    .inner-form
+    .login-form{:style => "margin-top: 100px"}
       %table{:cellspacing => "0"}
         %tr
           %th
@@ -17,4 +17,6 @@
           %td
             %input#some3.txt.pwd{:name => "password", :type => "password"}/
       %br
-      %input.awesome.green.medium{:type => "submit", :value => "Log in", :style => "margin-left: 55px; width: 325px"}
+      %input.awesome.green.medium{:type => "submit", :value => "Log in", :style => "width: 175px"}
+  %br
+  %a{:href => "/", :style => "margin: auto"} Return to SlideSink
