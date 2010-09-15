@@ -12,7 +12,7 @@
         %img{:src => "/images/slidesink-small.png", :style => 'vertical-align: middle; width: 64px; height: 64px; padding-right: 25px'}
         Sam Warmuth
     .graybox.50{:style => 'display: inline-block; padding: 30px; width: 365px; background: #eee; border: 1px solid #ccc; margin: 0; border-radius: 0 0 0 10px; vertical-align: text-top;'}
-      %h3 Name: #{@user.name}
+      %h3 Name: #{@selected_user.name}
       %h3 Email: 
       %h3 Website: www.SamWarmuth.com
       %br
@@ -22,7 +22,7 @@
         There's nothing I enjoy more than long walks on the beach. Some of my other hobbies include watching the sunset from a picturesque grassy knoll, indulging in fine wine with a scrumptious foie gras dinner, and candlelight conversations on French film.
       
     .graybox.50{:style => 'display: inline-block; padding: 30px; width: 365px; margin: 0; margin-left: 4px; background: #eee; border: 1px solid #ccc; border-radius: 0 0 10px 0; vertical-align: text-top;'}
-      #{@user.name}'s Recent Presentations:
+      #{@selected_user.name}'s Recent Presentations:
       %br
       %br
       .indent{:style => "margin-left: 50px"}
