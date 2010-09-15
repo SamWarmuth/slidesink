@@ -123,7 +123,7 @@ class Main
       end
     end
     @show.save
-    #Thread.new{Pusher[@show.id].trigger('updateSlides', (haml :show))}
+    Thread.new{Pusher[@show.id].trigger('updateSlides', (haml :show))}
     return true
   end
 
