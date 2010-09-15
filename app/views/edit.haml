@@ -28,11 +28,11 @@
     %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 150px"}
     %label{:for => "url", :style => "margin-left: 25px; margin-right: 3px"} URL
     %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 150px"}
-    %a#show-link{:href => "http://www.slidesink.com/show/#{@show.url}"}<
-      %em{:style => "font-size: 0.75em"}>www.slidesink.com/show/
-      #url-preview{:style => "display: inline; font-weight: bold; margin: 0; padding: 0; font-size: 0.75em"}= (@show.new_document? ? "your_url" : @show.url)
-    %a.awesome.blue.medium{:href => "save", :style => "display: inline-block; width: 120px; margin-left: 10px; -webkit-box-shadow: none; text-align: center;"} Change Template
-    %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; position: relative; top: -3px"} Save
+    %a#show-link{:href => "http://www.slidesink.com/show/#{@show.url}", :target => "_blank", :style => "margin-left: 20px"}
+      View Show
+    %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; position: relative; top: -6px; font-weight: bold"} Save
+    %a.awesome.blue.medium{:href => "save", :style => "width: 120px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; float: right; position: relative; top: -2px"} Change Template
+    
   .guiedit{:style => "margin: 0 auto; width: 920px; position: relative; white-space: nowrap;"}
     
     #slide-left.no-select.awesome.large{:style => "width: 25px; height: 86px; padding: 40px 12px 10px 8px; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0"} &#9664; 
@@ -76,7 +76,7 @@
     $("#title").keyup(function(){
       if (custom_url == false){
         $("#url").val($(this).val().replace(/ /g,""));
-        $("#url-preview").text($('#url').val());
+        $("#show-link").attr("href", ("http://www.slidesink.com/show/" + $('#url').val()));
       }
     });
     $("#url").keyup(function(){
@@ -160,9 +160,9 @@
   });
   
   $(".slide-group").hover(function(){
-    $(this).children(".close-box").fadeIn(100);
+    $(this).children(".close-box").fadeIn(50);
   }, function(){
-    $(this).children(".close-box").fadeOut(100);
+    $(this).children(".close-box").fadeOut(50);
   });
   
   $(".close-box").click(function(){

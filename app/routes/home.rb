@@ -18,6 +18,9 @@ class Main
   get "/404" do
     haml :not_found
   end
+  get "/show/?" do
+    redirect "/"
+  end
   get "/show/:show_url" do
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?

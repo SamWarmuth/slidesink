@@ -1,15 +1,15 @@
-#frame{:style => " height: 20px; background: #AAA; font-family: Arial; font-size: 15px; padding: 3px 10px 15px 0px; overflow: hidden;"}
+#frame{:style => " height: 20px; background: #eee; font-family: Arial; font-size: 15px; padding: 3px 10px 15px 0px; overflow: hidden; border: 1px solid #ccc;"}
 
   %a{:href => "/"}
     %img{:src => "/images/slidesink-tiny.png", :style => 'display: block-inline; width: 32px; height: 32px; margin-left: 5px; position: relative; top: -2px;'}
   -# .window_height{:style => 'display: inline-block'} 1234
   -if @show
     -if @presenting
-      .live_box{:style => "margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #E11; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} PRESENTING
+      .live_box{:style => "margin-right: 10px; color: #E11; font-size: 1.5em; display: inline-block; position: relative; top: -9px; left: 3px;"} Presenting
     -elsif @following
-      .live_box{:style => "margin-right: 10px; text-shadow: #511 1px 1px 1px; color: #ffC615; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} ATTENDING
+      .live_box{:style => "margin-right: 10px; color: #Ff8600; font-size: 1.5em; display: inline-block; position: relative; top: -9px; left: 3px;"} Attending
     -else
-      .live_box{:style => "margin-right: 10px; text-shadow: #777 1px 1px 1px; color: #FFF; font-size: 1.5em; display: inline-block; font-family: 'Arial Black'; position: relative; top: -9px; left: 3px;"} Browsing
+      .live_box{:style => "margin-right: 10px; color: #333; font-size: 1.5em; display: inline-block; position: relative; top: -9px; left: 3px;"} Browsing
       .controls{:style => "display: inline-block; position: relative; top: -13px; left: -3px"}
         .button{:style => "display: inline-block; position: relative;"}
           - if @user && (@user.id == @show.user_id)
@@ -30,8 +30,7 @@
       
     .controls{:style => "float: right; display: inline-block; position: relative; top: 3px; left: 3px"}
       .button{:style => "display: inline-block; position: relative;"}
-        %a.awesome.medium.green{:href => "/new" } New Show
-        %a.awesome.medium.yellow{:href => "/edit/#{@show.url}"} Edit this show
+        %a.awesome.medium.yellow{:href => "/edit/#{@show.url}"} Edit Show
         %a.awesome.medium.blue{:href => "/share/#{@show.url}"} Share
     
     
