@@ -104,6 +104,7 @@ class Main
   post "/save-show" do
     return false unless @user
     return false if (params[:title].empty? || params[:url].empty?)
+    refresh = ""
     if params[:show_id].empty?
       @show = Slideshow.new
       @show.user_id = @user.id
@@ -116,7 +117,10 @@ class Main
       redirect "/show/#{@show.url}" unless @user.id == @show.user_id
     end
     @show.title = params[:title]
+    refresh = "/edit/#{params[:url]}" if params[:url] != @show.url
     @show.url = params[:url]
+    refresh = "/edit/#{@show.url}" if params[:template] != @show.template
+    @show.template = params[:template]
     @show.slides = []
     params.to_a.sort_by{|name| name[0].gsub("slide", "").to_i}.each do |name, val|
       if name.include?("slide")
@@ -127,7 +131,7 @@ class Main
     end
     @show.save
     Thread.new{Pusher[@show.id].trigger('updateSlides', (haml :show))}
-    return true
+    return refresh
   end
 
   
