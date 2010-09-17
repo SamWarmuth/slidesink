@@ -7,9 +7,9 @@ class Slideshow < CouchRest::ExtendedDocument
   
   property :template
   
-  property :deleted
+  property :deleted, :default => false
   
-  property :slides, :cast_as => ['ShowSlide'] # markdown, html, checksum
+  property :slides, :cast_as => ['ShowSlide'], :default => []
   
   property :current_slide
   property :date_created
@@ -19,19 +19,14 @@ class Slideshow < CouchRest::ExtendedDocument
   
   save_callback :before, :regenerate_presentation
   
-  def force_regen
-    self.slides.each{|slide| slide.checksum = nil}
-    self.save
-  end
-  
   def regenerate_presentation
     return false if slides.nil? || slides.empty?
     self.slides.each do |slide|
-      checksum = (Digest::SHA2.new(512) << slide.markdown).to_s
-      next if slide.checksum == checksum
+      #checksum = (Digest::SHA2.new(512) << slide.markdown).to_s
+      #next if slide.checksum == checksum
       
-      slide.checksum = checksum
-      slide.html = Kramdown::Document.new(slide.markdown).to_html
+      #slide.checksum = checksum
+      slide.generate_html
     end
   end
   
@@ -44,9 +39,17 @@ end
 class ShowSlide < Hash
   include CouchRest::CastedModel
 
-  property :markdown
-  property :checksum
+  property :text_objects,  :cast_as => ['SOText']
+  property :image_objects,  :cast_as => ['SOImage']
+  property :youtube_objects,  :cast_as => ['SOYoutube']
+  
+  def objects
+    return self.text_objects + self.image_objects + self.youtube_objects
+  end
+  
   property :html
   
-  
+  def generate_html
+    self.html = objects.map{|o| o.to_html}.join("\n")
+  end
 end

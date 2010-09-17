@@ -2,15 +2,15 @@ defaults: &defaults
  
 :development:
   :couchdb:
-    :url: http://localhost:5984/followalong_development
+    :url: http://localhost:5984/slidesink_development
   <<: *defaults
   
 :test:
   :couchdb:
-    :url: http://localhost:5984/followalong_test
+    :url: http://localhost:5984/slidesink_test
     <<: *defaults
 
 :production:
   :couchdb:
-    :url: http://localhost:5984/followalong_production
+    :url: http://localhost:5984/slidesink_production
     <<: *defaults
