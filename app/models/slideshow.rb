@@ -22,10 +22,6 @@ class Slideshow < CouchRest::ExtendedDocument
   def regenerate_presentation
     return false if slides.nil? || slides.empty?
     self.slides.each do |slide|
-      #checksum = (Digest::SHA2.new(512) << slide.markdown).to_s
-      #next if slide.checksum == checksum
-      
-      #slide.checksum = checksum
       slide.generate_html
     end
   end
@@ -39,9 +35,9 @@ end
 class ShowSlide < Hash
   include CouchRest::CastedModel
 
-  property :text_objects,  :cast_as => ['SOText']
-  property :image_objects,  :cast_as => ['SOImage']
-  property :youtube_objects,  :cast_as => ['SOYoutube']
+  property :text_objects,  :cast_as => ['SOText'], :default => []
+  property :image_objects,  :cast_as => ['SOImage'], :default => []
+  property :youtube_objects,  :cast_as => ['SOYoutube'], :default => []
   
   def objects
     return self.text_objects + self.image_objects + self.youtube_objects
