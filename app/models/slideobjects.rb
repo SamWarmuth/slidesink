@@ -5,8 +5,15 @@ class SlideObject < Hash
   property :top, :default => 0
   property :opacity, :default => 1.0
   property :width, :default => "4em"
-  property :height, :default => "4em"
+  property :height, :default => ""
   property :center, :default => false
+  
+  property :o_id, :default => Proc.new{((Time.now.to_f*1000)%1000000000).to_i} #gross hack to get semi-unique IDs
+  
+  
+  def custom_json
+    self.o_id.to_s + ':{"o_class":"' + self.class.to_s + '", "data":' + self.to_json + "}"
+  end
   
   def basic_style
     if self.center
@@ -26,7 +33,7 @@ class SOText < SlideObject
   property :text, :default => ""
   
   def to_html
-    return "<div style='#{self.basic_style}; color: #{self.color}; font-size: #{self.font_size};'>#{self.text}</div>"
+    return "<div class='slide-object' id='#{self.o_id}' style='#{self.basic_style}; color: #{self.color}; font-size: #{self.font_size};'>#{self.text}</div>"
   end
 end
 
@@ -37,7 +44,7 @@ class SOImage < SlideObject
   property :alt
   
   def to_html
-    return "<img src='#{self.src}' alt='#{self.alt}' style='#{self.basic_style};' />"
+    return "<img class='slide-object' id='#{self.o_id}' src='#{self.src}' alt='#{self.alt}' style='#{self.basic_style};' />"
   end
 end
 
@@ -47,7 +54,7 @@ class SOYoutube < SlideObject
   property :youtube_url
   
   def to_html
-    return "<div style='#{self.basic_style};'> YouTube Not Implemented Yet.</div>"
+    return "<div class='slide-object' id='#{self.o_id}' style='#{self.basic_style};'> YouTube Not Implemented Yet.</div>"
     
   end
 end

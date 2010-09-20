@@ -30,6 +30,13 @@ class Slideshow < CouchRest::ExtendedDocument
     self.deleted = true
     self.save
   end
+  
+  def custom_json
+    out = self.slides.map do |slide|
+      slide.custom_json
+    end
+    return "{" + out.join(",") + "}"
+  end
 end
 
 class ShowSlide < Hash
@@ -41,6 +48,10 @@ class ShowSlide < Hash
   
   def objects
     return self.text_objects + self.image_objects + self.youtube_objects
+  end
+  
+  def custom_json
+   self.objects.map{|object| object.custom_json}
   end
   
   property :html
