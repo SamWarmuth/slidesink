@@ -61,7 +61,7 @@ class Main
 
   get "/new" do
     redirect "/login" unless @user
-    haml :edit
+    haml :gooey
   end
   
   get "/edit/:show_url" do
@@ -69,7 +69,7 @@ class Main
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?
     redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
-    haml :edit    
+    haml :gooey
   end
   
   get "/save" do

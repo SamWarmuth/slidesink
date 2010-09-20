@@ -9,9 +9,8 @@
   %script{:src => "/js/humanmsg.js", :type => "text/javascript"}
   %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
   %link{:href => "/templates.css", :rel => "stylesheet", :type => "text/css"}
+  %script{:src => "/js/views/edit.js", :type => "text/javascript"}
   
-  
-
   -if @show.new_document?
     %title SlideSink - New Show
   -else
@@ -33,19 +32,19 @@
     %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; position: relative; top: -6px; font-weight: bold"} Save
     %a.awesome.blue.medium.show-templates{:href => "save", :style => "width: 120px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; float: right; position: relative; top: -2px"} Change Template
     .template-chooser{:style => "border-radius: 5px; padding: 10px; width: 500px; background: rgba(0,0,0, 0.8); position: absolute; top: 35px; left: 280px; border: 10px solid #ccc; z-index: 1000; text-align: center; -moz-box-shadow: 0 0 20px rgba(0,0,0,0.5); -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.5); display: none;"}
-      .tiny-slide-demo.template-chooser
+      .tiny-slide-demo
         %input{:style => "display: none;",  :type => "radio", :name => "template", :value => "basic", :checked => (@show.template.nil?)}
         %b{:style => "font-size: 5em; display: block; margin-top: 20%;"} Basic
-      .tiny-slide-demo.tmplt-blue.template-chooser
+      .tiny-slide-demo.tmplt-blue
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "blue", :checked => (@show.template == "blue")}
         %b{:style => "font-size: 5em; display: block; margin-top: 20%"} Blue
-      .tiny-slide-demo.tmplt-red.template-chooser
+      .tiny-slide-demo.tmplt-red
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "red", :checked => (@show.template == "red")}
         %b{:style => "font-size: 5em; display: block; margin-top: 20%;"} Red
-      .tiny-slide-demo.tmplt-orange-gradient.template-chooser
+      .tiny-slide-demo.tmplt-orange-gradient
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "orange-gradient", :checked => (@show.template == "orange-gradient")}
         %b{:style => "font-size: 5em; display: block; margin-top: 7%;"} Orange Gradient
-      .tiny-slide-demo.tmplt-green-stripes.template-chooser
+      .tiny-slide-demo.tmplt-green-stripes
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "green-stripes", :checked => (@show.template == "green-stripes")}
         %b{:style => "font-size: 5em; display: block; margin-top: 7%;"} Green Stripes
       .clear{:style => "clear: both"}
@@ -78,140 +77,3 @@
     .slide-viewer{:style => "display: inline-block; width: 640px; height: 424px; position: relative; padding: 0; margin: 0;white-space: normal;"}
       #active-slide.slide{:style => "margin: 0", :class => "tmplt-" + @show.template.to_s}
       #active-mark{:style => "display: none"} Initial
-
-    
-:javascript
-  var showdown = new Showdown.converter();
-  var slideCount = #{@show.slides.count};
-  
-  function save(){
-    
-    output = $("#basics").serialize() + "&" + $.map($(".markdown"), function(m){return ($(m).attr('name') + "=" + $(m).text().replace(/&/g, "aMpEr"))}).join("&");
-    $.post("/save-show", output, function(data){
-      alert(data);
-      if (data != "") window.location = data;
-      else humanMsg.displayMsg('<strong>Show Saved</strong>');
-    });
-  }
-  
-  $(document).ready(function(){
-    var custom_url = #{@show.new_document? ? "false" : "true"};
-    $("#title").focus();
-    
-    $("#title").keyup(function(){
-      if (custom_url == false){
-        $("#url").val($(this).val().replace(/ /g,""));
-        $("#show-link").attr("href", ("http://www.slidesink.com/show/" + $('#url').val()));
-      }
-    });
-    $("#url").keyup(function(){
-      custom_url = true;
-      $("#url-preview").text($(this).val());
-    });
-  });
-  
-  
-  $(document).ready(function(){   
-    $(".markdown").each(function(m){$(this).html($(this).html().replace(/LiNeBrEaK/g, "\n"))});
-    
-    var firstSlide = $(".tiny-slide").first();
-    firstSlide.addClass("selected");
-    $("#active-slide").html(firstSlide.html());
-    $("#active-mark").html($('.tiny-slide.selected').siblings(".markdown").html());
-    $("#edit-field").val($("#active-mark").html());      
-    
-    
-    $("#add-slide").click(function(){
-      $("#slide-list").append("<div class='slide-group' style='display: inline-block'><div class='tiny-slide tmplt-#{@show.template.to_s}'></div><div class='markdown' name='slide"+$(".markdown").size() +"' style='display: none'></div></div>");
-      $(".tiny-slide").last().click();
-      $("#edit-field").focus();
-      slideCount++;
-      
-      return false;
-    });
-    
-    $(".tiny-slide").live('click', function(){
-      $("#edit-field").focus();
-      $(".tiny-slide").removeClass("selected");
-      $(this).addClass("selected");
-      $("#active-slide").html($(this).html());
-      $("#active-mark").html($('.tiny-slide.selected').siblings(".markdown").html());
-      $("#edit-field").val($("#active-mark").html());
-     });
-    
-    $("#edit-field").keyup(function(){
-      markdown = $(this).val();
-      new_html = showdown.makeHtml(markdown)
-      $("#active-slide").html(new_html);
-      $(".tiny-slide.selected").html(new_html);
-      
-      $(".tiny-slide.selected").siblings(".markdown").html(markdown);
-      $("#active-mark").html(markdown);
-    });
-    
-    $("#post-save").click(function(){
-      save();
-      return false;
-    });
-    
-    $("#slide-left").click(function(){
-      var currentPos = parseInt($("#slide-list").css("left"))
-      if (currentPos >= 0) return false;
-      if (currentPos + 507 >= 0) $('#slide-list').stop().animate({left: "0"}, 300, 'easeInOutQuad');
-      else $('#slide-list').stop(false, true).animate({left: "+=507"}, 300, 'easeInOutQuad');
-    });
-    $("#slide-right").click(function(){
-      if (parseInt($('#slide-list').css('left')) <= ((slideCount * -169) + 800)) return false
-      $('#slide-list').stop(false, true).animate({left: "-=507"}, 300, 'easeInOutQuad');
-    });
-    
-    $(".tabarea").keydown(function(e){
-      if (e.keyCode == 9){
-        return false;
-      }
-    });
-  });
-  
-  $(".slide-group").hover(function(){
-    $(this).children(".close-box").fadeIn(50);
-  }, function(){
-    $(this).children(".close-box").fadeOut(50);
-  });
-  
-  $(".close-box").click(function(){
-    $(this).parent().remove();
-  });
-  
-  $(".show-templates").click(function(){
-    chooser = $(".template-chooser");
-    if (chooser.is(":visible")) $(".template-chooser").fadeOut(200);
-    else $(".template-chooser").fadeIn(200);
-    
-    return false;
-  });
-  
-  $(".template-chooser").find("input:checked").parent().addClass("selected");
-  $(".template-chooser").click(function(){
-    $(this).children("input:radio").attr('checked', true);
-    $(".template-chooser").removeClass("selected");
-    $(this).addClass("selected");
-    return false;
-  });
-  
-  
-  
-  
-  $(function(){
-    $.extend($.fn.disableTextSelect = function() {
-      return this.each(function(){
-        if($.browser.mozilla){//Firefox
-          $(this).css('MozUserSelect','none');
-        }else if($.browser.msie){//IE
-          $(this).bind('selectstart',function(){return false;});
-        }else{//Opera, etc.
-          $(this).mousedown(function(){return false;});
-        }
-      });
-    });
-    $('.no-select').disableTextSelect();//No text selection on elements with a class of 'noSelect'
-  });

@@ -37,7 +37,7 @@ class SOImage < SlideObject
   property :alt
   
   def to_html
-    return "<img src='#{self.src}' alt='#{self.alt}' style='#{self.basic_style};'></img>"
+    return "<img src='#{self.src}' alt='#{self.alt}' style='#{self.basic_style};' />"
   end
 end
 
