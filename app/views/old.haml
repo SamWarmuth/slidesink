@@ -9,18 +9,12 @@
   %script{:src => "/js/humanmsg.js", :type => "text/javascript"}
   %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
   %link{:href => "/templates.css", :rel => "stylesheet", :type => "text/css"}
-  :javascript
-    var slideCount = #{@show.slides.count};
-    var customUrl = #{@show.new_document? ? "false" : "true"};
-    var showTemplate = '#{@show.template || "basic"}';
-    var showData = #{@show.custom_json};
   %script{:src => "/js/views/edit.js", :type => "text/javascript"}
   
   -if @show.new_document?
     %title SlideSink - New Show
   -else
     %title SlideSink - Edit #{@show.title}
-    
 %body{:style => 'background: #ddd'}
   .menubar{:style => "margin: 0 auto; width: 920px; position: relative; "}
     %a.awesome.blue.large{:href => "/new", :style => "display: inline-block; width: 75px; -webkit-box-shadow: none; border-radius: 5px 0 0 0; text-align: center;"} New Show
@@ -37,8 +31,7 @@
       View Show
     %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; position: relative; top: -6px; font-weight: bold"} Save
     %a.awesome.blue.medium.show-templates{:href => "save", :style => "width: 120px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; float: right; position: relative; top: -2px"} Change Template
-    
-    .template-chooser{:style => "border-radius: 5px; padding: 10px; width: 500px; background: rgba(0,0,0, 0.8); position: absolute; top: 35px; left: 280px; border: 2px solid #DDD; z-index: 1000; text-align: center; -moz-box-shadow: 0 0 20px rgba(0,0,0,0.5); -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.5); display: none;"}
+    .template-chooser{:style => "border-radius: 5px; padding: 10px; width: 500px; background: rgba(0,0,0, 0.8); position: absolute; top: 35px; left: 280px; border: 10px solid #ccc; z-index: 1000; text-align: center; -moz-box-shadow: 0 0 20px rgba(0,0,0,0.5); -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.5); display: none;"}
       .tiny-slide-demo
         %input{:style => "display: none;",  :type => "radio", :name => "template", :value => "basic", :checked => (@show.template.nil?)}
         %b{:style => "font-size: 5em; display: block; margin-top: 20%;"} Basic
@@ -55,30 +48,32 @@
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "green-stripes", :checked => (@show.template == "green-stripes")}
         %b{:style => "font-size: 5em; display: block; margin-top: 7%;"} Green Stripes
       .clear{:style => "clear: both"}
-      
-  .guiedit{:style => "margin: 0 auto; width: 920px; position: relative;"}
-    .slide-viewer{:style => "float: right; width: 710px; height: 524px; position: relative; padding: 0;"}
-      .input-pallet{:style => "outline: none; display: inline-block; float: right; width: 669px; height: 30px; padding: 20px; border: 1px solid #CCC; background: #eee; border-radius: 0 0 0 5px; margin: 5px 0 10px 0; text-align: center;"}
-        .awesome.green.large Add Text Box
-        .awesome.green.large Add Image
-        .awesome.green.large Add Embedded YouTube
-      #active-slide.slide{:style => "margin: 0", :class => "tmplt-" + @show.template.to_s}
-      #active-mark{:style => "display: none"} Initial
+  .guiedit{:style => "margin: 0 auto; width: 920px; position: relative; white-space: nowrap;"}
     
-    #slide-up.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 5px 5px 0 0; text-align: center;"} &#9650; 
-    #list-container{:style => "overflow: hidden; padding: 0; margin: 0; float: left; width: 160px; height: 400px; background: #BBB; padding: 10px 25px 10px 15px;  border: 1px solid #BBB; clear: left;"}
-      #slide-list{:style => "position: relative; margin: 0px; top: 0;"}
+    #slide-left.no-select.awesome.large{:style => "width: 25px; height: 86px; padding: 40px 12px 10px 8px; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0"} &#9664; 
+    #list-container{:style => "overflow: hidden; padding: 0; margin: 0; float: left; width: 788px; height: 115px; background: #BBB; padding: 10px 20px;  border: 1px solid #BBB;"}
+      #slide-list{:style => "white-space: nowrap; position: relative; margin: 0px; left: 0;"}
         -if @show.slides.empty?
           .slide-group{:style => "display: inline-block"}
             .tiny-slide
+            .markdown{:style => "display: none", :name => "slide0"}
         -@show.slides.each_with_index do |slide, i|
           .slide-group{:style => "display: inline-block; position: relative;"}
             .close-box{:style => 'position: absolute; width: 24px; height: 24px; top: 5px; left: 5px; display: none; background: url("/images/close.png"); cursor: pointer;'}
-            .tiny-slide{:id => slide.s_id, :class => "tmplt-" + @show.template.to_s}!= slide.html
+            .tiny-slide{:class => "tmplt-" + @show.template.to_s}!= slide.html
+            .markdown{:style => "display: none", :name => "slide#{i}"}= slide.markdown.gsub("\n", "LiNeBrEaK")
             
-    #slide-down.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0 0 5px 5px; text-align: center; clear: left;"} &#9660;
+    .right-container{:style => "margin: 0; padding: 0; float: left; width: 45px"}
+      #slide-right.no-select.awesome.large{:style => "margin: 0; width: 25px; height: 48px; padding: 31px 10px 10px 10px; -webkit-box-shadow: none; font-size: 2em;  border-radius: 0"} &#9654;
+      %br
+      %a#add-slide.awesome.green.large{:href => "save", :style => "margin: 0; width: 24px; -webkit-box-shadow: none; border-radius: 0; text-align: center; padding: 7px 12px 7px 9px;"}
+        New
+        %br
+        Slide
+    .clear{:style => "clear: both"}
     
-    %a#add-slide.awesome.green.large{:href => "save", :style => "float: left; margin: 5px; width: 164px; -webkit-box-shadow: none; text-align: center; padding: 7px 12px 7px 9px; clear: left;"}
-      New Slide
-      
-      
+    %textarea#edit-field.tabarea{:style => "outline: none; display: inline-block; font-size: 1em; font-family: monospace; width: 249px; height: 404px; resize: none; padding: 10px; border: 1px solid #CCC; background: #eee; border-radius: 0 0 0 5px; position: relative; top: 2px;"}
+    
+    .slide-viewer{:style => "display: inline-block; width: 640px; height: 424px; position: relative; padding: 0; margin: 0;white-space: normal;"}
+      #active-slide.slide{:id => "", :style => "margin: 0", :class => "tmplt-" + @show.template.to_s}
+      #active-mark{:style => "display: none"} Initial

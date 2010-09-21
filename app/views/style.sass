@@ -107,6 +107,7 @@ code
   padding: 20px
   font-size: 1.5em
   position: relative
+  overflow: hidden
   img
     width: 35%
   h1
@@ -132,6 +133,7 @@ code
   white-space: normal
   padding: 3px
   position: relative
+  overflow: hidden
   &.selected
     -webkit-box-shadow: 0px 0px 50px yellow
     -moz-box-shadow: 0px 0px 50px yellow
@@ -152,6 +154,11 @@ code
   h3
     font-size: 0.8em
     text-align: center
+    
+.slide-object
+  border: 1px dotted #ccc
+  &.selected
+    border: 1px dotted #000
 
   
 .label
@@ -178,6 +185,7 @@ code
   background: #fff
   border-radius: 5px
   margin: auto
+
 
 
 html, body 

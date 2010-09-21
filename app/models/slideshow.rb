@@ -46,12 +46,14 @@ class ShowSlide < Hash
   property :image_objects,  :cast_as => ['SOImage'], :default => []
   property :youtube_objects,  :cast_as => ['SOYoutube'], :default => []
   
+  property :s_id, :default => Proc.new{((Time.now.to_f*10000)%10000000000).to_i}
+  
   def objects
     return self.text_objects + self.image_objects + self.youtube_objects
   end
   
   def custom_json
-   self.objects.map{|object| object.custom_json}
+   '"' + self.s_id.to_s + '":{' + self.objects.map{|object| object.custom_json}.join(",") + "}"
   end
   
   property :html

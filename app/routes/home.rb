@@ -102,6 +102,8 @@ class Main
   end
   
   post "/save-show" do
+    puts params["1014558408"]["1014698664"]["data"].inspect
+    return ""
     return false unless @user
     return false if (params[:title].empty? || params[:url].empty?)
     refresh = ""

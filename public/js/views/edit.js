@@ -1,14 +1,15 @@
 
 function save(){  
   output = $("#basics").serialize() + "&" + $.map($(".markdown"), function(m){return ($(m).attr('name') + "=" + $(m).text().replace(/&/g, "aMpEr"))}).join("&");
-  $.post("/save-show", output, function(data){
-    alert(data);
+  $.post("/save-show", showData, function(data){
     if (data != "") window.location = data;
     else humanMsg.displayMsg('<strong>Show Saved</strong>');
   });
 }
+var currentSlide = "";
 
 $(document).ready(function(){
+  
   $("#title").focus();
   
   $("#title").keyup(function(){
@@ -22,10 +23,10 @@ $(document).ready(function(){
     $("#url-preview").text($(this).val());
   });
   
-  var firstSlide = $(".tiny-slide").first();
-  firstSlide.addClass("selected");
-  $("#active-slide").html(firstSlide.html());
-  $("#edit-field").val($("#active-mark").html());      
+  currentSlide = $(".tiny-slide").first();
+  currentSlide.addClass("selected");
+  $("#active-slide").html(currentSlide.html());
+  
   
   
   $("#add-slide").click(function(){
@@ -39,19 +40,12 @@ $(document).ready(function(){
   });
   
   $(".tiny-slide").live('click', function(){
-    $("#edit-field").focus();
     $(".tiny-slide").removeClass("selected");
     $(this).addClass("selected");
+    currentSlide = $(this);
     $("#active-slide").html($(this).html());
-    $("#active-mark").html($('.tiny-slide.selected').siblings(".markdown").html());
-    $("#edit-field").val($("#active-mark").html());
    });
   
-  $("#edit-field").keyup(function(){
-    $("#active-slide").html(new_html);
-    $(".tiny-slide.selected").html(new_html);
-    
-  });
   
   $("#post-save").click(function(){
     save();
@@ -103,8 +97,10 @@ $(document).ready(function(){
   
   
   $(".slide-object").live("click", function(){
-    if ($(this).parent().hasClass("tiny-slide")) return true ;
-    alert(showData[$(this).attr('id')].o_class);
+    if ($(this).parent().hasClass("tiny-slide")) return true;
+    $(".slide-object").removeClass("selected");
+    $(this).addClass("selected");
+    alert(JSON.stringify(showData[currentSlide.attr('id')][$(this).attr('id')]));
   });
   
   

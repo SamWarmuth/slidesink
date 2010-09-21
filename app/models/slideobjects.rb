@@ -8,11 +8,11 @@ class SlideObject < Hash
   property :height, :default => ""
   property :center, :default => false
   
-  property :o_id, :default => Proc.new{((Time.now.to_f*1000)%1000000000).to_i} #gross hack to get semi-unique IDs
+  property :o_id, :default => Proc.new{((Time.now.to_f*10000)%10000000000).to_i} #gross hack to get semi-unique IDs
   
   
   def custom_json
-    self.o_id.to_s + ':{"o_class":"' + self.class.to_s + '", "data":' + self.to_json + "}"
+    '"' + self.o_id.to_s + '":{"o_class":"' + self.class.to_s + '", "data":' + self.to_json + "}"
   end
   
   def basic_style
@@ -40,7 +40,7 @@ end
 class SOImage < SlideObject
   include CouchRest::CastedModel
 
-  property :src
+  property :src, :default => ""
   property :alt
   
   def to_html
