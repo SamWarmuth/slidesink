@@ -38,7 +38,7 @@
     %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; position: relative; top: -6px; font-weight: bold"} Save
     %a.awesome.blue.medium.show-templates{:href => "save", :style => "width: 120px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; float: right; position: relative; top: -2px"} Change Template
     
-    .template-chooser{:style => "border-radius: 5px; padding: 10px; width: 500px; background: rgba(0,0,0, 0.8); position: absolute; top: 35px; left: 280px; border: 2px solid #DDD; z-index: 1000; text-align: center; -moz-box-shadow: 0 0 20px rgba(0,0,0,0.5); -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.5); display: none;"}
+    .template-chooser
       .tiny-slide-demo
         %input{:style => "display: none;",  :type => "radio", :name => "template", :value => "basic", :checked => (@show.template.nil?)}
         %b{:style => "font-size: 5em; display: block; margin-top: 20%;"} Basic
@@ -63,7 +63,7 @@
         .awesome.green.large Add Image
         .awesome.green.large Add Embedded YouTube
       #active-slide.slide{:style => "margin: 0", :class => "tmplt-" + @show.template.to_s}
-      #active-mark{:style => "display: none"} Initial
+      .edit-overlay
     
     #slide-up.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 5px 5px 0 0; text-align: center;"} &#9650; 
     #list-container{:style => "overflow: hidden; padding: 0; margin: 0; float: left; width: 160px; height: 400px; background: #BBB; padding: 10px 25px 10px 15px;  border: 1px solid #BBB; clear: left;"}

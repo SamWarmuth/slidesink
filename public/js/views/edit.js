@@ -100,7 +100,16 @@ $(document).ready(function(){
     if ($(this).parent().hasClass("tiny-slide")) return true;
     $(".slide-object").removeClass("selected");
     $(this).addClass("selected");
-    alert(JSON.stringify(showData[currentSlide.attr('id')][$(this).attr('id')]));
+    var overlay = $(".edit-overlay")
+    overlay.fadeOut(200);
+    overlay.animate({left: "+=20"}, 0, 'easeInOutQuad')
+    overlay.animate({top: "+=20"}, 0, 'easeInOutQuad')
+    
+    overlay.text(JSON.stringify(showData[currentSlide.attr('id')][$(this).attr('id')]));
+    //move overlay location
+    overlay.fadeIn(200);
+    
+    
   });
   
   
