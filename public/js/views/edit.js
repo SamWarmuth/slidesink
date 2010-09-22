@@ -43,6 +43,7 @@ $(document).ready(function(){
     $(".tiny-slide").removeClass("selected");
     $(this).addClass("selected");
     currentSlide = $(this);
+    $(".edit-overlay").fadeOut(150);
     $("#active-slide").html($(this).html());
    });
   
@@ -100,14 +101,14 @@ $(document).ready(function(){
     if ($(this).parent().hasClass("tiny-slide")) return true;
     $(".slide-object").removeClass("selected");
     $(this).addClass("selected");
-    var overlay = $(".edit-overlay")
-    overlay.fadeOut(200);
-    overlay.animate({left: "+=20"}, 0, 'easeInOutQuad')
-    overlay.animate({top: "+=20"}, 0, 'easeInOutQuad')
+    var offset = $(this).offset();
+    var overlay = $(".edit-overlay");
+    if (overlay.not(":visible")) overlay.fadeIn(200);
+    overlay.css('left', offset.left+"px")
+    overlay.css('top', (offset.top+$(this).height() + 10)+"px")
     
     overlay.text(JSON.stringify(showData[currentSlide.attr('id')][$(this).attr('id')]));
     //move overlay location
-    overlay.fadeIn(200);
     
     
   });
