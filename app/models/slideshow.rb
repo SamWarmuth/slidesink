@@ -5,11 +5,11 @@ class Slideshow < CouchRest::ExtendedDocument
   property :url
   property :user_id
   
-  property :template
+  property :template, :default => "basic"
   
   property :deleted, :default => false
   
-  property :slides, :cast_as => ['ShowSlide'], :default => []
+  property :slides, :cast_as => ['Slide'], :default => []
   
   property :current_slide
   property :date_created
@@ -35,11 +35,11 @@ class Slideshow < CouchRest::ExtendedDocument
     out = self.slides.map do |slide|
       slide.custom_json
     end
-    return "{" + out.join(",") + "}"
+    return "[" + out.join(",") + "]"
   end
 end
 
-class ShowSlide < Hash
+class Slide < Hash
   include CouchRest::CastedModel
 
   property :text_objects,  :cast_as => ['SOText'], :default => []
@@ -53,7 +53,7 @@ class ShowSlide < Hash
   end
   
   def custom_json
-   '"' + self.s_id.to_s + '":{' + self.objects.map{|object| object.custom_json}.join(",") + "}"
+   '{"slide_id":' + self.s_id.to_s + ',' + self.objects.map{|object| object.custom_json}.join(",") + "}"
   end
   
   property :html

@@ -8,6 +8,8 @@
   %script{:src => "/js/showdown.js", :type => "text/javascript"}
   %script{:src => "/js/humanmsg.js", :type => "text/javascript"}
   %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
+  %link{:href => "/css/jqui/jquery-ui-1.8.5.custom.css", :rel => "stylesheet", :type => "text/css"}
+  
   %link{:href => "/templates.css", :rel => "stylesheet", :type => "text/css"}
   :javascript
     var slideCount = #{@show.slides.count};
@@ -22,12 +24,12 @@
     %title SlideSink - Edit #{@show.title}
     
 %body{:style => 'background: #ddd'}
-  .menubar{:style => "margin: 0 auto; width: 920px; position: relative; "}
+  .menubar{:style => "margin: 0 auto; width: 950px; position: relative; "}
     %a.awesome.blue.large{:href => "/new", :style => "display: inline-block; width: 75px; -webkit-box-shadow: none; border-radius: 5px 0 0 0; text-align: center;"} New Show
     %a.awesome.blue.large{:href => "/show/#{@show.url}", :style => "display: inline-block; width: 75px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0 5px 0 0; text-align: center;"} Open Show
     
   
-  %form#basics{:action => "/edit", :method => "post", :style => 'width: 898px; margin: 0 auto; background: white; padding: 10px; border: 1px solid #fff; border-radius: 0 5px 0 0; position: relative;'}
+  %form#basics{:action => "/edit", :method => "post", :style => 'width: 928px; margin: 0 auto; background: white; padding: 10px; border: 1px solid #fff; border-radius: 0 5px 0 0; position: relative;'}
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}
     %label{:for => "title", :style => 'margin-right: 3px; margin-left: 10px'} Title
     %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 150px"}
@@ -37,43 +39,44 @@
       View Show
     %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; position: relative; top: -6px; font-weight: bold"} Save
     %a.awesome.blue.medium.show-templates{:href => "save", :style => "width: 120px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; float: right; position: relative; top: -2px"} Change Template
-    
     .template-chooser
-      .tiny-slide-demo
-        %input{:style => "display: none;",  :type => "radio", :name => "template", :value => "basic", :checked => (@show.template.nil?)}
+      .tiny-slide-demo{:style => "float: left;"}
+        %input{:style => "display: none;",  :type => "radio", :name => "template", :value => "basic", :checked => (@show.template == "basic")}
         %b{:style => "font-size: 5em; display: block; margin-top: 20%;"} Basic
-      .tiny-slide-demo.tmplt-blue
+      .tiny-slide-demo.tmplt-blue{:style => "float: left;"}
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "blue", :checked => (@show.template == "blue")}
         %b{:style => "font-size: 5em; display: block; margin-top: 20%"} Blue
-      .tiny-slide-demo.tmplt-red
+      .tiny-slide-demo.tmplt-red{:style => "float: left;"}
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "red", :checked => (@show.template == "red")}
         %b{:style => "font-size: 5em; display: block; margin-top: 20%;"} Red
-      .tiny-slide-demo.tmplt-orange-gradient
+      .tiny-slide-demo.tmplt-orange-gradient{:style => "float: left;"}
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "orange-gradient", :checked => (@show.template == "orange-gradient")}
         %b{:style => "font-size: 5em; display: block; margin-top: 7%;"} Orange Gradient
-      .tiny-slide-demo.tmplt-green-stripes
+      .tiny-slide-demo.tmplt-green-stripes{:style => "float: left;"}
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "green-stripes", :checked => (@show.template == "green-stripes")}
         %b{:style => "font-size: 5em; display: block; margin-top: 7%;"} Green Stripes
       .clear{:style => "clear: both"}
   .edit-overlay   
-  .guiedit{:style => "margin: 0 auto; width: 920px; position: relative;"}
-    .slide-viewer{:style => "float: right; width: 710px; height: 524px; position: relative; padding: 0;"}
-      .input-pallet{:style => "outline: none; display: inline-block; float: right; width: 669px; height: 30px; padding: 20px; border: 1px solid #CCC; background: #eee; border-radius: 0 0 0 5px; margin: 5px 0 10px 0; text-align: center;"}
-        .awesome.green.large Add Text Box
+  .guiedit{:style => "margin: 0 auto; width: 950px; position: relative;"}
+    .slide-viewer{:style => "float: right; width: 720px; height: 524px; position: relative; padding: 0;"}
+      .input-pallet{:style => "outline: none; display: inline-block; float: right; width: 720px; height: 40px;   margin: 5px 0 10px 0; text-align: center;"}
+        .awesome.green.large.add-text-object Add Text
         .awesome.green.large Add Image
         .awesome.green.large Add Embedded YouTube
+        .awesome.green.large Add Embedded Website
+        .awesome.green.large Add Custom HTML
       #active-slide.slide{:style => "margin: 0", :class => "tmplt-" + @show.template.to_s}
       
     
     #slide-up.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 5px 5px 0 0; text-align: center;"} &#9650; 
-    #list-container{:style => "overflow: hidden; padding: 0; margin: 0; float: left; width: 160px; height: 400px; background: #BBB; padding: 10px 25px 10px 15px;  border: 1px solid #BBB; clear: left;"}
+    #list-container{:style => "overflow: hidden; padding: 0; margin: 0; float: left; width: 160px; height: 330px; background: #BBB; padding: 10px 25px 10px 15px;  border: 1px solid #BBB; clear: left;"}
       #slide-list{:style => "position: relative; margin: 0px; top: 0;"}
         -if @show.slides.empty?
           .slide-group{:style => "display: inline-block"}
             .tiny-slide
         -@show.slides.each_with_index do |slide, i|
           .slide-group{:style => "display: inline-block; position: relative;"}
-            .close-box{:style => 'position: absolute; width: 24px; height: 24px; top: 5px; left: 5px; display: none; background: url("/images/close.png"); cursor: pointer;'}
+            .close-box{:style => 'position: absolute; width: 24px; height: 24px; top: 5px; left: 5px; display: none; background: url("/images/close.png"); cursor: pointer; z-index: 500;'}
             .tiny-slide{:id => slide.s_id, :class => "tmplt-" + @show.template.to_s}!= slide.html
             
     #slide-down.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0 0 5px 5px; text-align: center; clear: left;"} &#9660;

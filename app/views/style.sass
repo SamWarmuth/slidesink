@@ -98,13 +98,13 @@ code
 
 .slide
   float: left
-  width: 600px
-  height: 384px
+  width: 720px
+  height: 405px
   background: #fff
   border: 1px solid #bbb
   border-radius: 5px
-  margin: 20px 20px
-  padding: 20px
+  margin: 0 40px
+  padding: 0
   font-size: 1.5em
   position: relative
   overflow: hidden
@@ -121,17 +121,15 @@ code
     text-align: center
 
 
-
 .tiny-slide, .tiny-slide-demo
-  float: left
-  width: 150px
-  height: 96px
+  width: 160px
+  height: 90px
   font-size: 6px
   background: #fff
   border-radius: 5px
   margin: 5px 5px
   white-space: normal
-  padding: 3px
+  padding: 0
   position: relative
   overflow: hidden
   &.selected
@@ -154,11 +152,12 @@ code
   h3
     font-size: 0.8em
     text-align: center
-    
-.slide-object
-  border: 1px dotted #ccc
-  &.selected
-    border: 1px dotted #000
+#active-slide    
+  .slide-object
+    border: 1px dotted #ccc
+    cursor: move
+    &.selected
+      border: 1px dotted #000
 
   
 .label
@@ -181,11 +180,11 @@ code
 .template-chooser
   border-radius: 5px
   padding: 10px
-  width: 500px
+  width: 350px
   background: rgba(0,0,0, 0.8)
   position: absolute
   top: 35px
-  left: 280px
+  left: 480px
   border: 2px solid #DDD
   z-index: 1000
   text-align: center
@@ -196,16 +195,13 @@ code
 .edit-overlay
   border-radius: 5px
   padding: 10px
-  width: 300px
   background: rgba(0,0,0, 0.8)
   position: absolute
   top: 0
   left: 0
-  border: 1px solid #DDD
   z-index: 1001
-  text-align: center
-  -moz-box-shadow: 0 0 20px rgba(0,0,0,0.5)
-  -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.5)
+  -moz-box-shadow: 0 0 5px rgba(0,0,0,0.5)
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.5)
   display: none
   color: white
   white-space: normal
@@ -229,7 +225,7 @@ html, body
   letter-spacing: -1px
   position: fixed
   top: 135px
-  left: 40%
+  left: 49%
   width: 20%
   color: white
   background-color: black

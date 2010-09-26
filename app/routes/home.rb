@@ -72,64 +72,51 @@ class Main
     haml :gooey
   end
   
-  get "/save" do
-    redirect "/login" unless @user
-    if params[:show_id].empty?
-      @show = Slideshow.new
-      @show.user_id = @user.id
-      @show.slides = []
-      @show.current_slide = 0
-      @show.date_created = Time.now.to_s
-    else
-      @show = Slideshow.get(params[:show_id])
-      redirect "/404" if @show.nil?
-      redirect "/show/#{@show.url}" unless @user.id == @show.user_id
-    end
-    return false if (params[:title].empty? || params[:url].empty?)
-    @show.title = params[:title]
-    @show.url = params[:url]
-    @show.slides = []
-    params.to_a.sort_by{|name| name[0].gsub("slide", "").to_i}.each do |name, val|
-      if name.include?("slide")
-        slide = ShowSlide.new
-        slide.markdown = val.gsub("AmPeR", "&")
-        @show.slides << slide
-      end
-    end
-    @show.save
-    #Thread.new{Pusher[@show.id].trigger('updateSlides', (haml :show))}
-    redirect "/show/#{@show.url}"
-  end
   
   post "/save-show" do
-    puts params["1014558408"]["1014698664"]["data"].inspect
-    return ""
     return false unless @user
-    return false if (params[:title].empty? || params[:url].empty?)
+    show_info = params[:info]
+    return false if (show_info[:title].empty? || show_info[:url].empty?)
     refresh = ""
-    if params[:show_id].empty?
+    if show_info[:show_id].empty?
       @show = Slideshow.new
       @show.user_id = @user.id
       @show.slides = []
       @show.current_slide = 0
       @show.date_created = Time.now.to_s
     else
-      @show = Slideshow.get(params[:show_id])
+      @show = Slideshow.get(show_info[:show_id])
       redirect "/404" if @show.nil?
       redirect "/show/#{@show.url}" unless @user.id == @show.user_id
     end
-    @show.title = params[:title]
-    refresh = "/edit/#{params[:url]}" if params[:url] != @show.url
-    @show.url = params[:url]
-    refresh = "/edit/#{@show.url}" if params[:template] != @show.template
-    @show.template = params[:template]
+    @show.title = show_info[:title]
+    refresh = "/edit/#{params[:url]}" if show_info[:url] != @show.url
+    @show.url = show_info[:url]
+    refresh = "/edit/#{@show.url}" if show_info[:template] != @show.template
+    @show.template = show_info[:template]
     @show.slides = []
-    params.to_a.sort_by{|name| name[0].gsub("slide", "").to_i}.each do |name, val|
-      if name.include?("slide")
-        slide = ShowSlide.new
-        slide.markdown = val.gsub("LiNeBrEaK", "\n").gsub("EqUaLs", "=").gsub("aMp", "&").gsub("hAsH", "#")
-        @show.slides << slide
+    params['slides'].sort_by{|s| s[0]}.each do |index, objects|
+      slide = Slide.new
+      objects.delete("slide_id")      
+      objects.each_pair do |object_id, object_data|
+        
+        object_attributes = object_data['data']
+        if object_data['o_class'] == "SOText"
+          object = SOText.new
+          slide.text_objects << object
+        elsif object_data['o_class'] == "SOImage"
+          object = SOImage.new
+          slide.image_objects << object
+        elsif object_data['o_class'] == "SOYoutube"
+          object = SOYoutube.new
+          slide.youtube_objects << object
+        else
+          next
+        end
+        
+        object_attributes.each_pair{|name, value| object[name] = value}
       end
+      @show.slides << slide
     end
     @show.save
     Thread.new{Pusher[@show.id].trigger('updateSlides', (haml :show))}

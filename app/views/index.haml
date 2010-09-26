@@ -14,8 +14,8 @@
     %title SlideSink - #{@show.title}
 %body{:style => "margin: 0; padding: 0; background: #ddd;"}
   = haml :frame
-  .page{:style => "height: 600px; width: 880px; white-space: nowrap; overflow: hidden; margin: auto;"}
-    #slideshow{:style => "position: relative; top: 0; left: 0; width: 5000000px; font-size: 22px; white-space: normal; "}
+  .page{:style => "width: 880px; white-space: nowrap; overflow: hidden; margin: 5px auto 0 auto;"}
+    #slideshow{:style => "position: relative; top: 0; left: 0; width: 5000000px; font-size: 1.25em; white-space: normal; "}
       = haml :show
   
 :javascript
@@ -76,7 +76,7 @@
     var width = $(window).width();
     //$(".window_height").text($(window).width() + " x " +$(window).height());
     //if ($(window).height() < width*0.5625) width = ($(window).height())*1.777;
-    $(".page").css("width", (width*0.75+80)).css("height", (width*0.75*.5625+80));
+    $(".page").css("width", (width*0.75+80));
     slide_width = (width*0.75+80)+1.5;
     slide = $(".slide")
     slide.css("font-size", (width/800.0)+"em");
