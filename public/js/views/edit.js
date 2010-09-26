@@ -1,4 +1,3 @@
-
 function save(){  
   var basics = {};
   $.each($('#basics').serializeArray(), function(index,value) {
@@ -17,22 +16,23 @@ var currentField = "";
 
 $(document).ready(function(){  
   $("#active-slide .slide-object").liveResizeAndDrag({ handles: 'e, s, se', containment: "#active-slide"}, {containment: "#active-slide"});
-  $("#active-slide .slide-object").live( "dragstart", function(event, ui) {
+  
+  $("#active-slide .slide-object").live("dragstart", function(event, ui) {
     $(".edit-overlay").fadeOut(100);
     $(".slide-object").removeClass("selected");
     $(this).addClass("selected");
   });
-  $("#active-slide .slide-object").live( "dragstop", function(event, ui) {
+  $("#active-slide .slide-object").live("dragstop", function(event, ui) {
     //update tiny-slide
     updateObject(this);
     showEditOverlay(this);
   });
-  $("#active-slide .slide-object").live( "resizestart", function(event, ui) {
+  $("#active-slide .slide-object").live("resizestart", function(event, ui) {
     $(".edit-overlay").fadeOut(100);
     $(".slide-object").removeClass("selected");
     $(this).addClass("selected");
   });
-  $("#active-slide .slide-object").live( "resizestop", function(event, ui) {
+  $("#active-slide .slide-object").live("resizestop", function(event, ui) {
     //update tiny-slide
     updateObject(this);
     showEditOverlay(this);
@@ -54,14 +54,11 @@ $(document).ready(function(){
   currentSlide = $(".tiny-slide").first();
   currentSlide.addClass("selected");
   $("#active-slide").html(currentSlide.html());
-  
+  $("#active-slide .slide-object").mouseover();
   
   
   $("#add-slide").click(function(){
-    $("#slide-list").append("<div class='slide-group' style='display: inline-block'><div class='tiny-slide tmplt-" + showTemplate + "'></div></div>");    
-    $(".tiny-slide").last().click();
-    
-    slideCount++;
+    addSlide();
     return false;
   });
   
@@ -80,6 +77,7 @@ $(document).ready(function(){
     currentSlideIndex = $(".tiny-slide.selected").parent().index();
     $(".edit-overlay").fadeOut(150);
     $("#active-slide").html($(this).html());
+    $("#active-slide .slide-object").mouseover();
    });
   
   
@@ -132,11 +130,22 @@ $(document).ready(function(){
   });
   
   
-  $(".slide-object").live("click", function(){
-    if ($(this).parent().hasClass("tiny-slide")) return true;
+  $("#active-slide .slide-object").live("click", function(){
     $(".slide-object").removeClass("selected");
     $(this).addClass("selected");
     showEditOverlay(this);
+    return false;
+  });
+  
+  $(".edit-overlay .contents").live("keyup", function(){
+    var obj = $("#active-slide .slide-object.selected");
+    obj.children(".content").text($(this).val());
+    updateObject(obj);
+  });
+  
+  
+  $("#active-slide").click(function(e){
+    if (e.target.id == "active-slide") $(".edit-overlay").fadeOut(100);
   });
   
 });
@@ -156,7 +165,7 @@ function showEditOverlay(uiObject){
       overlay.append($("<input type='text' class='contents'/>").attr("value", objData.contents));
       overlay.append("<br/>");
       overlay.append("font size = ");
-      overlay.append($("<input type='text' class='contents' style='width: 50px'/>").attr("value", objData.font_size));
+      overlay.append($("<input type='text' class='font-size' style='width: 50px'/>").attr("value", objData.font_size));
       overlay.append("<br/>");
     } else if (currentObject.o_class == "SOImage"){
       overlay.append("<span style='font-size: 1.2em'>Image</span><br/>");
@@ -166,16 +175,18 @@ function showEditOverlay(uiObject){
     } else{
       overlay.append("Unsupported object type\n");
     }
+    /* Basic info for debugging.
     overlay.append("Height: "+ objData.height + "<br/>");
     overlay.append("Width: "+ objData.width + "<br/>");
     overlay.append("x position: "+ objData.left + "<br/>");
     overlay.append("y position:" + objData.top + "<br/>");
+    */
+    
     overlay.append("centered: " + objData.center + "<br/>");
     
-    
-    if (overlay.not(":visible")) overlay.fadeIn(200);
     overlay.css('left', offset.left+"px");
-    overlay.css('top', (offset.top+$(uiObject).height() + 5)+"px");
+    overlay.css('top', (offset.top+$(uiObject).height() + 5)+"px");    
+    if (overlay.not(":visible")) overlay.fadeIn(200);
 }
 
 function updateObject(uiObject, classIfNew){
@@ -194,7 +205,7 @@ function updateObject(uiObject, classIfNew){
   objData.top = (100.0*$(uiObject).position().top/slideHeight)+"%";
   
   if (currentObject.o_class == "SOText"){
-    objData.contents = $(uiObject).text();
+    objData.contents = $(uiObject).children(".content").text();
 
   } else if (currentObject.o_class == "SOImage"){
     //objData.src = $(uiObject).text();
@@ -220,6 +231,24 @@ function updateTinySlide(uiObject){
   tinyObject.height(objData.height);
   tinyObject.css("left", objData.left);
   tinyObject.css("top", objData.top);
+  
+  if (currentObject.o_class == "SOText"){
+    tinyObject.children(".content").text($(uiObject).children(".content").text());
+
+  } else if (currentObject.o_class == "SOImage"){
+    //objData.src = $(uiObject).text();
+
+  }
+  
+}
+
+function addSlide(){
+  var slideID = ((new Date).getTime()%100000000);
+  $("#slide-list").append("<div class='slide-group' style='display: inline-block; position: relative'><div class='tiny-slide tmplt-" + showTemplate + "' id='" + slideID + "'></div></div>");
+  showData.push({'slide_id':slideID});
+  $(".tiny-slide").last().click();
+  
+  slideCount++;
 }
 
 

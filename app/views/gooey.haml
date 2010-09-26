@@ -11,6 +11,7 @@
   %link{:href => "/css/jqui/jquery-ui-1.8.5.custom.css", :rel => "stylesheet", :type => "text/css"}
   
   %link{:href => "/templates.css", :rel => "stylesheet", :type => "text/css"}
+  -@show.slides << Slide.new if @show.slides.empty?
   :javascript
     var slideCount = #{@show.slides.count};
     var customUrl = #{@show.new_document? ? "false" : "true"};
@@ -71,9 +72,6 @@
     #slide-up.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 5px 5px 0 0; text-align: center;"} &#9650; 
     #list-container{:style => "overflow: hidden; padding: 0; margin: 0; float: left; width: 160px; height: 330px; background: #BBB; padding: 10px 25px 10px 15px;  border: 1px solid #BBB; clear: left;"}
       #slide-list{:style => "position: relative; margin: 0px; top: 0;"}
-        -if @show.slides.empty?
-          .slide-group{:style => "display: inline-block"}
-            .tiny-slide
         -@show.slides.each_with_index do |slide, i|
           .slide-group{:style => "display: inline-block; position: relative;"}
             .close-box{:style => 'position: absolute; width: 24px; height: 24px; top: 5px; left: 5px; display: none; background: url("/images/close.png"); cursor: pointer; z-index: 500;'}

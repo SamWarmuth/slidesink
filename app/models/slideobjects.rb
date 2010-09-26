@@ -32,7 +32,7 @@ class SOText < SlideObject
   property :contents, :default => ""
   
   def to_html
-    return "<div class='slide-object' id='#{self.o_id}' style='#{self.basic_style}; color: #{self.color}; font-size: #{self.font_size};'>#{self.contents}</div>"
+    return "<div class='slide-object' id='#{self.o_id}' style='#{self.basic_style}; color: #{self.color}; font-size: #{self.font_size};'><div class='content'>#{self.contents}</div></div>"
   end
 end
 
