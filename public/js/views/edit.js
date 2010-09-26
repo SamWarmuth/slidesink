@@ -63,10 +63,18 @@ $(document).ready(function(){
   });
   
   $(".add-text-object").click(function(){
-    var defaultText = $("<div class='slide-object' style='display: block; position: absolute; left: 10%; top: 10%; opacity: 1.0; width: 25%; color: black; font-size: 1em;'>Text Here</div>").attr("id", ((new Date).getTime()%100000000 + ""));
-    $("#active-slide").append(defaultText);
-    updateObject(defaultText, "SOText");
-    
+    var defaultHTML = $("<div class='slide-object' style='display: block; position: absolute; left: 10%; top: 10%; opacity: 1.0; width: 25%; color: black; font-size: 1em;'><div class='content'>Text Here</div></div>").attr("id", ((new Date).getTime()%100000000 + ""));
+    $(".tiny-slide.selected").append(defaultHTML);
+    $("#active-slide").html($(".tiny-slide.selected").html());
+    updateObject(defaultHTML, "SOText");
+    return false;
+  });
+  
+  $(".add-image-object").click(function(){
+    var defaultHTML = $("<div class='slide-object' style='display: block; position: absolute; left: 10%; top: 10%; opacity: 1.0; width: 25%;'><img src='/images/about-sam.jpg' style='width: 100%;' /></div>").attr("id", ((new Date).getTime()%100000000 + ""));
+    $(".tiny-slide.selected").append(defaultHTML);
+    $("#active-slide").html($(".tiny-slide.selected").html());
+    updateObject(defaultHTML, "SOImage");
     return false;
   });
   
@@ -157,6 +165,7 @@ function showEditOverlay(uiObject){
     
     if (currentObject === undefined) return false;
     
+    
     var objData = currentObject.data;
     overlay.text("");
     if (currentObject.o_class == "SOText"){
@@ -206,9 +215,10 @@ function updateObject(uiObject, classIfNew){
   
   if (currentObject.o_class == "SOText"){
     objData.contents = $(uiObject).children(".content").text();
+    objData.font_size = $(uiObject).css("font-size");
 
   } else if (currentObject.o_class == "SOImage"){
-    //objData.src = $(uiObject).text();
+    objData.src = $(uiObject).children("img").attr("src");
 
   } else{
     overlay.append("Unsupported object type\n");

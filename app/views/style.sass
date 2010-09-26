@@ -154,10 +154,13 @@ code
     text-align: center
 #active-slide    
   .slide-object
-    border: 1px dotted #ccc
+    overflow: hidden
+    min-width: 25px
+    min-height: 25px
+    border: 1px solid #E5E5E5
     cursor: move
     &.selected
-      border: 1px dotted #000
+      border: 1px solid #888
 
   
 .label
