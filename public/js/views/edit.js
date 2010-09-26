@@ -78,6 +78,18 @@ $(document).ready(function(){
     return false;
   });
   
+  $(".delete-current-object").live("click", function(){
+    var obj = $("#active-slide .slide-object.selected");
+    obj.removeClass("selected");
+    obj.fadeOut(150).html("");
+    showData[currentSlideIndex][obj.attr('id')] = null;
+    currentObject = "";
+    var tinyObject = currentSlide.children(".slide-object#"+obj.attr('id'));
+    tinyObject.fadeOut(100);
+    $(".edit-overlay").fadeOut(150);
+    return false;
+  });
+  
   $(".tiny-slide").live('click', function(){
     $(".tiny-slide").removeClass("selected");
     $(this).addClass("selected");
@@ -169,16 +181,18 @@ function showEditOverlay(uiObject){
     var objData = currentObject.data;
     overlay.text("");
     if (currentObject.o_class == "SOText"){
-      overlay.append("<span style='font-size: 1.2em'>Text</span><br/>");
-      overlay.append("text = ");
+      overlay.append("<span style='font-size: 1.2em'>Text</span>");
+      overlay.append("<div style='float: right;' class='awesome medium red delete-current-object'>Delete</div><br/>");
+      overlay.append("<div style='clear: both;'></div> text = ");
       overlay.append($("<input type='text' class='contents'/>").attr("value", objData.contents));
       overlay.append("<br/>");
       overlay.append("font size = ");
       overlay.append($("<input type='text' class='font-size' style='width: 50px'/>").attr("value", objData.font_size));
       overlay.append("<br/>");
     } else if (currentObject.o_class == "SOImage"){
-      overlay.append("<span style='font-size: 1.2em'>Image</span><br/>");
-      overlay.append("src = ");
+      overlay.append("<span style='font-size: 1.2em'>Image</span>");
+      overlay.append("<div style='float: right;' class='awesome medium red delete-current-object'>Delete</div><br/>");
+      overlay.append("<div style='clear: both;'></div> src = ");
       overlay.append($("<input type='text' class='contents'/>").attr("value", objData.src));
       overlay.append("<br/>");
     } else{
@@ -199,7 +213,8 @@ function showEditOverlay(uiObject){
 }
 
 function updateObject(uiObject, classIfNew){
-  if (classIfNew != undefined) showData[currentSlideIndex][$(uiObject).attr('id')] = {'data':{}, 'o_class':classIfNew};
+  uiObject = $(uiObject);
+  if (classIfNew != undefined) showData[currentSlideIndex][uiObject.attr('id')] = {'data':{}, 'o_class':classIfNew};
   currentObject = showData[currentSlideIndex][$(uiObject).attr('id')];
   if (currentObject === undefined) return false;
   var objData = currentObject.data;
@@ -207,25 +222,22 @@ function updateObject(uiObject, classIfNew){
   slide = $("#active-slide");
   slideWidth = slide.width();
   slideHeight = slide.height();
-  objData.width = (100.0*$(uiObject).width()/slideWidth)+"%";
-  objData.height = (100.0*$(uiObject).height()/slideHeight)+"%";
+  objData.width = (100.0*uiObject.width()/slideWidth)+"%";
+  objData.height = (100.0*uiObject.height()/slideHeight)+"%";
   
-  objData.left = (100.0*$(uiObject).position().left/slideWidth)+"%";
-  objData.top = (100.0*$(uiObject).position().top/slideHeight)+"%";
+  objData.left = (100.0*uiObject.position().left/slideWidth)+"%";
+  objData.top = (100.0*uiObject.position().top/slideHeight)+"%";
   
   if (currentObject.o_class == "SOText"){
-    objData.contents = $(uiObject).children(".content").text();
-    objData.font_size = $(uiObject).css("font-size");
+    objData.contents = uiObject.children(".content").text();
+    objData.font_size = uiObject.css("font-size");
 
   } else if (currentObject.o_class == "SOImage"){
-    objData.src = $(uiObject).children("img").attr("src");
+    objData.src = uiObject.children("img").attr("src");
 
   } else{
     overlay.append("Unsupported object type\n");
   }
-  
-  
-  
   
   updateTinySlide(uiObject);
 }
