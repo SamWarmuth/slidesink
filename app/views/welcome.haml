@@ -11,7 +11,7 @@
       -if @user.nil?
         %a{:href => "/login"} Log In
       -else
-        %a{:href => "/user/"+@user.name.gsub(" ", "")}= @user.name
+        %a{:href => "/user/"+@user.name.to_s.gsub(" ", "")}= @user.name
     .graybox{:style => 'padding: 30px; width: 800px; margin: 5px 0; background: #eee; border: 1px solid #ccc; border-radius: 10px 10px 0 0'}
       %h1{:style => "display: block; padding: 10px; width: 350px; font-size: 3em; margin: auto"}
         %img{:src => "/images/slidesink-small.png", :style => 'vertical-align: middle; width: 64px; height: 64px; padding-right: 25px'}

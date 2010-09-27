@@ -79,8 +79,15 @@ $(document).ready(function(){
   });
   
   $(".edit-image-src").live("click", function(){
-    alert("Not ready yet.");
+    $(".edit-overlay").fadeOut(150);
+    $(".image-chooser").fadeIn(300);
     return false;
+  });
+  
+  $(".change-image-source").live("click", function(){
+    var obj = $("#active-slide .slide-object.selected");
+    obj.children("img").attr("src", $("input.src-field").val());
+    $(".image-chooser").fadeOut(100);
   });
   
   $(".delete-current-object").live("click", function(){
@@ -171,6 +178,12 @@ $(document).ready(function(){
     updateObject(obj);
   });
   
+  $(".edit-overlay input[type=radio]").live("change", function(){
+    var obj = $("#active-slide .slide-object.selected");
+    obj.css("font-size", $(this).val());
+    updateObject(obj);
+  });
+  
   
   $("#active-slide").click(function(e){
     if (e.target.id == "active-slide") $(".edit-overlay").fadeOut(100);
@@ -191,11 +204,19 @@ function showEditOverlay(uiObject){
     if (currentObject.o_class == "SOText"){
       overlay.append("<span style='font-size: 1.2em'>Text</span>");
       overlay.append("<div style='float: right;' class='awesome medium red delete-current-object'>Delete</div><br/>");
-      overlay.append("<div style='clear: both;'></div> text = ");
+      overlay.append("<div style='clear: both;'></div>");
       overlay.append($("<input type='text' class='contents'/>").attr("value", objData.contents));
       overlay.append("<br/>");
-      overlay.append("font size = ");
-      overlay.append($("<input type='text' class='font-size' style='width: 50px'/>").attr("value", objData.font_size));
+      overlay.append("<span style='font-size: 0.5em;'>A</span>");
+      overlay.append("<input type='radio' name='font-size' value='0.5em'/>")
+      overlay.append("<input type='radio' name='font-size' value='1em'/>")
+      overlay.append("<input type='radio' name='font-size' value='1.5em'/>")
+      overlay.append("<input type='radio' name='font-size' value='2em'/>")
+      overlay.append("<input type='radio' name='font-size' value='2.5em'/>")
+      overlay.append("<span style='font-size: 1em;'>A</span>");      
+      overlay.find("input:radio[name=font-size]").each(function(){
+        if ($(this).val() == objData.font_size) $(this).attr('checked', 'checked');
+      });
       overlay.append("<br/>");
       overlay.find(".contents").focus();
     } else if (currentObject.o_class == "SOImage"){
@@ -212,9 +233,9 @@ function showEditOverlay(uiObject){
     overlay.append("Width: "+ objData.width + "<br/>");
     overlay.append("x position: "+ objData.left + "<br/>");
     overlay.append("y position:" + objData.top + "<br/>");
+    overlay.append("centered: " + objData.center + "<br/>");
     */
     
-    overlay.append("centered: " + objData.center + "<br/>");
     
     overlay.css('left', offset.left+"px");
     overlay.css('top', (offset.top+$(uiObject).height() + 5)+"px");    
@@ -265,9 +286,10 @@ function updateTinySlide(uiObject){
   
   if (currentObject.o_class == "SOText"){
     tinyObject.children(".content").text($(uiObject).children(".content").text());
+    tinyObject.css("font-size", objData.font_size);
 
   } else if (currentObject.o_class == "SOImage"){
-    //objData.src = $(uiObject).text();
+    tinyObject.children("img").attr("src", objData.src);
 
   }
   

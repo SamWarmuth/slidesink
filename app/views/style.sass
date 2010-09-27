@@ -124,7 +124,7 @@ code
 .tiny-slide, .tiny-slide-demo
   width: 160px
   height: 90px
-  font-size: 6px
+  font-size: 5px
   background: #fff
   border-radius: 5px
   margin: 5px 5px
@@ -154,13 +154,16 @@ code
     text-align: center
 #active-slide    
   .slide-object
-    overflow: hidden
     min-width: 25px
     min-height: 25px
     border: 1px solid #E5E5E5
     cursor: move
     &.selected
       border: 1px solid #444
+      
+.slide-object
+  overflow: hidden
+  
 
   
 .label
@@ -202,6 +205,22 @@ code
   position: absolute
   top: 0
   left: 0
+  z-index: 1002
+  -moz-box-shadow: 0 0 5px rgba(0,0,0,0.5)
+  -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.5)
+  display: none
+  color: white
+  white-space: normal
+  
+.image-chooser
+  border-radius: 5px
+  padding: 10px
+  background: rgba(0,0,0, 0.95)
+  position: absolute
+  width: 575px
+  height: 300px
+  top: 75px
+  left: 75px
   z-index: 1002
   -moz-box-shadow: 0 0 5px rgba(0,0,0,0.5)
   -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.5)

@@ -57,7 +57,7 @@
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "green-stripes", :checked => (@show.template == "green-stripes")}
         %b{:style => "font-size: 5em; display: block; margin-top: 7%;"} Green Stripes
       .clear{:style => "clear: both"}
-  .edit-overlay   
+  .edit-overlay
   .guiedit{:style => "margin: 0 auto; width: 950px; position: relative;"}
     .slide-viewer{:style => "float: right; width: 720px; height: 524px; position: relative; padding: 0;"}
       .input-pallet{:style => "outline: none; display: inline-block; float: right; width: 720px; height: 40px;   margin: 5px 0 10px 0; text-align: center;"}
@@ -66,6 +66,26 @@
         .awesome.green.large Add Embedded YouTube
         .awesome.green.large Add Embedded Website
         .awesome.green.large Add Custom HTML
+      .image-chooser
+        %b{:style => "font-size: 2em"} Edit Image Source
+        %p
+          %input{:type => "radio", :name => "source-type", :value => "library", :disabled => "disabled"} Library
+          %br
+          %br
+          %br
+        %p
+          %input{:type => "radio", :name => "source-type", :value => "upload", :disabled => "disabled"} Upload
+          %br
+          %br
+          %br
+        %p
+          %input{:type => "radio", :name => "source-type", :value => "url", :checked => "checked"} URL
+          %input.src-field{:type => "text", :name => "src", :style => 'width: 300px'}
+          %br
+          %br
+          %br
+        .awesome.green.medium.change-image-source{:style => 'display: block; text-align: center;margin: auto; width: 100px'} Done
+      
       #active-slide.slide{:style => "margin: 0", :class => "tmplt-" + @show.template.to_s}
       
     
