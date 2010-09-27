@@ -74,14 +74,14 @@
   });
   function resizeSlides(){
     var width = $(window).width();
-    //$(".window_height").text($(window).width() + " x " +$(window).height());
-    //if ($(window).height() < width*0.5625) width = ($(window).height())*1.777;
-    $(".page").css("width", (width*0.75+80));
-    slide_width = (width*0.75+80)+1.5;
+    if ($(window).height() < width*0.5625) width = ($(window).height())*1.77;
+    width = width - 100;
+    $(".page").css("width", (width+80));
+    slide_width = (width+80)+1.5;
     slide = $(".slide")
-    slide.css("font-size", (width/800.0)+"em");
-    slide.css("width", (width*0.75)+'px');
-    slide.css("height", (width*0.75*0.5625)+'px');
+    slide.css("font-size", ((width*1.185)/720.0)+"em");
+    slide.css("width", (width)+'px');
+    slide.css("height", (width*0.5625)+'px');
 
     //update slide location
     position = slide_width * current_slide * -1;
