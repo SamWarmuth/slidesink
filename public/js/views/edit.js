@@ -78,11 +78,16 @@ $(document).ready(function(){
     return false;
   });
   
+  $(".edit-image-src").live("click", function(){
+    alert("Not ready yet.");
+    return false;
+  });
+  
   $(".delete-current-object").live("click", function(){
     var obj = $("#active-slide .slide-object.selected");
     obj.removeClass("selected");
     obj.fadeOut(150).html("");
-    showData[currentSlideIndex][obj.attr('id')] = null;
+    delete showData[currentSlideIndex][obj.attr('id')];
     currentObject = "";
     var tinyObject = currentSlide.children(".slide-object#"+obj.attr('id'));
     tinyObject.fadeOut(100);
@@ -130,6 +135,9 @@ $(document).ready(function(){
   });
 
   $(".close-box").click(function(){
+    var index = $(this).parent().index();
+    if (index != -1) showData.splice(index, 1);
+    if ($(this).parent().is(".selected")) $(".tiny-slide").first.click();
     $(this).parent().remove();
   });
 
@@ -189,11 +197,12 @@ function showEditOverlay(uiObject){
       overlay.append("font size = ");
       overlay.append($("<input type='text' class='font-size' style='width: 50px'/>").attr("value", objData.font_size));
       overlay.append("<br/>");
+      overlay.find(".contents").focus();
     } else if (currentObject.o_class == "SOImage"){
       overlay.append("<span style='font-size: 1.2em'>Image</span>");
       overlay.append("<div style='float: right;' class='awesome medium red delete-current-object'>Delete</div><br/>");
-      overlay.append("<div style='clear: both;'></div> src = ");
-      overlay.append($("<input type='text' class='contents'/>").attr("value", objData.src));
+      overlay.append("<div style='clear: both;'><br/></div>");
+      overlay.append("<div class='awesome medium green edit-image-src'>Change Image Source</div><br/>");
       overlay.append("<br/>");
     } else{
       overlay.append("Unsupported object type\n");
