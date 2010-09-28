@@ -2,8 +2,6 @@ class Main
   before do
     logged_in?
   end
-  
-  
   get "/" do
     haml :welcome
   end
