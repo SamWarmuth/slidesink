@@ -1,4 +1,5 @@
 function save(){  
+  commitObjectChanges();
   var basics = {};
   $.each($('#basics').serializeArray(), function(index,value) {
     basics[value.name] = value.value;
@@ -13,6 +14,7 @@ var currentSlide = "";
 var currentSlideIndex = 0;
 var currentObject = "";
 var currentField = "";
+var currentlyEditing = false;
 
 $(document).ready(function(){  
   $("#active-slide .slide-object").liveResizeAndDrag({ handles: 'e, s, se', containment: "#active-slide"}, {containment: "#active-slide"});
@@ -28,6 +30,7 @@ $(document).ready(function(){
     showEditOverlay(this);
   });
   $("#active-slide .slide-object").live("resizestart", function(event, ui) {
+    if (currentlyEditing) commitObjectChanges();
     $(".edit-overlay").fadeOut(100);
     $(".slide-object").removeClass("selected");
     $(this).addClass("selected");
@@ -126,12 +129,12 @@ $(document).ready(function(){
   $("#slide-up").click(function(){
     var currentPos = parseInt($("#slide-list").css("top"))
     if (currentPos >= 0) return false;
-    if (currentPos + 507 >= 0) $('#slide-list').stop().animate({top: "0"}, 300, 'easeInOutQuad');
-    else $('#slide-list').stop(false, true).animate({top: "+=345"}, 300, 'easeInOutQuad');
+    if (currentPos + 172 >= 0) $('#slide-list').stop().animate({top: "0"}, 300, 'easeInOutQuad');
+    else $('#slide-list').stop(false, true).animate({top: "+=172"}, 300, 'easeInOutQuad');
   });
   $("#slide-down").click(function(){
-    if (parseInt($('#slide-list').css('top')) <= ((slideCount * -169) + 800)) return false
-    $('#slide-list').stop(false, true).animate({top: "-=345"}, 300, 'easeInOutQuad');
+    if (parseInt($('#slide-list').css('top')) <= ((slideCount * -100) + 350)) return false
+    $('#slide-list').stop(false, true).animate({top: "-=172"}, 300, 'easeInOutQuad');
   });
   
   $(".tabarea").keydown(function(e){
@@ -171,10 +174,28 @@ $(document).ready(function(){
   
   
   $("#active-slide .slide-object").live("click", function(){
+    if ($(this).is(".selected")) return false;
+    if (currentlyEditing) commitObjectChanges();
+    
     $(".slide-object").removeClass("selected");
     $(this).addClass("selected");
     showEditOverlay(this);
     return false;
+  });
+  
+  $("#active-slide .slide-object").live("dblclick", function(){
+    if (currentlyEditing) return false;
+    currentObject = showData[currentSlideIndex][$(this).attr('id')];
+    if (currentObject.o_class == "SOText"){
+      currentlyEditing = true;
+      var content = $(this).children(".content");
+      content.hide();
+      $(this).css("border-color","red");
+    
+      $(this).append($("<textarea class='text-edit' style='width: 100%; position: relative; top: -3px; left: -3px;'></input>").text(currentObject.data.contents).css('height', $(this).height()).css("font-size", content.css('font-size')));
+      $(this).find(".text-edit").focus();
+      return false;
+    }
   });
   
   $(".edit-overlay .contents").live("keyup", function(){
@@ -191,10 +212,29 @@ $(document).ready(function(){
   
   
   $("#active-slide").click(function(e){
-    if (e.target.id == "active-slide") $(".edit-overlay").fadeOut(100);
+    if (e.target.id == "active-slide"){
+      if (currentlyEditing) commitObjectChanges();
+      $(".edit-overlay").fadeOut(100);
+    }
   });
   
 });
+
+function commitObjectChanges(){
+  var obj = $("#active-slide .slide-object.selected");
+  currentObject = showData[currentSlideIndex][$(obj).attr('id')];
+  currentlyEditing = false;
+  if (currentObject.o_class == "SOText"){
+    obj.css("border-color", "#E5E5E5")
+    var content = obj.children(".content");
+    var editField = obj.children(".text-edit");
+    content.html(editField.val());
+    updateObject(obj);
+    editField.remove();
+    content.show();
+  }
+  
+}
 
 function showEditOverlay(uiObject){
     var offset = $(uiObject).offset();
@@ -208,10 +248,8 @@ function showEditOverlay(uiObject){
     overlay.text("");
     if (currentObject.o_class == "SOText"){
       overlay.append("<span style='font-size: 1.2em'>Text</span>");
-      overlay.append("<div style='float: right;' class='awesome medium red delete-current-object'>Delete</div><br/>");
-      overlay.append("<div style='clear: both;'></div>");
-      overlay.append($("<input type='text' class='contents'/>").attr("value", objData.contents));
-      overlay.append("<br/>");
+      overlay.append("<div style='float: right; margin-left: 15px; position: relative; top: -2px;' class='awesome medium red delete-current-object'>Delete</div><br/>");
+      overlay.append("<div style='clear: both; margin-top: 10px;'></div>");
       overlay.append("<span style='font-size: 0.5em;'>A</span>");
       overlay.append("<input type='radio' name='font-size' value='0.5em'/>")
       overlay.append("<input type='radio' name='font-size' value='1em'/>")
@@ -223,7 +261,6 @@ function showEditOverlay(uiObject){
         if ($(this).val() == objData.font_size) $(this).attr('checked', 'checked');
       });
       overlay.append("<br/>");
-      overlay.find(".contents").focus();
     } else if (currentObject.o_class == "SOImage"){
       overlay.append("<span style='font-size: 1.2em'>Image</span>");
       overlay.append("<div style='float: right;' class='awesome medium red delete-current-object'>Delete</div><br/>");
