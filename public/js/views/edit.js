@@ -80,13 +80,18 @@ $(document).ready(function(){
   
   $(".edit-image-src").live("click", function(){
     $(".edit-overlay").fadeOut(150);
+    if (currentObject != "") $(".image-chooser").find("input.src-field").val(currentObject.data.src);
     $(".image-chooser").fadeIn(300);
     return false;
   });
   
   $(".change-image-source").live("click", function(){
     var obj = $("#active-slide .slide-object.selected");
-    obj.children("img").attr("src", $("input.src-field").val());
+    obj.children("img").attr("src", $(".image-chooser").find("input.src-field").val());
+    $(".image-chooser").fadeOut(100);
+  });
+  
+  $(".cancel-image-change").live("click", function(){
     $(".image-chooser").fadeOut(100);
   });
   

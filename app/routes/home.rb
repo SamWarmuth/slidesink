@@ -90,7 +90,7 @@ class Main
     @show.title = show_info[:title]
     refresh = "/edit/#{params[:url]}" if show_info[:url] != @show.url
     @show.url = show_info[:url]
-    refresh = "/edit/#{@show.url}" if show_info[:template] != @show.template
+    refresh = "/edit/#{params[:url]}" if show_info[:template] != @show.template
     @show.template = show_info[:template]
     @show.slides = []
     params['slides'].sort_by{|s| s[0]}.each do |index, objects|

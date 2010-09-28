@@ -69,22 +69,27 @@
       .image-chooser
         %b{:style => "font-size: 2em"} Edit Image Source
         %p
-          %input{:type => "radio", :name => "source-type", :value => "library", :disabled => "disabled"} Library
+          %input{:type => "radio", :name => "source-type", :value => "library", :disabled => "disabled"}
+          Library
           %br
           %br
           %br
         %p
-          %input{:type => "radio", :name => "source-type", :value => "upload", :disabled => "disabled"} Upload
+          %input{:type => "radio", :name => "source-type", :value => "upload", :disabled => "disabled"}
+          Upload
           %br
           %br
           %br
         %p
-          %input{:type => "radio", :name => "source-type", :value => "url", :checked => "checked"} URL
+          %input{:type => "radio", :name => "source-type", :value => "url", :checked => "checked"}
+          URL
           %input.src-field{:type => "text", :name => "src", :style => 'width: 300px'}
           %br
           %br
           %br
-        .awesome.green.medium.change-image-source{:style => 'display: block; text-align: center;margin: auto; width: 100px'} Done
+        .buttons{:style => "text-align: center"}
+          .awesome.green.medium.change-image-source{:style => 'display: inline-block; text-align: center;margin: auto; width: 100px'} OK
+          .awesome.red.medium.cancel-image-change{:style => 'display: inline-block; text-align: center;margin: auto; width: 100px'} Cancel
       
       #active-slide.slide{:style => "margin: 0", :class => "tmplt-" + @show.template.to_s}
       
