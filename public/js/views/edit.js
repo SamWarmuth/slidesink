@@ -43,7 +43,7 @@ $(document).ready(function(){
   $("#title").keyup(function(){
     if (customUrl == false){
       $("#url").val($(this).val().replace(/ /g,""));
-      $("#show-link").attr("href", ("http://www.slidesink.com/show/" + $('#url').val()));
+      $("#show-link").attr("href", ("http://www.SlideMirror.com/show/" + $('#url').val()));
     }
   });
   $("#url").keyup(function(){

@@ -20,9 +20,9 @@
   %script{:src => "/js/views/edit.js", :type => "text/javascript"}
   
   -if @show.new_document?
-    %title SlideSink - New Show
+    %title SlideMirror - New Show
   -else
-    %title SlideSink - Edit #{@show.title}
+    %title SlideMirror - Edit #{@show.title}
     
 %body{:style => 'background: #ddd'}
   .menubar{:style => "margin: 0 auto; width: 950px; position: relative; "}
@@ -36,7 +36,7 @@
     %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 150px"}
     %label{:for => "url", :style => "margin-left: 25px; margin-right: 3px"} URL
     %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 150px"}
-    %a#show-link{:href => "http://www.slidesink.com/show/#{@show.url}", :target => "_blank", :style => "margin-left: 20px"}
+    %a#show-link{:href => "http://www.SlideMirror.com/show/#{@show.url}", :target => "_blank", :style => "margin-left: 20px"}
       View Show
     %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; position: relative; top: -6px; font-weight: bold"} Save
     %a.awesome.blue.medium.show-templates{:href => "save", :style => "width: 120px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; float: right; position: relative; top: -2px"} Change Template

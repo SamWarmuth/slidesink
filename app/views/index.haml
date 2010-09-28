@@ -9,9 +9,9 @@
   -if @following
     %script{:src => "http://js.pusherapp.com/1.6/pusher.min.js", :type => "text/javascript"}
   -if @show.nil?
-    %title SlideSink. Your Slides, sinked.
+    %title SlideMirror. Through the looking glass.
   -else
-    %title SlideSink - #{@show.title}
+    %title SlideMirror - #{@show.title}
 %body{:style => "margin: 0; padding: 0; background: #ddd;"}
   = haml :frame
   .page{:style => "width: 880px; white-space: nowrap; overflow: hidden; margin: 5px auto 0 auto;"}
