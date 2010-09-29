@@ -57,8 +57,8 @@
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "green-stripes", :checked => (@show.template == "green-stripes")}
         %b{:style => "font-size: 5em; display: block; margin-top: 7%;"} Green Stripes
       .clear{:style => "clear: both"}
-  .edit-overlay
   .guiedit{:style => "margin: 0 auto; width: 950px; position: relative;"}
+    
     .slide-viewer{:style => "float: right; width: 720px; height: 524px; position: relative; padding: 0;"}
       .input-pallet{:style => "outline: none; display: inline-block; float: right; width: 720px; height: 40px;   margin: 5px 0 10px 0; text-align: center;"}
         .awesome.green.large.add-text-object Add Text
@@ -90,6 +90,7 @@
         .buttons{:style => "text-align: center"}
           .awesome.green.medium.change-image-source{:style => 'display: inline-block; text-align: center;margin: auto; width: 100px'} OK
           .awesome.red.medium.cancel-image-change{:style => 'display: inline-block; text-align: center;margin: auto; width: 100px'} Cancel
+      .edit-overlay
       
       #active-slide.slide{:style => "margin: 0", :class => "tmplt-" + @show.template.to_s}
       

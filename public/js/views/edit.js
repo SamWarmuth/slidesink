@@ -198,12 +198,6 @@ $(document).ready(function(){
     }
   });
   
-  $(".edit-overlay .contents").live("keyup", function(){
-    var obj = $("#active-slide .slide-object.selected");
-    obj.children(".content").text($(this).val());
-    updateObject(obj);
-  });
-  
   $(".edit-overlay input[type=radio]").live("change", function(){
     var obj = $("#active-slide .slide-object.selected");
     obj.css("font-size", $(this).val());
@@ -237,7 +231,7 @@ function commitObjectChanges(){
 }
 
 function showEditOverlay(uiObject){
-    var offset = $(uiObject).offset();
+    var position = $(uiObject).position();
     var overlay = $(".edit-overlay");
     currentObject = showData[currentSlideIndex][$(uiObject).attr('id')];
     
@@ -264,9 +258,8 @@ function showEditOverlay(uiObject){
     } else if (currentObject.o_class == "SOImage"){
       overlay.append("<span style='font-size: 1.2em'>Image</span>");
       overlay.append("<div style='float: right;' class='awesome medium red delete-current-object'>Delete</div><br/>");
-      overlay.append("<div style='clear: both;'><br/></div>");
+      overlay.append("<div style='clear: both; margin-top: 15px;'></div>");
       overlay.append("<div class='awesome medium green edit-image-src'>Change Image Source</div><br/>");
-      overlay.append("<br/>");
     } else{
       overlay.append("Unsupported object type\n");
     }
@@ -279,8 +272,8 @@ function showEditOverlay(uiObject){
     */
     
     
-    overlay.css('left', offset.left+"px");
-    overlay.css('top', (offset.top+$(uiObject).height() + 5)+"px");    
+    overlay.css('left', position.left+"px");
+    overlay.css('top', (position.top+$(uiObject).height() + 60)+"px");    
     if (overlay.not(":visible")) overlay.fadeIn(200);
 }
 
