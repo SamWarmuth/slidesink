@@ -1,5 +1,5 @@
 function save(){  
-  commitObjectChanges();
+  if (currentlyEditing) commitObjectChanges();
   var basics = {};
   $.each($('#basics').serializeArray(), function(index,value) {
     basics[value.name] = value.value;
