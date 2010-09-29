@@ -50,6 +50,9 @@
         resizeSlides();
       });
     }
+    $(".slide").live("click", function(){
+      slideRight();
+    });
     $(".leftarrow").click(function(){
       slideLeft();
     });
