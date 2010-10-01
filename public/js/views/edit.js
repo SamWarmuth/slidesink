@@ -16,30 +16,101 @@ var currentObject = "";
 var currentField = "";
 var currentlyEditing = false;
 
+$("#active-slide .slide-object").liveResizeAndDrag({ handles: 'e, s, se', containment: "#active-slide"}, {containment: "#active-slide"});
+
+$("#active-slide .slide-object").live("dragstart", function(event, ui) {
+  $(".edit-overlay").fadeOut(100);
+  $(".slide-object").removeClass("selected");
+  $(this).addClass("selected");
+});
+$("#active-slide .slide-object").live("dragstop", function(event, ui) {
+  //update tiny-slide
+  updateObject(this);
+  showEditOverlay(this);
+});
+$("#active-slide .slide-object").live("resizestart", function(event, ui) {
+  if (currentlyEditing) commitObjectChanges();
+  $(".edit-overlay").fadeOut(100);
+  $(".slide-object").removeClass("selected");
+  $(this).addClass("selected");
+});
+$("#active-slide .slide-object").live("resizestop", function(event, ui) {
+  //update tiny-slide
+  updateObject(this);
+  showEditOverlay(this);
+});
+
+$(".edit-image-src").live("click", function(){
+  $(".edit-overlay").fadeOut(150);
+  if (currentObject != "") $(".image-chooser").find("input.src-field").val(currentObject.data.src);
+  $(".image-chooser").fadeIn(300);
+  return false;
+});
+
+$(".change-image-source").live("click", function(){
+  var obj = $("#active-slide .slide-object.selected");
+  obj.children("img").attr("src", $(".image-chooser").find("input.src-field").val());
+  $(".image-chooser").fadeOut(100);
+});
+
+$(".cancel-image-change").live("click", function(){
+  $(".image-chooser").fadeOut(100);
+});
+
+$(".delete-current-object").live("click", function(){
+  var obj = $("#active-slide .slide-object.selected");
+  obj.removeClass("selected");
+  obj.fadeOut(150).html("");
+  delete showData[currentSlideIndex][obj.attr('id')];
+  currentObject = "";
+  var tinyObject = currentSlide.children(".slide-object#"+obj.attr('id'));
+  tinyObject.fadeOut(100);
+  $(".edit-overlay").fadeOut(150);
+  return false;
+});
+
+$(".tiny-slide").live('click', function(){
+  $(".tiny-slide").removeClass("selected");
+  $(this).addClass("selected");
+  currentSlide = $(this);
+  currentSlideIndex = $(".tiny-slide.selected").parent().index();
+  $(".edit-overlay").fadeOut(150);
+  $("#active-slide").html($(this).html());
+  $("#active-slide .slide-object").mouseover();
+ });
+ 
+ $("#active-slide .slide-object").live("click", function(){
+   if ($(this).is(".selected")) return false;
+   if (currentlyEditing) commitObjectChanges();
+   
+   $(".slide-object").removeClass("selected");
+   $(this).addClass("selected");
+   showEditOverlay(this);
+   return false;
+ });
+ 
+ $("#active-slide .slide-object").live("dblclick", function(){
+   if (currentlyEditing) return false;
+   currentObject = showData[currentSlideIndex][$(this).attr('id')];
+   if (currentObject.o_class == "SOText"){
+     currentlyEditing = true;
+     var content = $(this).children(".content");
+     content.hide();
+     $(this).css("border-color","red");
+   
+     $(this).append($("<textarea class='text-edit' style='width: 100%; position: relative; top: -3px; left: -3px;'></input>").text(currentObject.data.contents).css('height', $(this).height()).css("font-size", content.css('font-size')));
+     $(this).find(".text-edit").focus();
+     return false;
+   }
+ });
+ 
+ $(".edit-overlay input[type=radio]").live("change", function(){
+   var obj = $("#active-slide .slide-object.selected");
+   obj.css("font-size", $(this).val());
+   updateObject(obj);
+ });
+
 $(document).ready(function(){  
-  $("#active-slide .slide-object").liveResizeAndDrag({ handles: 'e, s, se', containment: "#active-slide"}, {containment: "#active-slide"});
-  
-  $("#active-slide .slide-object").live("dragstart", function(event, ui) {
-    $(".edit-overlay").fadeOut(100);
-    $(".slide-object").removeClass("selected");
-    $(this).addClass("selected");
-  });
-  $("#active-slide .slide-object").live("dragstop", function(event, ui) {
-    //update tiny-slide
-    updateObject(this);
-    showEditOverlay(this);
-  });
-  $("#active-slide .slide-object").live("resizestart", function(event, ui) {
-    if (currentlyEditing) commitObjectChanges();
-    $(".edit-overlay").fadeOut(100);
-    $(".slide-object").removeClass("selected");
-    $(this).addClass("selected");
-  });
-  $("#active-slide .slide-object").live("resizestop", function(event, ui) {
-    //update tiny-slide
-    updateObject(this);
-    showEditOverlay(this);
-  });
   
   $("#title").focus();
   
@@ -80,45 +151,6 @@ $(document).ready(function(){
     updateObject(defaultHTML, "SOImage");
     return false;
   });
-  
-  $(".edit-image-src").live("click", function(){
-    $(".edit-overlay").fadeOut(150);
-    if (currentObject != "") $(".image-chooser").find("input.src-field").val(currentObject.data.src);
-    $(".image-chooser").fadeIn(300);
-    return false;
-  });
-  
-  $(".change-image-source").live("click", function(){
-    var obj = $("#active-slide .slide-object.selected");
-    obj.children("img").attr("src", $(".image-chooser").find("input.src-field").val());
-    $(".image-chooser").fadeOut(100);
-  });
-  
-  $(".cancel-image-change").live("click", function(){
-    $(".image-chooser").fadeOut(100);
-  });
-  
-  $(".delete-current-object").live("click", function(){
-    var obj = $("#active-slide .slide-object.selected");
-    obj.removeClass("selected");
-    obj.fadeOut(150).html("");
-    delete showData[currentSlideIndex][obj.attr('id')];
-    currentObject = "";
-    var tinyObject = currentSlide.children(".slide-object#"+obj.attr('id'));
-    tinyObject.fadeOut(100);
-    $(".edit-overlay").fadeOut(150);
-    return false;
-  });
-  
-  $(".tiny-slide").live('click', function(){
-    $(".tiny-slide").removeClass("selected");
-    $(this).addClass("selected");
-    currentSlide = $(this);
-    currentSlideIndex = $(".tiny-slide.selected").parent().index();
-    $(".edit-overlay").fadeOut(150);
-    $("#active-slide").html($(this).html());
-    $("#active-slide .slide-object").mouseover();
-   });
   
   
   $("#post-save").click(function(){
@@ -172,39 +204,6 @@ $(document).ready(function(){
     return false;
   });
   
-  
-  $("#active-slide .slide-object").live("click", function(){
-    if ($(this).is(".selected")) return false;
-    if (currentlyEditing) commitObjectChanges();
-    
-    $(".slide-object").removeClass("selected");
-    $(this).addClass("selected");
-    showEditOverlay(this);
-    return false;
-  });
-  
-  $("#active-slide .slide-object").live("dblclick", function(){
-    if (currentlyEditing) return false;
-    currentObject = showData[currentSlideIndex][$(this).attr('id')];
-    if (currentObject.o_class == "SOText"){
-      currentlyEditing = true;
-      var content = $(this).children(".content");
-      content.hide();
-      $(this).css("border-color","red");
-    
-      $(this).append($("<textarea class='text-edit' style='width: 100%; position: relative; top: -3px; left: -3px;'></input>").text(currentObject.data.contents).css('height', $(this).height()).css("font-size", content.css('font-size')));
-      $(this).find(".text-edit").focus();
-      return false;
-    }
-  });
-  
-  $(".edit-overlay input[type=radio]").live("change", function(){
-    var obj = $("#active-slide .slide-object.selected");
-    obj.css("font-size", $(this).val());
-    updateObject(obj);
-  });
-  
-  
   $("#active-slide").click(function(e){
     if (e.target.id == "active-slide"){
       if (currentlyEditing) commitObjectChanges();
@@ -245,11 +244,11 @@ function showEditOverlay(uiObject){
       overlay.append("<div style='float: right; margin-left: 15px; position: relative; top: -2px;' class='awesome medium red delete-current-object'>Delete</div><br/>");
       overlay.append("<div style='clear: both; margin-top: 10px;'></div>");
       overlay.append("<span style='font-size: 0.5em;'>A</span>");
-      overlay.append("<input type='radio' name='font-size' value='0.5em'/>")
-      overlay.append("<input type='radio' name='font-size' value='1em'/>")
-      overlay.append("<input type='radio' name='font-size' value='1.5em'/>")
-      overlay.append("<input type='radio' name='font-size' value='2em'/>")
-      overlay.append("<input type='radio' name='font-size' value='2.5em'/>")
+      overlay.append("<input type='radio' name='font-size' value='0.5em'/>");
+      overlay.append("<input type='radio' name='font-size' value='1em'/>");
+      overlay.append("<input type='radio' name='font-size' value='1.5em'/>");
+      overlay.append("<input type='radio' name='font-size' value='2em'/>");
+      overlay.append("<input type='radio' name='font-size' value='2.5em'/>");
       overlay.append("<span style='font-size: 1em;'>A</span>");      
       overlay.find("input:radio[name=font-size]").each(function(){
         if ($(this).val() == objData.font_size) $(this).attr('checked', 'checked');
