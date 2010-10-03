@@ -1,3 +1,30 @@
+$(function(){
+  $.extend($.fn.disableTextSelect = function() {
+    return this.each(function(){
+      if($.browser.mozilla){//Firefox
+        $(this).css('MozUserSelect','none');
+      }else if($.browser.msie){//IE
+        $(this).bind('selectstart',function(){return false;});
+      }else{//Opera, etc.
+        $(this).mousedown(function(){return false;});
+      }
+    });
+  });
+  $('.no-select').disableTextSelect();//No text selection on elements with a class of 'noSelect'
+});
+
+(function ($) {
+   jQuery.fn.liveResizeAndDrag = function (resizeOpts, dragOpts) {
+      this.live("mouseover", function() {
+         if (!$(this).data("init")) {
+            $(this).data("init", true).resizable(resizeOpts).draggable(dragOpts);
+         }
+      });
+   };
+})(jQuery);
+
+
+
 function save(){  
   if (currentlyEditing) commitObjectChanges();
   var basics = {};
@@ -80,7 +107,10 @@ $(".tiny-slide").live('click', function(){
  });
  
  $("#active-slide .slide-object").live("click", function(){
-   if ($(this).is(".selected")) return false;
+   if ($(this).is(".selected")){
+     $(".edit-overlay").fadeIn(100);
+     return false;
+   }
    if (currentlyEditing) commitObjectChanges();
    
    $(".slide-object").removeClass("selected");
@@ -107,7 +137,9 @@ $(".tiny-slide").live('click', function(){
  $(".edit-overlay input[type=radio]").live("change", function(){
    var obj = $("#active-slide .slide-object.selected");
    obj.css("font-size", $(this).val());
+   if (currentlyEditing) commitObjectChanges();
    updateObject(obj);
+   repositionOverlay(obj);
  });
 
 $(document).ready(function(){  
@@ -244,11 +276,11 @@ function showEditOverlay(uiObject){
       overlay.append("<div style='float: right; margin-left: 15px; position: relative; top: -2px;' class='awesome medium red delete-current-object'>Delete</div><br/>");
       overlay.append("<div style='clear: both; margin-top: 10px;'></div>");
       overlay.append("<span style='font-size: 0.5em;'>A</span>");
-      overlay.append("<input type='radio' name='font-size' value='0.5em'/>");
       overlay.append("<input type='radio' name='font-size' value='1em'/>");
       overlay.append("<input type='radio' name='font-size' value='1.5em'/>");
       overlay.append("<input type='radio' name='font-size' value='2em'/>");
       overlay.append("<input type='radio' name='font-size' value='2.5em'/>");
+      overlay.append("<input type='radio' name='font-size' value='3.5em'/>");
       overlay.append("<span style='font-size: 1em;'>A</span>");      
       overlay.find("input:radio[name=font-size]").each(function(){
         if ($(this).val() == objData.font_size) $(this).attr('checked', 'checked');
@@ -272,8 +304,14 @@ function showEditOverlay(uiObject){
     
     
     overlay.css('left', position.left+"px");
-    overlay.css('top', (position.top+$(uiObject).height() + 60)+"px");    
+    overlay.css('top', (position.top+$(uiObject).height() + 60)+"px");
     if (overlay.not(":visible")) overlay.fadeIn(200);
+}
+
+function repositionOverlay(uiObject){
+  var overlay = $(".edit-overlay");
+  overlay.css('left', position.left+"px");
+  overlay.css('top', (position.top+$(uiObject).height() + 60)+"px");
 }
 
 function updateObject(uiObject, classIfNew){
@@ -341,27 +379,4 @@ function addSlide(){
 
 
 
-$(function(){
-  $.extend($.fn.disableTextSelect = function() {
-    return this.each(function(){
-      if($.browser.mozilla){//Firefox
-        $(this).css('MozUserSelect','none');
-      }else if($.browser.msie){//IE
-        $(this).bind('selectstart',function(){return false;});
-      }else{//Opera, etc.
-        $(this).mousedown(function(){return false;});
-      }
-    });
-  });
-  $('.no-select').disableTextSelect();//No text selection on elements with a class of 'noSelect'
-});
 
-(function ($) {
-   jQuery.fn.liveResizeAndDrag = function (resizeOpts, dragOpts) {
-      this.live("mouseover", function() {
-         if (!$(this).data("init")) {
-            $(this).data("init", true).resizable(resizeOpts).draggable(dragOpts);
-         }
-      });
-   };
-})(jQuery);

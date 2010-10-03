@@ -27,10 +27,15 @@
           %a{:href => "/user/" + creator.name.gsub(" ", "")} #{creator.name}
           \ -
         = @show.title
+        .button{:style => "display: inline-block; position: relative; top: -3px"}
+        
+          %a.awesome.medium.yellow.lights{:href => "", :style => "color: #A70; text-shadow: 2px 2px 3px white"} Lights
+        
       
     .controls{:style => "float: right; display: inline-block; position: relative; top: 3px; left: 3px"}
       .button{:style => "display: inline-block; position: relative;"}
-        %a.awesome.medium.yellow{:href => "/edit/#{@show.url}"} Edit Show
+        - if @user && (@user.id == @show.user_id)
+          %a.awesome.medium.yellow{:href => "/edit/#{@show.url}"} Edit Show
         %a.awesome.medium.blue{:href => "/share/#{@show.url}"} Share
     
     
