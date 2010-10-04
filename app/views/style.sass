@@ -228,6 +228,47 @@ code
   color: white
   white-space: normal
 
+.ico-text-align
+  display: inline-block
+  background: #fff
+  border: 1px solid #fff
+  width: 16px
+  height: 16px
+  padding: 3px
+  &.left
+    background: #ddd url("/images/icons/text_align_left.png") no-repeat 3px 3px
+    border-radius: 3px 0 0 3px
+    border-right: none
+    &.selected
+      background: #00acff url("/images/icons/text_align_left.png") no-repeat 3px 3px
+  &.center
+    background: #ddd url("/images/icons/text_align_center.png") no-repeat 3px 3px
+    border-radius: 0
+    &.selected
+      background: #00acff url("/images/icons/text_align_center.png") no-repeat 3px 3px
+  &.right
+    background: #ddd url("/images/icons/text_align_right.png") no-repeat 3px 3px
+    border-radius: 0 3px 3px 0
+    border-left: none
+    
+    &.selected
+      background: #00acff url("/images/icons/text_align_right.png") no-repeat 3px 3px
+      
+.ico-color-picker
+  display: inline-block
+  background: #fff
+  width: 18px
+  height: 18px
+  padding: 3px
+  margin-left: 10px
+  border-radius: 3px
+  background: #555 url("/images/icons/color_wheel.png") no-repeat 4px 4px
+  &:hover
+    background: #BBB url("/images/icons/color_wheel.png") no-repeat 4px 4px
+  &:active
+    background: #999 url("/images/icons/color_wheel.png") no-repeat 4px 4px
+  
+  
   
 .login-form
   width: 220px

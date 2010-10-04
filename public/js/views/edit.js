@@ -245,6 +245,21 @@ $(document).ready(function(){
   
 });
 
+$(".ico-text-align").live("click", function(){
+  var obj = $("#active-slide .slide-object.selected");
+  var alignment = "left";
+  if ($(this).hasClass("center")) alignment = "center";
+  if ($(this).hasClass("right")) alignment = "right";
+  $(".ico-text-align").removeClass("selected");
+  $(this).addClass("selected");
+  
+  
+  obj.css("text-align", alignment);
+  if (currentlyEditing) commitObjectChanges();
+  updateObject(obj);
+  repositionOverlay(obj);
+});
+
 function commitObjectChanges(){
   var obj = $("#active-slide .slide-object.selected");
   currentObject = showData[currentSlideIndex][$(obj).attr('id')];
@@ -275,6 +290,12 @@ function showEditOverlay(uiObject){
       overlay.append("<span style='font-size: 1.2em'>Text</span>");
       overlay.append("<div style='float: right; margin-left: 15px; position: relative; top: -2px;' class='awesome medium red delete-current-object'>Delete</div><br/>");
       overlay.append("<div style='clear: both; margin-top: 10px;'></div>");
+      overlay.append("<div class='ico-text-align left'></div>");
+      overlay.append("<div class='ico-text-align center'></div>");
+      overlay.append("<div class='ico-text-align right'></div>");
+      overlay.append("<div class='ico-color-picker'></div>");
+
+      overlay.append("<div style='clear: both; margin-top: 5px;'></div>");
       overlay.append("<span style='font-size: 0.5em;'>A</span>");
       overlay.append("<input type='radio' name='font-size' value='1em'/>");
       overlay.append("<input type='radio' name='font-size' value='1.5em'/>");
@@ -284,6 +305,9 @@ function showEditOverlay(uiObject){
       overlay.append("<span style='font-size: 1em;'>A</span>");      
       overlay.find("input:radio[name=font-size]").each(function(){
         if ($(this).val() == objData.font_size) $(this).attr('checked', 'checked');
+      });
+      overlay.find(".ico-text-align").each(function(){
+        if ($(this).hasClass(objData.text_align)) $(this).addClass("selected");
       });
       overlay.append("<br/>");
     } else if (currentObject.o_class == "SOImage"){
@@ -309,6 +333,7 @@ function showEditOverlay(uiObject){
 }
 
 function repositionOverlay(uiObject){
+  var position = $(uiObject).position();
   var overlay = $(".edit-overlay");
   overlay.css('left', position.left+"px");
   overlay.css('top', (position.top+$(uiObject).height() + 60)+"px");
@@ -333,6 +358,8 @@ function updateObject(uiObject, classIfNew){
   if (currentObject.o_class == "SOText"){
     objData.contents = uiObject.children(".content").text();
     objData.font_size = uiObject.css("font-size");
+    objData.text_align = uiObject.css("text-align");
+    
 
   } else if (currentObject.o_class == "SOImage"){
     objData.src = uiObject.children("img").attr("src");
@@ -359,6 +386,8 @@ function updateTinySlide(uiObject){
   if (currentObject.o_class == "SOText"){
     tinyObject.children(".content").text($(uiObject).children(".content").text());
     tinyObject.css("font-size", objData.font_size);
+    tinyObject.css("text-align", objData.text_align);
+    
 
   } else if (currentObject.o_class == "SOImage"){
     tinyObject.children("img").attr("src", objData.src);

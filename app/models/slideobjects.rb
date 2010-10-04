@@ -30,9 +30,10 @@ class SOText < SlideObject
   property :color, :default => "#000"
   property :font_size, :default => "1em"
   property :contents, :default => ""
+  property :text_align, :default => "left"
   
   def to_html
-    return "<div class='slide-object' id='#{self.o_id}' style='#{self.basic_style}; color: #{self.color}; font-size: #{self.font_size};'><div class='content'>#{self.contents}</div></div>"
+    return "<div class='slide-object' id='#{self.o_id}' style='#{self.basic_style}; text-align: #{self.text_align}; color: #{self.color}; font-size: #{self.font_size};'><div class='content'>#{self.contents}</div></div>"
   end
 end
 
