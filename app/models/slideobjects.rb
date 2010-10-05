@@ -27,9 +27,12 @@ class SOText < SlideObject
   property :font_size, :default => "1em"
   property :contents, :default => ""
   property :text_align, :default => "left"
+  property :bold, :default => false
+  property :italic, :default => false
+  property :underline, :default => false
   
   def to_html
-    return "<div class='slide-object' id='#{self.o_id}' style='#{self.basic_style}; text-align: #{self.text_align}; font-size: #{self.font_size};'><div style='color: #{self.color};' class='content'>#{self.contents}</div></div>"
+    return "<div class='slide-object' id='#{self.o_id}' style='#{self.basic_style}; text-align: #{self.text_align}; font-size: #{self.font_size};'><div style='color: #{self.color}; #{self.bold ? "font-weight: bold" : ""}' class='content'>#{self.contents}</div></div>"
   end
 end
 

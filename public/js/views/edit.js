@@ -280,6 +280,8 @@ $(document).ready(function(){
 });
 
 $(".ico-text.align").live("click", function(){
+  if (currentlyEditing) commitObjectChanges();
+  
   var obj = $("#active-slide .slide-object.selected");
   var alignment = "left";
   if ($(this).hasClass("center")) alignment = "center";
@@ -289,7 +291,22 @@ $(".ico-text.align").live("click", function(){
   
   
   obj.css("text-align", alignment);
+  updateObject(obj);
+  repositionOverlay(obj);
+});
+
+$(".ico-text.bold").live("click", function(){
   if (currentlyEditing) commitObjectChanges();
+  var obj = $("#active-slide .slide-object.selected");
+  var text = obj.children(".content");
+  
+  if ($(this).hasClass("selected")){
+    $(this).removeClass("selected");
+    text.css("font-weight", "normal");
+  }else{
+    $(this).addClass("selected");
+    text.css("font-weight", "bold");
+  }
   updateObject(obj);
   repositionOverlay(obj);
 });
@@ -351,6 +368,10 @@ function showEditOverlay(uiObject){
       overlay.find(".ico-text.align").each(function(){
         if ($(this).hasClass(objData.text_align)) $(this).addClass("selected");
       });
+      if (objData.bold == true) $(".ico-text.bold").addClass("selected");
+      if (objData.italic == true) $(".ico-text.italic").addClass("selected");
+      if (objData.underline == true) $(".ico-text.underline").addClass("selected");
+      
       overlay.append("<br/>");
     } else if (currentObject.o_class == "SOImage"){
       overlay.append("<span style='font-size: 1.2em'>Image</span>");
@@ -398,10 +419,13 @@ function updateObject(uiObject, classIfNew){
   objData.top = (100.0*uiObject.position().top/slideHeight)+"%";
   
   if (currentObject.o_class == "SOText"){
-    objData.contents = uiObject.children(".content").text();
+    var content = uiObject.children(".content");
+    objData.contents = content.text();
     objData.font_size = uiObject.css("font-size");
     objData.text_align = uiObject.css("text-align");
-    objData.color = uiObject.children(".content").css("color");
+    objData.color = content.css("color");
+    objData.bold = (content.css("font-weight") == "bold");
+    
     
     
 
@@ -428,10 +452,17 @@ function updateTinySlide(uiObject){
   tinyObject.css("top", objData.top);
   
   if (currentObject.o_class == "SOText"){
-    tinyObject.children(".content").text($(uiObject).children(".content").text());
+    var content = tinyObject.children(".content");
+    
+    content.text($(uiObject).children(".content").text());
     tinyObject.css("font-size", objData.font_size);
     tinyObject.css("text-align", objData.text_align);
-    tinyObject.children(".content").css("color", objData.color);
+    content.css("color", objData.color);
+    if (objData.bold){
+      content.css("font-weight", "bold");
+    }else{
+      content.css("font-weight", "normal");
+    }
     
     
     
