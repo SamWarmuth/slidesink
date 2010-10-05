@@ -201,7 +201,7 @@ $(document).ready(function(){
     return false;
   });
   
-  $(".add-text-object").click(function(){
+  $(".add-object.text").click(function(){
     var defaultHTML = $("<div class='slide-object' style='display: block; position: absolute; left: 10%; top: 10%; opacity: 1.0; width: 25%; color: black; font-size: 1em;'><div class='content'>Text Here</div></div>").attr("id", ((new Date).getTime()%100000000 + ""));
     $(".tiny-slide.selected").append(defaultHTML);
     $("#active-slide").html($(".tiny-slide.selected").html());
@@ -209,7 +209,7 @@ $(document).ready(function(){
     return false;
   });
   
-  $(".add-image-object").click(function(){
+  $(".add-object.image").click(function(){
     var defaultHTML = $("<div class='slide-object' style='display: block; position: absolute; left: 10%; top: 10%; opacity: 1.0; width: 25%;'><img src='/images/about-sam.jpg' style='width: 100%;' /></div>").attr("id", ((new Date).getTime()%100000000 + ""));
     $(".tiny-slide.selected").append(defaultHTML);
     $("#active-slide").html($(".tiny-slide.selected").html());

@@ -27,6 +27,11 @@
     %title SlideMirror - Edit #{@show.title}
     
 %body{:style => 'background: #ddd'}
+  .edit-menu{:style => 'margin: 0px auto 10px auto; padding: 0 15px; width: 916px; text-align: center;'}
+    .awesome.gray.huge{:style => "margin: 0 5px; width: 150px;"} Dashboard
+    .awesome.green.huge{:style => "margin: 0 5px; width: 150px;"} Slideshows
+    .awesome.gray.huge{:style => "margin: 0 5px; width: 150px;"} Presentations
+    .awesome.gray.huge{:style => "margin: 0 5px; width: 150px;"} Account Settings
   .menubar{:style => "margin: 0 auto; width: 950px; position: relative; "}
     %a.awesome.blue.large{:href => "/new", :style => "display: inline-block; width: 75px; -webkit-box-shadow: none; border-radius: 5px 0 0 0; text-align: center;"} New Show
     %a.awesome.blue.large{:href => "/show/#{@show.url}", :style => "display: inline-block; width: 75px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0 5px 0 0; text-align: center;"} Open Show    
@@ -64,12 +69,13 @@
     
     .slide-viewer{:style => "float: right; width: 720px; height: 524px; position: relative; padding: 0;"}
       .input-pallet{:style => "outline: none; display: inline-block; float: right; width: 720px; height: 40px;   margin: 5px 0 10px 0; text-align: center;"}
-        .awesome.green.large.add-text-object Add Text
-        .awesome.green.large.add-image-object Add Image
-        .awesome.green.large Add Poll
-        .awesome.green.large Add Map
-        .awesome.green.large Add YouTube Video
-        .awesome.green.large Add Custom HTML
+        .add-object.text
+        .add-object.image
+        .add-object.youtube
+        .add-object.map
+        .add-object.graph
+        .add-object.html
+        .add-object.poll
       .image-chooser
         %b{:style => "font-size: 2em"} Edit Image Source
         %p

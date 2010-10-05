@@ -52,6 +52,10 @@ a:active, a:focus
   background-color: #F32100
 .red.awesome:hover
   background-color: #A72300
+.gray-red.awesome, .gray-red.awesome:visited
+  background-color: #BBB
+.gray-red.awesome:hover
+  background-color: #e31100
 .magenta.awesome, .magenta.awesome:visited
   background-color: #a9014b
 .magenta.awesome:hover
@@ -96,6 +100,7 @@ li
 
 code
   font-family: monospace
+
 
 .slide
   float: left
@@ -242,6 +247,41 @@ code
   display: none
   color: white
   white-space: normal
+
+.add-object
+  display: inline-block
+  background: #eee
+  border: 1px solid #fff
+  width: 16px
+  height: 16px
+  padding: 3px
+  &.text
+    background: #e5e5e5 url("/images/icons/text.png") no-repeat 3px 3px
+    border-radius: 3px
+  &.image
+    background: #e5e5e5 url("/images/icons/photo.png") no-repeat 3px 3px
+    border-radius: 3px
+    &:active
+      background: #ccc url("/images/icons/photo.png") no-repeat 3px 3px
+  &.youtube
+    background: #e5e5e5 url("/images/icons/youtube.png") no-repeat 3px 3px
+    border-radius: 3px
+  &.map
+    background: #e5e5e5 url("/images/icons/map.png") no-repeat 3px 3px
+    border-radius: 3px
+  &.graph
+    background: #e5e5e5 url("/images/icons/graph.png") no-repeat 3px 3px
+    border-radius: 3px
+  &.html
+    background: #e5e5e5 url("/images/icons/html.png") no-repeat 3px 3px
+    border-radius: 3px
+  &.poll
+    background: #e5e5e5 url("/images/icons/rainbow.png") no-repeat 3px 3px
+    border-radius: 3px
+  &:hover
+    background-color: #fff
+  &:active
+    background-color: #ccc
 
 .ico-text
   display: inline-block
