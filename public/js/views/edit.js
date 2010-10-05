@@ -311,6 +311,38 @@ $(".ico-text.bold").live("click", function(){
   repositionOverlay(obj);
 });
 
+$(".ico-text.italic").live("click", function(){
+  if (currentlyEditing) commitObjectChanges();
+  var obj = $("#active-slide .slide-object.selected");
+  var text = obj.children(".content");
+  
+  if ($(this).hasClass("selected")){
+    $(this).removeClass("selected");
+    text.css("font-style", "normal");
+  }else{
+    $(this).addClass("selected");
+    text.css("font-style", "italic");
+  }
+  updateObject(obj);
+  repositionOverlay(obj);
+});
+
+$(".ico-text.underline").live("click", function(){
+  if (currentlyEditing) commitObjectChanges();
+  var obj = $("#active-slide .slide-object.selected");
+  var text = obj.children(".content");
+  
+  if ($(this).hasClass("selected")){
+    $(this).removeClass("selected");
+    text.css("text-decoration", "none");
+  }else{
+    $(this).addClass("selected");
+    text.css("text-decoration", "underline");
+  }
+  updateObject(obj);
+  repositionOverlay(obj);
+});
+
 function commitObjectChanges(){
   var obj = $("#active-slide .slide-object.selected");
   currentObject = showData[currentSlideIndex][$(obj).attr('id')];
@@ -368,9 +400,9 @@ function showEditOverlay(uiObject){
       overlay.find(".ico-text.align").each(function(){
         if ($(this).hasClass(objData.text_align)) $(this).addClass("selected");
       });
-      if (objData.bold == true) $(".ico-text.bold").addClass("selected");
-      if (objData.italic == true) $(".ico-text.italic").addClass("selected");
-      if (objData.underline == true) $(".ico-text.underline").addClass("selected");
+      if (objData.font_weight == "bold") $(".ico-text.bold").addClass("selected");
+      if (objData.font_style == "italic") $(".ico-text.italic").addClass("selected");
+      if (objData.text_decoration == "underline") $(".ico-text.underline").addClass("selected");
       
       overlay.append("<br/>");
     } else if (currentObject.o_class == "SOImage"){
@@ -424,8 +456,9 @@ function updateObject(uiObject, classIfNew){
     objData.font_size = uiObject.css("font-size");
     objData.text_align = uiObject.css("text-align");
     objData.color = content.css("color");
-    objData.bold = (content.css("font-weight") == "bold");
-    
+    objData.font_weight = content.css("font-weight");
+    objData.font_style = content.css("font-style");
+    objData.text_decoration = content.css("text-decoration");
     
     
 
@@ -458,15 +491,10 @@ function updateTinySlide(uiObject){
     tinyObject.css("font-size", objData.font_size);
     tinyObject.css("text-align", objData.text_align);
     content.css("color", objData.color);
-    if (objData.bold){
-      content.css("font-weight", "bold");
-    }else{
-      content.css("font-weight", "normal");
-    }
+    content.css("font-weight", objData.font_weight);
+    content.css("font-style", objData.font_style);
+    content.css("text-decoration", objData.text_decoration);
     
-    
-    
-
   } else if (currentObject.o_class == "SOImage"){
     tinyObject.children("img").attr("src", objData.src);
 
