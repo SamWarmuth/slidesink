@@ -48,6 +48,10 @@ $(document).ready(function(){
   });
 
   $(document).bind('keydown', function(e) {
+    if (e.keyCode == 27){
+      if (lights_out) toggleLights();
+      return false;
+    }
     if (e.keyCode == arrow.left){
       slideLeft();
       return false;

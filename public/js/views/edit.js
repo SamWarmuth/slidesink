@@ -77,7 +77,7 @@ $(".ico-colorpicker").live("click", function(){
     return false;
   }
   var overlay = $(".edit-overlay");
-  $('.colorpicker').farbtastic(function(color){
+  $.farbtastic('.colorpicker', function(color){
     if (currentlyEditing) commitObjectChanges();
     var obj = $("#active-slide .slide-object.selected");
     currentObject = showData[currentSlideIndex][obj.attr('id')];
@@ -85,7 +85,7 @@ $(".ico-colorpicker").live("click", function(){
     if (currentObject.o_class != "SOText") return false;
     obj.children(".content").css("color", color);
     updateObject(obj);
-  });
+  }).setColor(rgbToHex(currentObject.data.color));
   
   overlayPosition = overlay.position();
   $(".colorpicker").css("left", overlayPosition.left + overlay.width() + 25);
@@ -323,10 +323,17 @@ function showEditOverlay(uiObject){
       overlay.append("<span style='font-size: 1.2em'>Text</span>");
       overlay.append("<div style='float: right; margin-left: 15px; position: relative; top: -2px;' class='awesome medium red delete-current-object'>Delete</div><br/>");
       overlay.append("<div style='clear: both; margin-top: 10px;'></div>");
-      overlay.append("<div class='ico-text-align left'></div>");
-      overlay.append("<div class='ico-text-align center'></div>");
-      overlay.append("<div class='ico-text-align right'></div>");
-      overlay.append("<div class='ico-colorpicker'></div>");
+      overlay.append("<div class='ico-text bold'></div>");
+      overlay.append("<div class='ico-text italic'></div>");
+      overlay.append("<div class='ico-text underline'></div>");
+      
+      overlay.append("<div class='ico-text left-align' style='margin-left: 10px'></div>");
+      overlay.append("<div class='ico-text center-align'></div>");
+      overlay.append("<div class='ico-text right-align'></div>");
+
+      
+      
+      
 
       overlay.append("<div style='clear: both; margin-top: 5px;'></div>");
       overlay.append("<span style='font-size: 0.5em;'>A</span>");
@@ -335,7 +342,9 @@ function showEditOverlay(uiObject){
       overlay.append("<input type='radio' name='font-size' value='2em'/>");
       overlay.append("<input type='radio' name='font-size' value='2.5em'/>");
       overlay.append("<input type='radio' name='font-size' value='3.5em'/>");
-      overlay.append("<span style='font-size: 1em;'>A</span>");      
+      overlay.append("<span style='font-size: 1em;'>A</span>");
+      overlay.append("<div class='ico-colorpicker' style='margin-left: 29px; position: relative; top: 5px;'></div>");
+           
       overlay.find("input:radio[name=font-size]").each(function(){
         if ($(this).val() == objData.font_size) $(this).attr('checked', 'checked');
       });
@@ -443,6 +452,22 @@ function addSlide(){
   slideCount++;
 }
 
+
+function rgbToHex(rgbString){
+
+  var parts = rgbString
+          .match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+  ;
+  // parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
+
+  delete (parts[0]);
+  for (var i = 1; i <= 3; ++i) {
+      parts[i] = parseInt(parts[i]).toString(16);
+      if (parts[i].length == 1) parts[i] = '0' + parts[i];
+  }
+  var hexString = parts.join(''); // "0070ff"
+  return "#" + hexString
+}
 
 
 

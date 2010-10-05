@@ -243,31 +243,51 @@ code
   color: white
   white-space: normal
 
-.ico-text-align
+.ico-text
   display: inline-block
   background: #fff
   border: 1px solid #fff
   width: 16px
   height: 16px
   padding: 3px
-  &.left
+  &.left-align
     background: #ddd url("/images/icons/text_align_left.png") no-repeat 3px 3px
     border-radius: 3px 0 0 3px
     border-right: none
     &.selected
       background: #5dc5fe url("/images/icons/text_align_left.png") no-repeat 3px 3px
-  &.center
+  &.center-align
     background: #ddd url("/images/icons/text_align_center.png") no-repeat 3px 3px
     border-radius: 0
     &.selected
       background: #5dc5fe url("/images/icons/text_align_center.png") no-repeat 3px 3px
-  &.right
+  &.right-align
     background: #ddd url("/images/icons/text_align_right.png") no-repeat 3px 3px
     border-radius: 0 3px 3px 0
     border-left: none
-    
     &.selected
       background: #5dc5fe url("/images/icons/text_align_right.png") no-repeat 3px 3px
+  &.bold
+    border-radius: 3px 0 0 3px
+    border-right: none
+    background: #ddd url("/images/icons/text_bold.png") no-repeat 3px 3px
+    &.selected
+      background: #5dc5fe url("/images/icons/text_bold.png") no-repeat 3px 3px
+    
+  &.italic
+    border-radius: 0
+    background: #ddd url("/images/icons/text_italic.png") no-repeat 3px 3px
+    &.selected
+      background: #5dc5fe url("/images/icons/text_italic.png") no-repeat 3px 3px
+    
+  &.underline
+    border-radius: 0 3px 3px 0
+    border-left: none
+    background: #ddd url("/images/icons/text_underline.png") no-repeat 3px 3px
+    &.selected
+      background: #5dc5fe url("/images/icons/text_underline.png") no-repeat 3px 3px
+    
+  
       
 .ico-colorpicker
   display: inline-block
