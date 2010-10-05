@@ -41,8 +41,8 @@ $(document).ready(function(){
     return false;
   });
   
-  $(".page").click(function(e){
-    if ($(e.target).hasClass("page") && lights_out){
+  $("body").click(function(e){
+    if (($(e.target).hasClass("body") || $(e.target).hasClass("page"))  && lights_out){
       toggleLights();
     }
   });

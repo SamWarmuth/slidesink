@@ -47,6 +47,8 @@ $("#active-slide .slide-object").liveResizeAndDrag({ handles: 'e, s, se', contai
 
 $("#active-slide .slide-object").live("dragstart", function(event, ui) {
   $(".edit-overlay").fadeOut(100);
+  $(".colorpicker").fadeOut(100);
+  
   $(".slide-object").removeClass("selected");
   $(this).addClass("selected");
 });
@@ -58,6 +60,8 @@ $("#active-slide .slide-object").live("dragstop", function(event, ui) {
 $("#active-slide .slide-object").live("resizestart", function(event, ui) {
   if (currentlyEditing) commitObjectChanges();
   $(".edit-overlay").fadeOut(100);
+  $(".colorpicker").fadeOut(100);
+  
   $(".slide-object").removeClass("selected");
   $(this).addClass("selected");
 });
@@ -65,6 +69,29 @@ $("#active-slide .slide-object").live("resizestop", function(event, ui) {
   //update tiny-slide
   updateObject(this);
   showEditOverlay(this);
+});
+
+$(".ico-colorpicker").live("click", function(){
+  if ($('.colorpicker').is(":visible")){
+    $('.colorpicker').fadeOut(200);
+    return false;
+  }
+  var overlay = $(".edit-overlay");
+  $('.colorpicker').farbtastic(function(color){
+    if (currentlyEditing) commitObjectChanges();
+    var obj = $("#active-slide .slide-object.selected");
+    currentObject = showData[currentSlideIndex][obj.attr('id')];
+    if (currentObject === undefined) return false;
+    if (currentObject.o_class != "SOText") return false;
+    obj.children(".content").css("color", color);
+    updateObject(obj);
+  });
+  
+  overlayPosition = overlay.position();
+  $(".colorpicker").css("left", overlayPosition.left + overlay.width() + 25);
+  $(".colorpicker").css("top", overlayPosition.top);
+  $(".colorpicker").fadeIn(200);
+  
 });
 
 $(".edit-image-src").live("click", function(){
@@ -102,11 +129,14 @@ $(".tiny-slide").live('click', function(){
   currentSlide = $(this);
   currentSlideIndex = $(".tiny-slide.selected").parent().index();
   $(".edit-overlay").fadeOut(150);
+  $(".colorpicker").fadeOut(150);
+  
   $("#active-slide").html($(this).html());
   $("#active-slide .slide-object").mouseover();
  });
  
  $("#active-slide .slide-object").live("click", function(){
+   $(".colorpicker").fadeOut(100);
    if ($(this).is(".selected")){
      $(".edit-overlay").fadeIn(100);
      return false;
@@ -145,6 +175,9 @@ $(".tiny-slide").live('click', function(){
 $(document).ready(function(){  
   
   $("#title").focus();
+
+  
+
   
   $("#title").keyup(function(){
     if (customUrl == false){
@@ -240,6 +273,7 @@ $(document).ready(function(){
     if (e.target.id == "active-slide"){
       if (currentlyEditing) commitObjectChanges();
       $(".edit-overlay").fadeOut(100);
+      $(".colorpicker").fadeOut(100);
     }
   });
   
@@ -283,7 +317,6 @@ function showEditOverlay(uiObject){
     
     if (currentObject === undefined) return false;
     
-    
     var objData = currentObject.data;
     overlay.text("");
     if (currentObject.o_class == "SOText"){
@@ -293,7 +326,7 @@ function showEditOverlay(uiObject){
       overlay.append("<div class='ico-text-align left'></div>");
       overlay.append("<div class='ico-text-align center'></div>");
       overlay.append("<div class='ico-text-align right'></div>");
-      overlay.append("<div class='ico-color-picker'></div>");
+      overlay.append("<div class='ico-colorpicker'></div>");
 
       overlay.append("<div style='clear: both; margin-top: 5px;'></div>");
       overlay.append("<span style='font-size: 0.5em;'>A</span>");
@@ -359,6 +392,8 @@ function updateObject(uiObject, classIfNew){
     objData.contents = uiObject.children(".content").text();
     objData.font_size = uiObject.css("font-size");
     objData.text_align = uiObject.css("text-align");
+    objData.color = uiObject.children(".content").css("color");
+    
     
 
   } else if (currentObject.o_class == "SOImage"){
@@ -387,6 +422,9 @@ function updateTinySlide(uiObject){
     tinyObject.children(".content").text($(uiObject).children(".content").text());
     tinyObject.css("font-size", objData.font_size);
     tinyObject.css("text-align", objData.text_align);
+    tinyObject.children(".content").css("color", objData.color);
+    
+    
     
 
   } else if (currentObject.o_class == "SOImage"){
