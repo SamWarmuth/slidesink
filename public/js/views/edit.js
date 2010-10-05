@@ -279,12 +279,12 @@ $(document).ready(function(){
   
 });
 
-$(".ico-text-align").live("click", function(){
+$(".ico-text.align").live("click", function(){
   var obj = $("#active-slide .slide-object.selected");
   var alignment = "left";
   if ($(this).hasClass("center")) alignment = "center";
   if ($(this).hasClass("right")) alignment = "right";
-  $(".ico-text-align").removeClass("selected");
+  $(".ico-text.align").removeClass("selected");
   $(this).addClass("selected");
   
   
@@ -327,9 +327,9 @@ function showEditOverlay(uiObject){
       overlay.append("<div class='ico-text italic'></div>");
       overlay.append("<div class='ico-text underline'></div>");
       
-      overlay.append("<div class='ico-text left-align' style='margin-left: 10px'></div>");
-      overlay.append("<div class='ico-text center-align'></div>");
-      overlay.append("<div class='ico-text right-align'></div>");
+      overlay.append("<div class='ico-text align left' style='margin-left: 10px'></div>");
+      overlay.append("<div class='ico-text align center'></div>");
+      overlay.append("<div class='ico-text align right'></div>");
 
       
       
@@ -348,7 +348,7 @@ function showEditOverlay(uiObject){
       overlay.find("input:radio[name=font-size]").each(function(){
         if ($(this).val() == objData.font_size) $(this).attr('checked', 'checked');
       });
-      overlay.find(".ico-text-align").each(function(){
+      overlay.find(".ico-text.align").each(function(){
         if ($(this).hasClass(objData.text_align)) $(this).addClass("selected");
       });
       overlay.append("<br/>");
