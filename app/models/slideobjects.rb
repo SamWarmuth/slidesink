@@ -15,11 +15,7 @@ class SlideObject < Hash
   end
   
   def basic_style
-    if self.center
-      return "display: block; position: absolute; top: #{self.top}; left: #{self.left}; margin: auto; opacity: #{self.opacity}; width: #{self.width}; height: #{self.height}"
-    else
-      return "display: block; position: absolute; left: #{self.left}; left: #{self.left}; top: #{self.top}; opacity: #{self.opacity}; width: #{self.width}; height: #{self.height}"
-    end
+    return "display: block; position: absolute; left: #{self.left}; top: #{self.top}; opacity: #{self.opacity}; width: #{self.width}; height: #{self.height}"
   end
   
 end
