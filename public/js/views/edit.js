@@ -384,15 +384,14 @@ function showEditOverlay(uiObject){
 
       
       
-      
 
       overlay.append("<div style='clear: both; margin-top: 5px;'></div>");
       overlay.append("<span style='font-size: 0.5em;'>A</span>");
       overlay.append("<input type='radio' name='font-size' value='1em'/>");
       overlay.append("<input type='radio' name='font-size' value='1.5em'/>");
       overlay.append("<input type='radio' name='font-size' value='2em'/>");
-      overlay.append("<input type='radio' name='font-size' value='2.5em'/>");
-      overlay.append("<input type='radio' name='font-size' value='3.5em'/>");
+      overlay.append("<input type='radio' name='font-size' value='3em'/>");
+      overlay.append("<input type='radio' name='font-size' value='4.5em'/>");
       overlay.append("<span style='font-size: 1em;'>A</span>");
       overlay.append("<div class='ico-colorpicker' style='margin-left: 29px; position: relative; top: 5px;'></div>");
            

@@ -28,21 +28,24 @@
     
 %body{:style => 'background: #ddd'}
   .edit-menu{:style => 'margin: 0px auto 10px auto; padding: 0 15px; width: 916px; text-align: center;'}
-    .awesome.gray.huge{:style => "margin: 0 5px; width: 150px;"} Dashboard
-    .awesome.green.huge{:style => "margin: 0 5px; width: 150px;"} Slideshows
-    .awesome.gray.huge{:style => "margin: 0 5px; width: 150px;"} Presentations
-    .awesome.gray.huge{:style => "margin: 0 5px; width: 150px;"} Account Settings
+    .awesome.gray.huge{:style => "margin: 0 10px; width: 150px; padding: 10px 5px;"} Dashboard
+    .awesome.green.huge{:style => "margin: 0 10px; width: 150px; padding: 10px 5px;"} Slideshows
+    .awesome.gray.huge{:style => "margin: 0 10px; width: 150px; padding: 10px 5px;"} Presentations
+    .awesome.gray.huge{:style => "margin: 0 10px; width: 150px; padding: 10px 5px;"} Account Settings
   .menubar{:style => "margin: 0 auto; width: 950px; position: relative; "}
     %a.awesome.blue.large{:href => "/new", :style => "display: inline-block; width: 75px; -webkit-box-shadow: none; border-radius: 5px 0 0 0; text-align: center;"} New Show
     %a.awesome.blue.large{:href => "/show/#{@show.url}", :style => "display: inline-block; width: 75px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0 5px 0 0; text-align: center;"} Open Show    
-  
   %form#basics{:action => "/edit", :method => "post", :style => 'width: 928px; margin: 0 auto; background: white; padding: 10px; border: 1px solid #fff; border-radius: 0 5px 0 0; position: relative;'}
+    .button-box{:style => "position: absolute;"}
+      #add-slide.add-object.add-slide
+      #add-slide.add-object.play
+    
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}
-    %label{:for => "title", :style => 'margin-right: 3px; margin-left: 10px'} Title
-    %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 150px"}
-    %label{:for => "url", :style => "margin-left: 25px; margin-right: 3px"} URL
-    %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 150px"}
-    %a#show-link{:href => "http://www.SlideMirror.com/show/#{@show.url}", :target => "_blank", :style => "margin-left: 20px"}
+    %label{:for => "title", :style => 'margin-right: 3px; margin-left: 235px'} Title
+    %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 100px"}
+    %label{:for => "url", :style => "margin-left: 15px; margin-right: 3px"} URL
+    %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 75px"}
+    %a#show-link{:href => "http://www.SlideMirror.com/show/#{@show.url}", :target => "_blank", :style => "margin-left: 10px"}
       View Show
     %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; position: relative; top: -6px; font-weight: bold"} Save
     %a.awesome.blue.medium.show-templates{:href => "save", :style => "width: 120px; margin-left: 10px; -webkit-box-shadow: none; text-align: center; float: right; position: relative; top: -2px"} Change Template
@@ -68,7 +71,6 @@
     
     .slide-viewer{:style => "float: right; width: 747px; height: 474px; position: relative; padding: 0; background: #ccc; border: 1px solid #999; border-top: none; border-left: none;"}
       .toolbar
-        %span{:style => "position: relative; top: -7px; margin: 5px"} Insert
         .add-object.text
         .add-object.image
         .add-object.youtube
@@ -102,11 +104,11 @@
           .awesome.red.medium.cancel-image-change{:style => 'display: inline-block; text-align: center;margin: auto; width: 100px'} Cancel
       .edit-overlay.no-select
       .colorpicker
-      #active-slide.slide{:style => "margin: 5px 10px", :class => "tmplt-" + @show.template.to_s}
+      #active-slide.slide{:style => "margin: 5px 12px", :class => "tmplt-" + @show.template.to_s}
       
     
     #slide-up.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 5px 5px 0 0; text-align: center;"} &#9650; 
-    #list-container{:style => "overflow: hidden; padding: 0; margin: 0; float: left; width: 160px; height: 345px; background: #BBB; padding: 10px 25px 10px 15px;  border: 1px solid #AAA; clear: left;"}
+    #list-container{:style => "overflow: hidden; padding: 0; margin: 0; float: left; width: 160px; height: 379px; background: #BBB; padding: 10px 25px 10px 15px;  border: 1px solid #AAA; clear: left;"}
       #slide-list{:style => "position: relative; margin: 0px; top: 0;"}
         -@show.slides.each_with_index do |slide, i|
           .slide-group{:style => "display: inline-block; position: relative;"}
@@ -114,8 +116,5 @@
             .tiny-slide{:id => slide.s_id, :class => "tmplt-" + @show.template.to_s}!= slide.html
             
     #slide-down.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0 0 5px 5px; text-align: center; clear: left;"} &#9660;
-    
-    %a#add-slide.awesome.green.large{:href => "", :style => "float: left; margin: 5px; width: 164px; -webkit-box-shadow: none; text-align: center; padding: 7px 12px 7px 9px; clear: left;"}
-      New Slide
       
       
