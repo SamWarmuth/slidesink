@@ -24,7 +24,7 @@ class SOText < SlideObject
   include CouchRest::CastedModel
 
   property :color, :default => "#000"
-  property :font_size, :default => "1em"
+  property :font_size, :default => "1.5em"
   property :contents, :default => ""
   property :text_align, :default => "left"
   property :font_weight, :default => "normal"

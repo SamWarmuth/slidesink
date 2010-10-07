@@ -26,14 +26,14 @@
   -else
     %title SlideMirror - Edit #{@show.title}
     
-%body{:style => 'background: #ddd'}
-  .menubar{:style => "margin: 25px auto 0 auto; width: 960px; position: relative;"}
+%body{:style => 'background: #333'}
+  .menubar{:style => "margin: 35px auto 0 auto; width: 960px; position: relative;"}
     %a.awesome.blue.large{:href => "/new", :style => "display: inline-block; width: 75px; -webkit-box-shadow: none; border-radius: 5px 0 0 0; text-align: center;"} New Show
-    %a.awesome.blue.large{:href => "/show/#{@show.url}", :style => "display: inline-block; width: 75px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0 5px 0 0; text-align: center;"} Open Show    
-    .awesome.large.gray{:style => "border-radius: 5px 0 0 5px; margin: 0 -1px 0 75px; position: relative; top: -15px"} Dashboard
-    .awesome.large.green{:style => "border-radius: 0; margin: 0 -1px; position: relative; top: -15px"} Slideshows
-    .awesome.large.gray{:style => "border-radius: 0; margin: 0 -1px; position: relative; top: -15px"} Presentations
-    .awesome.large.gray{:style => "border-radius: 0 5px 5px 0; margin: 0 -1px; position: relative; top: -15px"} Account Settings
+    %a.awesome.blue.large{:href => "/show/#{@show.url}", :style => "display: inline-block; width: 75px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0 5px 0 0; text-align: center;"} Open Show  
+    .awesome.large.gray{:style => "border-radius: 0 5px 5px 0; margin: 0 1px;float: right; position: relative; top: -25px"} Account Settings
+    .awesome.large.gray{:style => "border-radius: 0; margin: 0 0 0 1px;float: right; position: relative; top: -25px"} Presentations
+    .awesome.large.green{:style => "border-radius: 0; margin: 0 0 0 1px;float: right; position: relative; top: -25px"} Slideshows
+    .awesome.large.gray{:style => "border-radius: 5px 0 0 5px; float: right; position: relative; top: -25px"} Dashboard
   %form#basics{:action => "/edit", :method => "post", :style => 'width: 938px; margin: 0 auto; background: white; padding: 10px; border: 1px solid #aaa; border-radius: 0 5px 0 0; position: relative;'}
     .button-box{:style => "position: absolute;"}
       #add-slide.add-object.add-slide
@@ -42,10 +42,10 @@
       
     
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}
-    %label{:for => "title", :style => 'margin-right: 3px; margin-left: 235px'} Title
-    %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 100px"}
-    %label{:for => "url", :style => "margin-left: 15px; margin-right: 3px"} URL
-    %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 75px"}
+    %label{:for => "title", :style => 'margin-right: 3px; margin-left: 285px'} Title
+    %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 150px"}
+    %label{:for => "url", :style => "margin-left: 25px; margin-right: 3px"} URL
+    %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 150px"}
     %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; -webkit-box-shadow: none; text-align: center; position: relative; top: -4px; font-weight: bold"} Save
     
     .template-chooser
@@ -68,7 +68,7 @@
   
   .guiedit{:style => "margin: 0 auto; width: 960px; position: relative;"}
     
-    .slide-viewer{:style => "float: right; width: 757px; height: 474px; position: relative; padding: 0; background: #ccc; border: 1px solid #999; border-top: none; border-left: none; border-radius: 0 0 5px 0;"}
+    .slide-viewer{:style => "float: right; width: 797px; height: 474px; position: relative; padding: 0; background: #ddd; border: 1px solid #999; border-top: none; border-left: none; border-radius: 0 0 5px 0;"}
       .toolbar
         .add-object.text
         .add-object.image
@@ -103,18 +103,18 @@
           .awesome.red.medium.cancel-image-change{:style => 'display: inline-block; text-align: center;margin: auto; width: 100px'} Cancel
       .edit-overlay.no-select
       .colorpicker
-      #active-slide.slide{:style => "margin: 5px 18px", :class => "tmplt-" + @show.template.to_s}
+      #active-slide.slide{:style => "margin: 7px 36px", :class => "tmplt-" + @show.template.to_s}
       
     
-    #slide-up.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0; text-align: center;"} &#9650; 
-    #list-container{:style => "overflow: hidden; padding: 0; margin: 0; float: left; width: 160px; height: 379px; background: #BBB; padding: 10px 25px 10px 15px;  border: 1px solid #AAA; clear: left;"}
+    #slide-up.no-select.awesome.large{:style => "display: none;width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0; text-align: center;"} &#9650; 
+    #list-container{:style => "overflow: auto; padding: 0; margin: 0; float: left; width: 130px; height: 463px; background: #BBB; padding: 5px 20px 5px 10px;  border: 1px solid #AAA; clear: left;  border-radius: 0 0 0 5px;"}
       #slide-list{:style => "position: relative; margin: 0px; top: 0;"}
         -@show.slides.each_with_index do |slide, i|
           .slide-group{:style => "display: inline-block; position: relative;"}
             .close-box
             .tiny-slide{:id => slide.s_id, :class => "tmplt-" + @show.template.to_s}!= slide.html
             
-    #slide-down.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0 0 0 5px ; text-align: center; clear: left;"} &#9660;
+    #slide-down.no-select.awesome.large{:style => "display: none;width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0 0 0 5px ; text-align: center; clear: left;"} &#9660;
     .clear{:style => "clear: both;"}
       
       

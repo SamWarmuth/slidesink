@@ -202,7 +202,7 @@ $(document).ready(function(){
   });
   
   $(".add-object.text").click(function(){
-    var defaultHTML = $("<div class='slide-object' style='display: block; position: absolute; left: 10%; top: 10%; opacity: 1.0; width: 25%; color: black; font-size: 1em;'><div class='content'>Text Here</div></div>").attr("id", ((new Date).getTime()%100000000 + ""));
+    var defaultHTML = $("<div class='slide-object' style='display: block; position: absolute; left: 10%; top: 10%; opacity: 1.0; width: 25%; color: black; font-size: 1.5em;'><div class='content'>Text Here</div></div>").attr("id", ((new Date).getTime()%100000000 + ""));
     $(".tiny-slide.selected").append(defaultHTML);
     $("#active-slide").html($(".tiny-slide.selected").html());
     updateObject(defaultHTML, "SOText");
@@ -432,7 +432,7 @@ function repositionOverlay(uiObject){
   var position = $(uiObject).position();
   var overlay = $(".edit-overlay");
   overlay.css('left', position.left+"px");
-  overlay.css('top', (position.top+$(uiObject).height() + 60)+"px");
+  overlay.css('top', (position.top + $(uiObject).height() + 60)+"px");
 }
 
 function updateObject(uiObject, classIfNew){
