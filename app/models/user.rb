@@ -2,10 +2,8 @@ class User < CouchRest::ExtendedDocument
   use_database COUCHDB_SERVER
   
   property :name
-  property :email
-  
+  property :email  
   property :date_created
-
 
   def set_password(password)
     self.salt = 64.times.map{|l|('a'..'z').to_a[rand(25)]}.join
@@ -19,6 +17,4 @@ class User < CouchRest::ExtendedDocument
   property :password_hash
   property :salt
   property :challenges
-
-
 end

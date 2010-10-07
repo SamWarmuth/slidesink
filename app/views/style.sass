@@ -158,6 +158,17 @@ code
   h3
     font-size: 0.8em
     text-align: center
+    
+.close-box
+  position: absolute
+  width: 24px
+  height: 24px
+  top: 5px
+  left: 5px
+  display: none
+  background: url("/images/close.png")
+  cursor: pointer
+  z-index: 500
 #active-slide    
   .slide-object
     min-width: 25px
@@ -248,6 +259,22 @@ code
   color: white
   white-space: normal
 
+.toolbar
+  outline: none
+  display: inline-block
+  float: right
+  width: 738px
+  height: 24px
+  padding: 6px
+  margin: 0 0 5px 0
+  text-align: center
+  border-top: 1px solid #ccc
+  background: #ffffff
+  background: -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%)
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f1f1f1), color-stop(51%,#e1e1e1), color-stop(100%,#f6f6f6))
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0 )
+    
+    
 .add-object
   display: inline-block
   background: #eee
@@ -255,6 +282,7 @@ code
   width: 16px
   height: 16px
   padding: 3px
+  cursor: pointer
   &.text
     background: #e5e5e5 url("/images/icons/text.png") no-repeat 3px 3px
     border-radius: 3px
@@ -279,7 +307,7 @@ code
     background: #e5e5e5 url("/images/icons/rainbow.png") no-repeat 3px 3px
     border-radius: 3px
   &:hover
-    background-color: #fff
+    background-color: #AAA
   &:active
     background-color: #ccc
 

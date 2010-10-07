@@ -67,8 +67,9 @@
   .guiedit{:style => "margin: 0 auto; width: 950px; position: relative;"}
   
     
-    .slide-viewer{:style => "float: right; width: 720px; height: 524px; position: relative; padding: 0;"}
-      .input-pallet{:style => "outline: none; display: inline-block; float: right; width: 720px; height: 40px;   margin: 5px 0 10px 0; text-align: center;"}
+    .slide-viewer{:style => "float: right; width: 747px; height: 474px; position: relative; padding: 0; background: #ccc; border: 1px solid #999; border-top: none; border-left: none;"}
+      .toolbar
+        %span{:style => "position: relative; top: -7px; margin: 5px"} Insert
         .add-object.text
         .add-object.image
         .add-object.youtube
@@ -102,15 +103,15 @@
           .awesome.red.medium.cancel-image-change{:style => 'display: inline-block; text-align: center;margin: auto; width: 100px'} Cancel
       .edit-overlay.no-select
       .colorpicker
-      #active-slide.slide{:style => "margin: 0", :class => "tmplt-" + @show.template.to_s}
+      #active-slide.slide{:style => "margin: 5px 10px", :class => "tmplt-" + @show.template.to_s}
       
     
     #slide-up.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 5px 5px 0 0; text-align: center;"} &#9650; 
-    #list-container{:style => "overflow: hidden; padding: 0; margin: 0; float: left; width: 160px; height: 330px; background: #BBB; padding: 10px 25px 10px 15px;  border: 1px solid #BBB; clear: left;"}
+    #list-container{:style => "overflow: hidden; padding: 0; margin: 0; float: left; width: 160px; height: 345px; background: #BBB; padding: 10px 25px 10px 15px;  border: 1px solid #AAA; clear: left;"}
       #slide-list{:style => "position: relative; margin: 0px; top: 0;"}
         -@show.slides.each_with_index do |slide, i|
           .slide-group{:style => "display: inline-block; position: relative;"}
-            .close-box{:style => 'position: absolute; width: 24px; height: 24px; top: 5px; left: 5px; display: none; background: url("/images/close.png"); cursor: pointer; z-index: 500;'}
+            .close-box
             .tiny-slide{:id => slide.s_id, :class => "tmplt-" + @show.template.to_s}!= slide.html
             
     #slide-down.no-select.awesome.large{:style => "width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0 0 5px 5px; text-align: center; clear: left;"} &#9660;
