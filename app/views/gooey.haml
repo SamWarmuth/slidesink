@@ -38,7 +38,7 @@
     .button-box{:style => "position: absolute;"}
       #add-slide.add-object.add-slide{:title => "Add a Slide to This Show"}
       .add-object.themes.show-templates{:title => "Change the Show Theme"}
-      %a#show-link.add-object.play{:href => "http://www.SlideMirror.com/show/#{@show.url}", :target => "_blank", :style => "margin-left: 10px;", :title => "Start Slideshow in a New Window"}
+      %a#show-link.add-object.play{:href => "http://#{request.env["HTTP_HOST"]}/show/#{@show.url}", :target => "_blank", :style => "margin-left: 10px;", :title => "Start Slideshow in a New Window"}
       
     
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}

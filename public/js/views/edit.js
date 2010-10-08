@@ -395,7 +395,7 @@ function showEditOverlay(uiObject){
       overlay.append("<input type='radio' name='font-size' value='3em'/>");
       overlay.append("<input type='radio' name='font-size' value='4.5em'/>");
       overlay.append("<span style='font-size: 1em;'>A</span>");
-      overlay.append("<div class='ico-colorpicker' style='margin-left: 29px; position: relative; top: 5px;'></div>");
+      overlay.append("<div class='ico-fontcolor' style='margin-left: 29px; position: relative; top: 5px;'></div>");
       overlay.append("<hr/>")
       overlay.append("<div class='ico-text arrange back'></div>");
       overlay.append("<div class='ico-text arrange backwards'></div>");
@@ -406,7 +406,7 @@ function showEditOverlay(uiObject){
       overlay.append("<br/>");
       
       overlay.append("Fill ");
-      overlay.append("<div class='ico-fontcolor' style='margin: 0; position: relative; top: 5px;'></div>");
+      overlay.append("<div class='ico-fillcolor' style='margin: 0; position: relative; top: 5px;'></div>");
       overlay.append("<br/>");
       
            
