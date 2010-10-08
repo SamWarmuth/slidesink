@@ -31,12 +31,24 @@ function save(){
   $.each($('#basics').serializeArray(), function(index,value) {
     basics[value.name] = value.value;
   });
-  
+
+  reorderShowSlides();
   $.post("/save-show", {'info':basics, 'slides':showData}, function(data){
     if (data != "") window.location = data;
     else humanMsg.displayMsg('<strong>Show Saved</strong>');
   });
 }
+
+function reorderShowSlides(){
+  var order = [];
+  $("#slide-list").find("li .tiny-slide").each(function(){
+    order.push($(this).attr("id"));
+  });
+  showData.sort(function(a, b){
+    return ($.inArray(a.slide_id+"", order)) - ($.inArray(b.slide_id+"", order))
+  });
+}
+
 var currentSlide = "";
 var currentSlideIndex = 0;
 var currentObject = "";
@@ -176,8 +188,21 @@ $(".tiny-slide").live('click', function(){
    updateObject(obj);
    repositionOverlay(obj);
  });
-
+var dips = "";
 $(document).ready(function(){  
+  //preload images
+  $("<img src='/images/icons/text_align_left.png'/>");
+  $("<img src='/images/icons/text_align_right.png'/>");
+  $("<img src='/images/icons/text_align_center.png'/>");
+  $("<img src='/images/icons/move_back.png'/>");
+  $("<img src='/images/icons/move_backwards.png'/>");
+  $("<img src='/images/icons/move_forwards.png'/>");
+  $("<img src='/images/icons/move_front.png'/>");
+  $("<img src='/images/icons/text_bold.png'/>");
+  $("<img src='/images/icons/text_italic.png'/>");
+  $("<img src='/images/icons/text_underline.png'/>");
+  $("<img src='/images/icons/color_wheel.png'/>");
+
   
   $(document).bind('keydown', function(e) {
      if (e.which == 8 && !currentlyEditing){
@@ -185,6 +210,8 @@ $(document).ready(function(){
        return false;
      }
   });
+  
+  $("#slide-list").sortable();
   
 
   
@@ -517,7 +544,7 @@ function updateTinySlide(uiObject){
 
 function addSlide(){
   var slideID = ((new Date).getTime()%100000000);
-  $("#slide-list").append("<div class='slide-group' style='display: inline-block; position: relative'><div class='close-box'></div><div class='tiny-slide tmplt-" + showTemplate + "' id='" + slideID + "'></div></div>");
+  $("#slide-list").append("<li class='slide-group' style='display: inline-block; position: relative'><div class='close-box'></div><div class='tiny-slide tmplt-" + showTemplate + "' id='" + slideID + "'></div></div>");
   showData.push({'slide_id':slideID});
   $(".tiny-slide").last().click();
   

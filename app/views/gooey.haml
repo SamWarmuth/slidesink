@@ -108,9 +108,9 @@
     
     #slide-up.no-select.awesome.large{:style => "display: none;width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0; text-align: center;"} &#9650; 
     #list-container{:style => "overflow: auto; padding: 0; margin: 0; float: left; width: 130px; height: 463px; background: #BBB; padding: 5px 20px 5px 10px;  border: 1px solid #AAA; clear: left;  border-radius: 0 0 0 5px;"}
-      #slide-list{:style => "position: relative; margin: 0px; top: 0;"}
+      %ul#slide-list{:style => "position: relative; margin: 0px; padding: 0px; top: 0;"}
         -@show.slides.each_with_index do |slide, i|
-          .slide-group{:style => "display: inline-block; position: relative;"}
+          %li.slide-group{:style => "display: inline-block; position: relative; margin: 0;"}
             .close-box
             .tiny-slide{:id => slide.s_id, :class => "tmplt-" + @show.template.to_s}!= slide.html
             
