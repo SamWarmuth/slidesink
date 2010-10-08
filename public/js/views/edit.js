@@ -279,7 +279,7 @@ $(document).ready(function(){
   $(".slide-group").live("mouseleave", function(){
     $(this).children(".close-box").fadeOut(50);
   });
-  $(".close-box").click(function(){
+  $(".close-box").live("click", function(){
     var index = $(this).parent().index();
     if (index != -1) showData.splice(index, 1);
     if ($(this).parent().is(".selected")) $(".tiny-slide").first.click();
@@ -544,7 +544,7 @@ function updateTinySlide(uiObject){
 
 function addSlide(){
   var slideID = ((new Date).getTime()%100000000);
-  $("#slide-list").append("<li class='slide-group' style='display: inline-block; position: relative'><div class='close-box'></div><div class='tiny-slide tmplt-" + showTemplate + "' id='" + slideID + "'></div></div>");
+  $("#slide-list").append("<li class='slide-group' style='display: inline-block; position: relative; margin: 0;'><div class='close-box'></div><div class='tiny-slide tmplt-" + showTemplate + "' id='" + slideID + "'></div></div>");
   showData.push({'slide_id':slideID});
   $(".tiny-slide").last().click();
   

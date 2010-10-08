@@ -35,7 +35,7 @@
     .awesome.large.green{:style => "border-radius: 0; margin: 0 0 0 1px;float: right; position: relative; top: -25px"} Slideshows
     .awesome.large.gray{:style => "border-radius: 5px 0 0 5px; float: right; position: relative; top: -25px"} Dashboard
   %form#basics{:action => "/edit", :method => "post", :style => 'width: 938px; margin: 0 auto; background: white; padding: 10px; border: 1px solid #aaa; border-radius: 0 5px 0 0; position: relative;'}
-    .button-box{:style => "position: absolute;"}
+    .button-box.no-select{:style => "position: absolute;"}
       #add-slide.add-object.add-slide{:title => "Add a Slide to This Show"}
       .add-object.themes.show-templates{:title => "Change the Show Theme"}
       %a#show-link.add-object.play{:href => "http://#{request.env["HTTP_HOST"]}/show/#{@show.url}", :target => "_blank", :style => "margin-left: 10px;", :title => "Start Slideshow in a New Window"}
@@ -69,7 +69,7 @@
   .guiedit{:style => "margin: 0 auto; width: 960px; position: relative;"}
     
     .slide-viewer{:style => "float: right; width: 797px; height: 474px; position: relative; padding: 0; background: #ddd; border: 1px solid #999; border-top: none; border-left: none; border-radius: 0 0 5px 0;"}
-      .toolbar
+      .toolbar.no-select
         .add-object.text{:title => "Add a Text Box to This Slide"}
         .add-object.image{:title => "Add an Image to This Slide"}
         .add-object.youtube{:title => "Add a YouTube Video to This Slide"}
