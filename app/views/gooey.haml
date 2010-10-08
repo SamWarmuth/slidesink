@@ -36,9 +36,9 @@
     .awesome.large.gray{:style => "border-radius: 5px 0 0 5px; float: right; position: relative; top: -25px"} Dashboard
   %form#basics{:action => "/edit", :method => "post", :style => 'width: 938px; margin: 0 auto; background: white; padding: 10px; border: 1px solid #aaa; border-radius: 0 5px 0 0; position: relative;'}
     .button-box{:style => "position: absolute;"}
-      #add-slide.add-object.add-slide
-      .add-object.themes.show-templates
-      %a#show-link.add-object.play{:href => "http://www.SlideMirror.com/show/#{@show.url}", :target => "_blank", :style => "margin-left: 10px;"}
+      #add-slide.add-object.add-slide{:title => "Add a Slide to This Show"}
+      .add-object.themes.show-templates{:title => "Change the Show Theme"}
+      %a#show-link.add-object.play{:href => "http://www.SlideMirror.com/show/#{@show.url}", :target => "_blank", :style => "margin-left: 10px;", :title => "Start Slideshow in a New Window"}
       
     
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}
@@ -70,13 +70,13 @@
     
     .slide-viewer{:style => "float: right; width: 797px; height: 474px; position: relative; padding: 0; background: #ddd; border: 1px solid #999; border-top: none; border-left: none; border-radius: 0 0 5px 0;"}
       .toolbar
-        .add-object.text
-        .add-object.image
-        .add-object.youtube
-        .add-object.map
-        .add-object.graph
-        .add-object.html
-        .add-object.poll
+        .add-object.text{:title => "Add a Text Box to This Slide"}
+        .add-object.image{:title => "Add an Image to This Slide"}
+        .add-object.youtube{:title => "Add a YouTube Video to This Slide"}
+        .add-object.map{:title => "Add a Google Map to This Slide"}
+        .add-object.graph{:title => "Add a Graph to This Slide"}
+        .add-object.html{:title => "Add an HTML snippet to This Slide"}
+        .add-object.poll{:title => "Add a Poll to This Slide"}
       .image-chooser
         %b{:style => "font-size: 2em"} Edit Image Source
         %p
@@ -116,5 +116,8 @@
             
     #slide-down.no-select.awesome.large{:style => "display: none;width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0 0 0 5px ; text-align: center; clear: left;"} &#9660;
     .clear{:style => "clear: both;"}
+    .copyright{:style => "text-align: center; color: #222; margin: 20px;"}
+      %img{:src => "/images/glider-gray.png"}
+      2011 Sam Warmuth
       
       

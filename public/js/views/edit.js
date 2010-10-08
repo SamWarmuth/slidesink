@@ -43,7 +43,7 @@ var currentObject = "";
 var currentField = "";
 var currentlyEditing = false;
 
-$("#active-slide .slide-object").liveResizeAndDrag({ handles: 'e, s, se', containment: "#active-slide"}, {containment: "#active-slide"});
+$("#active-slide .slide-object").liveResizeAndDrag({ handles: 'n, e, s, w, se, sw, ne, nw', containment: "#active-slide"}, {containment: "#active-slide"});
 
 $("#active-slide .slide-object").live("dragstart", function(event, ui) {
   $(".edit-overlay").fadeOut(100);
@@ -71,7 +71,7 @@ $("#active-slide .slide-object").live("resizestop", function(event, ui) {
   showEditOverlay(this);
 });
 
-$(".ico-colorpicker").live("click", function(){
+$(".ico-fontcolor").live("click", function(){
   if ($('.colorpicker').is(":visible")){
     $('.colorpicker').fadeOut(200);
     return false;
@@ -112,6 +112,11 @@ $(".cancel-image-change").live("click", function(){
 });
 
 $(".delete-current-object").live("click", function(){
+  deleteCurrentObject();
+  return false;
+});
+
+function deleteCurrentObject(){
   var obj = $("#active-slide .slide-object.selected");
   obj.removeClass("selected");
   obj.fadeOut(150).html("");
@@ -121,7 +126,7 @@ $(".delete-current-object").live("click", function(){
   tinyObject.fadeOut(100);
   $(".edit-overlay").fadeOut(150);
   return false;
-});
+}
 
 $(".tiny-slide").live('click', function(){
   $(".tiny-slide").removeClass("selected");
@@ -174,8 +179,12 @@ $(".tiny-slide").live('click', function(){
 
 $(document).ready(function(){  
   
-  $("#title").focus();
-
+  $(document).bind('keydown', function(e) {
+     if (e.which == 8 && !currentlyEditing){
+       deleteCurrentObject();
+       return false;
+     }
+  });
   
 
   
@@ -234,11 +243,6 @@ $(document).ready(function(){
     $('#slide-list').stop(false, true).animate({top: "-=172"}, 300, 'easeInOutQuad');
   });
   
-  $(".tabarea").keydown(function(e){
-    if (e.keyCode == 9){
-      return false;
-    }
-  });
   
   
   $(".slide-group").live("mouseenter", function(){
@@ -274,6 +278,7 @@ $(document).ready(function(){
   $("#active-slide").click(function(e){
     if (e.target.id == "active-slide"){
       if (currentlyEditing) commitObjectChanges();
+      $("#active-slide .slide-object.selected").removeClass("selected");
       $(".edit-overlay").fadeOut(100);
       $(".colorpicker").fadeOut(100);
     }
@@ -371,9 +376,6 @@ function showEditOverlay(uiObject){
     var objData = currentObject.data;
     overlay.text("");
     if (currentObject.o_class == "SOText"){
-      overlay.append("<span style='font-size: 1.2em'>Text</span>");
-      overlay.append("<div style='float: right; margin-left: 15px; position: relative; top: -2px;' class='awesome medium red delete-current-object'>Delete</div><br/>");
-      overlay.append("<div style='clear: both; margin-top: 10px;'></div>");
       overlay.append("<div class='ico-text bold'></div>");
       overlay.append("<div class='ico-text italic'></div>");
       overlay.append("<div class='ico-text underline'></div>");
@@ -394,6 +396,19 @@ function showEditOverlay(uiObject){
       overlay.append("<input type='radio' name='font-size' value='4.5em'/>");
       overlay.append("<span style='font-size: 1em;'>A</span>");
       overlay.append("<div class='ico-colorpicker' style='margin-left: 29px; position: relative; top: 5px;'></div>");
+      overlay.append("<hr/>")
+      overlay.append("<div class='ico-text arrange back'></div>");
+      overlay.append("<div class='ico-text arrange backwards'></div>");
+      overlay.append("<div class='ico-text arrange forwards'></div>");
+      overlay.append("<div class='ico-text arrange front'></div>");
+      overlay.append("<br/><br/>");
+      overlay.append("Stroke");
+      overlay.append("<br/>");
+      
+      overlay.append("Fill ");
+      overlay.append("<div class='ico-fontcolor' style='margin: 0; position: relative; top: 5px;'></div>");
+      overlay.append("<br/>");
+      
            
       overlay.find("input:radio[name=font-size]").each(function(){
         if ($(this).val() == objData.font_size) $(this).attr('checked', 'checked');
@@ -407,10 +422,8 @@ function showEditOverlay(uiObject){
       
       overlay.append("<br/>");
     } else if (currentObject.o_class == "SOImage"){
-      overlay.append("<span style='font-size: 1.2em'>Image</span>");
-      overlay.append("<div style='float: right;' class='awesome medium red delete-current-object'>Delete</div><br/>");
-      overlay.append("<div style='clear: both; margin-top: 15px;'></div>");
       overlay.append("<div class='awesome medium green edit-image-src'>Change Image Source</div><br/>");
+      
     } else{
       overlay.append("Unsupported object type\n");
     }

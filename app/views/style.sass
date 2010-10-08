@@ -118,7 +118,7 @@ code
   height: 405px
   background: #fff
   border: 1px solid #bbb
-  border-radius: 5px
+  border-radius: 3px
   margin: 0 40px
   padding: 0
   font-size: 1.5em
@@ -142,7 +142,7 @@ code
   height: 67.5px
   font-size: 4px
   background: #fff
-  border-radius: 5px
+  border-radius: 2px
   margin: 5px 5px
   white-space: normal
   padding: 0
@@ -171,8 +171,8 @@ code
     
 .close-box
   position: absolute
-  width: 24px
-  height: 24px
+  width: 18px
+  height: 18px
   top: 5px
   left: 5px
   display: none
@@ -323,7 +323,7 @@ code
       background-color: #FF7
       
   &:hover
-    background-color: #DF7
+    background-color: #CF7
   &:active
     top: 1px
     background-color: #9DC425  
@@ -364,43 +364,46 @@ code
   width: 16px
   height: 16px
   padding: 3px
+
   &.align
     &.left
       background: #e5e5e5 url("/images/icons/text_align_left.png") no-repeat 3px 3px
       border-radius: 3px 0 0 3px
       border-right: none
-      &.selected
-        background: #5dc5fe url("/images/icons/text_align_left.png") no-repeat 3px 3px
     &.center
       background: #e5e5e5 url("/images/icons/text_align_center.png") no-repeat 3px 3px
       border-radius: 0
-      &.selected
-        background: #5dc5fe url("/images/icons/text_align_center.png") no-repeat 3px 3px
     &.right
       background: #e5e5e5 url("/images/icons/text_align_right.png") no-repeat 3px 3px
       border-radius: 0 3px 3px 0
       border-left: none
-      &.selected
-        background: #5dc5fe url("/images/icons/text_align_right.png") no-repeat 3px 3px
+  &.arrange
+    border-radius: 3px
+    margin: 0 2px
+    &.back
+      background: #ccc url("/images/icons/move_back.png") no-repeat 3px 3px
+    &.backwards
+      background: #ccc url("/images/icons/move_backwards.png") no-repeat 3px 3px
+    &.forwards
+      background: #ccc url("/images/icons/move_forwards.png") no-repeat 3px 3px
+    &.front
+      background: #ccc url("/images/icons/move_front.png") no-repeat 3px 3px
+    
   &.bold
     border-radius: 3px 0 0 3px
     border-right: none
     background: #e5e5e5 url("/images/icons/text_bold.png") no-repeat 3px 3px
-    &.selected
-      background: #5dc5fe url("/images/icons/text_bold.png") no-repeat 3px 3px
-    
   &.italic
     border-radius: 0
     background: #e5e5e5 url("/images/icons/text_italic.png") no-repeat 3px 3px
-    &.selected
-      background: #5dc5fe url("/images/icons/text_italic.png") no-repeat 3px 3px
-    
   &.underline
     border-radius: 0 3px 3px 0
     border-left: none
     background: #e5e5e5 url("/images/icons/text_underline.png") no-repeat 3px 3px
-    &.selected
-      background: #5dc5fe url("/images/icons/text_underline.png") no-repeat 3px 3px
+  &:hover, &.align:hover
+    background-color: #C5C5C5
+  &.selected, &.align.selected
+    background-color: #5dc5fe
     
   
       
@@ -417,6 +420,20 @@ code
     background-color: #BBB
   &:active
     background-color: #999
+
+.ico-fontcolor
+  display: inline-block
+  background: #fff
+  width: 18px
+  height: 18px
+  padding: 3px
+  margin-left: 10px
+  border-radius: 3px
+  background: #555 url("/images/icons/color_font.png") no-repeat 4px 4px
+  &:hover
+    background-color: #888
+  &:active
+    background-color: #111
   
   
   
