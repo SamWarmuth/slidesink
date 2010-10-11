@@ -123,6 +123,64 @@ $(".cancel-image-change").live("click", function(){
   $(".image-chooser").fadeOut(100);
 });
 
+$(".ico-text.arrange.back").live("click", function(){
+  var obj = $("#active-slide .slide-object.selected");
+  var zIndex = parseInt(obj.css("z-index"));
+  if (parseInt(obj.css("z-index")) == 0) return false; //already at back
+  $("#active-slide .slide-object").each(function(index, element){
+    element = $(element);
+    if (parseInt(element.css("z-index")) < zIndex){
+      element.css("z-index", (parseInt(element.css("z-index")) + 1));
+      updateObject(element);
+    } 
+  });
+  obj.css("z-index", 0);
+});
+
+$(".ico-text.arrange.backwards").live("click", function(){
+  var obj = $("#active-slide .slide-object.selected");
+  if (parseInt(obj.css("z-index")) == 1) return false; //already at back
+  var zIndex = parseInt(obj.css("z-index"));
+  $("#active-slide .slide-object").each(function(index, element){
+    element = $(element);
+    if (parseInt(element.css("z-index")) == zIndex - 1){
+      element.css("z-index", (parseInt(element.css("z-index"))+1));
+      updateObject(element);
+    } 
+  });
+  obj.css("z-index", (zIndex - 1));
+  
+});
+
+$(".ico-text.arrange.forwards").live("click", function(){
+  var obj = $("#active-slide .slide-object.selected");
+  if (parseInt(obj.css("z-index")) >= Object.keys(showData[currentSlideIndex]).length) return false; //already at front
+  var zIndex = parseInt(obj.css("z-index"));
+  $("#active-slide .slide-object").each(function(index, element){
+    element = $(element);
+    if (parseInt(element.css("z-index")) == zIndex + 1){
+      element.css("z-index", (parseInt(element.css("z-index")) - 1));
+      updateObject(element);
+    } 
+  });
+  obj.css("z-index", (zIndex + 1));
+});
+
+$(".ico-text.arrange.front").live("click", function(){
+  var obj = $("#active-slide .slide-object.selected");
+  var zIndex = parseInt(obj.css("z-index"));
+  var totalZ = Object.keys(showData[currentSlideIndex]).length;
+  if (parseInt(obj.css("z-index")) >= totalZ) return false; //already at front
+  $("#active-slide .slide-object").each(function(index, element){
+    element = $(element);
+    if (parseInt(element.css("z-index")) > zIndex){
+      element.css("z-index", (parseInt(element.css("z-index")) - 1));
+      updateObject(element);
+    } 
+  });
+  obj.css("z-index", totalZ);
+});
+
 $(".delete-current-object").live("click", function(){
   deleteCurrentObject();
   return false;
@@ -238,7 +296,8 @@ $(document).ready(function(){
   });
   
   $(".add-object.text").click(function(){
-    var defaultHTML = $("<div class='slide-object' style='display: block; position: absolute; left: 10%; top: 10%; opacity: 1.0; width: 30%; height: 15%; color: black; font-size: 1.5em;'><div class='content'>Text Here</div></div>").attr("id", ((new Date).getTime()%100000000 + ""));
+    var zIndex = Object.keys(showData[currentSlideIndex]).length;
+    var defaultHTML = $("<div class='slide-object' style='display: block; position: absolute; left: 10%; top: 10%; opacity: 1.0; width: 30%; height: 15%; color: black; font-size: 1.5em; z-index: " + zIndex + ";'><div class='content'>Text Here</div></div>").attr("id", ((new Date).getTime()%100000000 + ""));
     $(".tiny-slide.selected").append(defaultHTML);
     $("#active-slide").html($(".tiny-slide.selected").html());
     updateObject(defaultHTML, "SOText");
@@ -246,7 +305,8 @@ $(document).ready(function(){
   });
   
   $(".add-object.image").click(function(){
-    var defaultHTML = $("<div class='slide-object' style='display: block; position: absolute; left: 10%; top: 10%; opacity: 1.0; width: 25%;'><img src='/images/about-sam.jpg' style='width: 100%;' /></div>").attr("id", ((new Date).getTime()%100000000 + ""));
+    var zIndex = Object.keys(showData[currentSlideIndex]).length;
+    var defaultHTML = $("<div class='slide-object' style='display: block; position: absolute; left: 10%; top: 10%; opacity: 1.0; width: 25%; z-index: " + zIndex + ";'><img src='/images/about-sam.jpg' style='width: 100%;' /></div>").attr("id", ((new Date).getTime()%100000000 + ""));
     $(".tiny-slide.selected").append(defaultHTML);
     $("#active-slide").html($(".tiny-slide.selected").html());
     updateObject(defaultHTML, "SOImage");
@@ -265,6 +325,7 @@ $(document).ready(function(){
     if (currentPos + 172 >= 0) $('#slide-list').stop().animate({top: "0"}, 300, 'easeInOutQuad');
     else $('#slide-list').stop(false, true).animate({top: "+=172"}, 300, 'easeInOutQuad');
   });
+  
   $("#slide-down").click(function(){
     if (parseInt($('#slide-list').css('top')) <= ((slideCount * -100) + 350)) return false
     $('#slide-list').stop(false, true).animate({top: "-=172"}, 300, 'easeInOutQuad');
@@ -400,6 +461,18 @@ function showEditOverlay(uiObject){
     
     if (currentObject === undefined) return false;
     
+    var objFormat = "<hr/>" +
+                    "<div class='ico-text arrange back'></div>" +
+                    "<div class='ico-text arrange backwards'></div>" +
+                    "<div class='ico-text arrange forwards'></div>" +
+                    "<div class='ico-text arrange front'></div>" +
+                    "<br/><br/>" +
+                    "Stroke" +
+                    "<br/>" +
+                    "Fill " +
+                    "<div class='ico-fillcolor' style='margin: 0; position: relative; top: 5px;'></div>" +
+                    "<br/>";
+    
     var objData = currentObject.data;
     overlay.text("");
     if (currentObject.o_class == "SOText"){
@@ -423,18 +496,8 @@ function showEditOverlay(uiObject){
       overlay.append("<input type='radio' name='font-size' value='4.5em'/>");
       overlay.append("<span style='font-size: 1em;'>A</span>");
       overlay.append("<div class='ico-fontcolor' style='margin-left: 29px; position: relative; top: 5px;'></div>");
-      overlay.append("<hr/>")
-      overlay.append("<div class='ico-text arrange back'></div>");
-      overlay.append("<div class='ico-text arrange backwards'></div>");
-      overlay.append("<div class='ico-text arrange forwards'></div>");
-      overlay.append("<div class='ico-text arrange front'></div>");
-      overlay.append("<br/><br/>");
-      overlay.append("Stroke");
-      overlay.append("<br/>");
-      
-      overlay.append("Fill ");
-      overlay.append("<div class='ico-fillcolor' style='margin: 0; position: relative; top: 5px;'></div>");
-      overlay.append("<br/>");
+      overlay.append(objFormat);
+
       
            
       overlay.find("input:radio[name=font-size]").each(function(){
@@ -450,6 +513,7 @@ function showEditOverlay(uiObject){
       overlay.append("<br/>");
     } else if (currentObject.o_class == "SOImage"){
       overlay.append("<div class='awesome medium green edit-image-src'>Change Image Source</div><br/>");
+      overlay.append(objFormat);
       
     } else{
       overlay.append("Unsupported object type\n");
@@ -486,6 +550,7 @@ function updateObject(uiObject, classIfNew){
   slideHeight = slide.height();
   objData.width = (100.0*uiObject.width()/slideWidth)+"%";
   objData.height = (100.0*uiObject.height()/slideHeight)+"%";
+  objData.z_index = uiObject.css("z-index");
   
   objData.left = (100.0*uiObject.position().left/slideWidth)+"%";
   objData.top = (100.0*uiObject.position().top/slideHeight)+"%";
@@ -523,6 +588,7 @@ function updateTinySlide(uiObject){
   tinyObject.height(objData.height);
   tinyObject.css("left", objData.left);
   tinyObject.css("top", objData.top);
+  tinyObject.css("z-index", objData.z_index);
   
   if (currentObject.o_class == "SOText"){
     var content = tinyObject.children(".content");

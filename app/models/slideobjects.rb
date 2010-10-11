@@ -6,8 +6,7 @@ class SlideObject < Hash
   property :opacity, :default => 1.0
   property :width, :default => "20%"
   property :height, :default => ""
-  property :center, :default => false
-  
+  property :z_index, :default => 1
   property :o_id, :default => Proc.new{((Time.now.to_f*10000)%10000000000).to_i} #gross hack to get semi-unique IDs
   
   def custom_json
@@ -15,7 +14,7 @@ class SlideObject < Hash
   end
   
   def basic_style
-    return "display: block; position: absolute; left: #{self.left}; top: #{self.top}; opacity: #{self.opacity}; width: #{self.width}; height: #{self.height}"
+    return "display: block; position: absolute; left: #{self.left}; top: #{self.top}; opacity: #{self.opacity}; width: #{self.width}; height: #{self.height}; z-index: #{self.z_index}"
   end
   
 end
