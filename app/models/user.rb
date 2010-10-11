@@ -17,4 +17,6 @@ class User < CouchRest::ExtendedDocument
   property :password_hash
   property :salt
   property :challenges
+  
+  property :image_ids, :default => []
 end

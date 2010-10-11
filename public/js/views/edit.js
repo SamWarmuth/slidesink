@@ -126,7 +126,7 @@ $(".cancel-image-change").live("click", function(){
 $(".ico-text.arrange.back").live("click", function(){
   var obj = $("#active-slide .slide-object.selected");
   var zIndex = parseInt(obj.css("z-index"));
-  if (parseInt(obj.css("z-index")) == 0) return false; //already at back
+  if (parseInt(obj.css("z-index")) == 1) return false; //already at back
   $("#active-slide .slide-object").each(function(index, element){
     element = $(element);
     if (parseInt(element.css("z-index")) < zIndex){
@@ -134,7 +134,7 @@ $(".ico-text.arrange.back").live("click", function(){
       updateObject(element);
     } 
   });
-  obj.css("z-index", 0);
+  obj.css("z-index", 1);
 });
 
 $(".ico-text.arrange.backwards").live("click", function(){
@@ -260,6 +260,11 @@ $(document).ready(function(){
   $("<img src='/images/icons/text_italic.png'/>");
   $("<img src='/images/icons/text_underline.png'/>");
   $("<img src='/images/icons/color_wheel.png'/>");
+  
+  var uploader = new qq.FileUploader({
+      element: document.getElementById('upload-image'),
+      action: 'uploadimage'
+  });
 
   
   $(document).bind('keydown', function(e) {

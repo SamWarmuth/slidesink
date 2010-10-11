@@ -70,6 +70,14 @@ class Main
     haml :edit
   end
   
+  post "/edit/uploadimage" do
+    puts params.inspect
+    puts "33"
+    puts params[:file].class
+    puts "33"
+    return '{"success":true}'
+  end
+  
   
   post "/save-show" do
     return false unless @user
