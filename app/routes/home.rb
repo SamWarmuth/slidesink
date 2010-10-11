@@ -71,10 +71,22 @@ class Main
   end
   
   post "/edit/uploadimage" do
-    puts params.inspect
-    puts "33"
-    puts params[:file].class
-    puts "33"
+    image = Image.new
+    image.name = params[:qqfile].gsub(" ", "")
+    extension = image.name.split(".").last
+    image.save
+    image.url = "/uploads/#{@user.id}/#{image.id}.#{extension}"
+    image.save
+    
+    FileUtils.mkdir_p "public/uploads/#{@user.id}/"
+    
+    image.file_path = "public/uploads/#{@user.id}/#{image.id}.#{extension}"
+    @user.image_ids << image.id
+    @user.save
+    
+    
+    data = request.env['rack.input']
+    File.open(image.file_path, 'w') {|f| f.write(data.read)}
     return '{"success":true}'
   end
   

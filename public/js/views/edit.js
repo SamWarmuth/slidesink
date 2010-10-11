@@ -113,9 +113,17 @@ $(".edit-image-src").live("click", function(){
   return false;
 });
 
+$(".image-frame").live("click", function(){
+  var obj = $("#active-slide .slide-object.selected");
+  obj.children("img").attr("src", $(this).children("img").attr("src"));
+  updateObject(obj);
+  $(".image-chooser").fadeOut(100);
+});
+
 $(".change-image-source").live("click", function(){
   var obj = $("#active-slide .slide-object.selected");
   obj.children("img").attr("src", $(".image-chooser").find("input.src-field").val());
+  updateObject(obj);
   $(".image-chooser").fadeOut(100);
 });
 
@@ -263,7 +271,9 @@ $(document).ready(function(){
   
   var uploader = new qq.FileUploader({
       element: document.getElementById('upload-image'),
-      action: 'uploadimage'
+      action: 'uploadimage',
+      allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],    
+      sizeLimit: 2000000 // max size (2MB)  
   });
 
   

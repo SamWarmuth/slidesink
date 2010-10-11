@@ -82,27 +82,31 @@
       .image-chooser
         %b{:style => "font-size: 2em"} Edit Image Source
         .library
-          Library
+          %h2 Library
           -if @user.image_ids.empty?
             %p{:style => "margin-left: 20px; font-size: 0.8em; font-style: italic;"} You Don't have any images.
           -else
             - @user.image_ids.map{|id| Image.get(id)}.each do |image|
-              .image-frame{:style => "display: inline-block; width: 80px; height: 100px; "}
-                %img{:src => image.url, :style => 'width: 75px; max-height: 150px;'}
+              -next if image.nil?
+              .image-frame{:style => "display: inline-block; width: 100px; border: 1px solid #999; text-align: center; padding: 5px;"}
+                .image-id{:style => "display: none", :id => image.id}
+                %img{:src => image.url, :style => 'width: 80px; max-height: 150px;'}
                 %br
-                image.name 
-        .upload
+                =image.name 
+        .upload{:style => "margin-top: 10px;"}
           #upload-image
             %noscript
               .message Please enable JavaScript to use file uploader.
         .url
           URL
           %input.src-field{:type => "text", :name => "src", :style => 'width: 300px'}
+          .awesome.green.medium.change-image-source{:style => 'display: inline-block; text-align: center;margin: auto; width: 25px'} OK
+          
           %br
           %br
           %br
         .buttons{:style => "text-align: center"}
-          .awesome.green.medium.change-image-source{:style => 'display: inline-block; text-align: center;margin: auto; width: 100px'} OK
+          %br
           .awesome.red.medium.cancel-image-change{:style => 'display: inline-block; text-align: center;margin: auto; width: 100px'} Cancel
       .edit-overlay.no-select
       .colorpicker
