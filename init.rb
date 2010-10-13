@@ -16,6 +16,8 @@ require "json"
 require "nokogiri"
 require "kramdown"
 require "pusher"
+require "oauth"
+
 
 class Main < Monk::Glue
   set :app_file, __FILE__

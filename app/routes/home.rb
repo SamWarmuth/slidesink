@@ -3,6 +3,14 @@ class Main
     logged_in?
   end
   get "/" do
+    jtv_client = JtvClient.new
+    response = jtv_client.get("/user/show/apidemo.xml")
+    @jtv = "nothing. :("
+    if response.is_a?(Net::HTTPOK)
+      @jtv = response.body
+      j = Nokogiri::XML(@jtv)
+      puts j.xpath("//embed_code").children.first.inspect
+    end
     haml :welcome
   end
   get "/style.css" do
@@ -75,12 +83,12 @@ class Main
     image.name = params[:qqfile].gsub(" ", "")
     extension = image.name.split(".").last
     image.save
-    image.url = "/uploads/#{@user.id}/#{image.id}.#{extension}"
+    image.url = "/uploads/#{@user.id}/images/#{image.id}.#{extension}"
     image.save
     
-    FileUtils.mkdir_p "public/uploads/#{@user.id}/"
+    FileUtils.mkdir_p "public/uploads/#{@user.id}/images/"
     
-    image.file_path = "public/uploads/#{@user.id}/#{image.id}.#{extension}"
+    image.file_path = "public/uploads/#{@user.id}/images/#{image.id}.#{extension}"
     @user.image_ids << image.id
     @user.save
     

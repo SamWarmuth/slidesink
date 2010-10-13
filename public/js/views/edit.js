@@ -278,10 +278,14 @@ $(document).ready(function(){
 
   
   $(document).bind('keydown', function(e) {
-     if (e.which == 8 && !currentlyEditing){
-       deleteCurrentObject();
-       return false;
-     }
+    if (e.which == 8 && !currentlyEditing){
+      deleteCurrentObject();
+      return false;
+    }
+    if (e.which == 83 && !currentlyEditing){
+      save();
+      return false;
+    }
   });
   
   $("#slide-list").sortable();
