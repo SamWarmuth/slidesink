@@ -124,10 +124,9 @@ class Main
     @show.slides = []
     params['slides'].sort_by{|s| s[0]}.each do |index, objects|
       slide = Slide.new
-      objects.delete("slide_id")      
+      objects.delete("slide_id")
       objects.each_pair do |object_id, object_data|
         object_attributes = object_data['data']
-        puts object_attributes.inspect
         if object_data['o_class'] == "SOText"
           object = SOText.new
           slide.text_objects << object
