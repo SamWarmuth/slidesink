@@ -143,6 +143,8 @@ $(".ico-text.arrange.back").live("click", function(){
     } 
   });
   obj.css("z-index", 1);
+  updateObject(obj);
+  
 });
 
 $(".ico-text.arrange.backwards").live("click", function(){
@@ -157,7 +159,7 @@ $(".ico-text.arrange.backwards").live("click", function(){
     } 
   });
   obj.css("z-index", (zIndex - 1));
-  
+  updateObject(obj);
 });
 
 $(".ico-text.arrange.forwards").live("click", function(){
@@ -172,6 +174,7 @@ $(".ico-text.arrange.forwards").live("click", function(){
     } 
   });
   obj.css("z-index", (zIndex + 1));
+  updateObject(obj);
 });
 
 $(".ico-text.arrange.front").live("click", function(){
@@ -187,6 +190,7 @@ $(".ico-text.arrange.front").live("click", function(){
     } 
   });
   obj.css("z-index", totalZ);
+  updateObject(obj);
 });
 
 $(".delete-current-object").live("click", function(){
