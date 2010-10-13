@@ -278,11 +278,12 @@ $(document).ready(function(){
 
   
   $(document).bind('keydown', function(e) {
-    if (e.which == 8 && !currentlyEditing){
+    var editingTextFields = ($(document.activeElement)[0].id == 'title' || $(document.activeElement)[0].id == "url")
+    if (e.which == 8 && !currentlyEditing && !editingTextFields){
       deleteCurrentObject();
       return false;
     }
-    if (e.which == 83 && !currentlyEditing){
+    if (e.which == 83 && !currentlyEditing && !editingTextFields){
       save();
       return false;
     }
