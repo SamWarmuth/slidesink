@@ -503,10 +503,7 @@ function showEditOverlay(uiObject){
       overlay.append("<div class='ico-text align left' style='margin-left: 10px'></div>");
       overlay.append("<div class='ico-text align center'></div>");
       overlay.append("<div class='ico-text align right'></div>");
-
       
-      
-
       overlay.append("<div style='clear: both; margin-top: 5px;'></div>");
       overlay.append("<span style='font-size: 0.5em;'>A</span>");
       overlay.append("<input type='radio' name='font-size' value='1em'/>");

@@ -126,8 +126,8 @@ class Main
       slide = Slide.new
       objects.delete("slide_id")      
       objects.each_pair do |object_id, object_data|
-        
         object_attributes = object_data['data']
+        puts object_attributes
         if object_data['o_class'] == "SOText"
           object = SOText.new
           slide.text_objects << object
