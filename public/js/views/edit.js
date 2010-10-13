@@ -254,7 +254,7 @@ $(".tiny-slide").live('click', function(){
    updateObject(obj);
    repositionOverlay(obj);
  });
-var dips = "";
+var jresponse = "";
 $(document).ready(function(){  
   //preload images
   $("<img src='/images/icons/text_align_left.png'/>");
@@ -271,7 +271,7 @@ $(document).ready(function(){
   
   var uploader = new qq.FileUploader({
       element: document.getElementById('upload-image'),
-      action: 'uploadimage',
+      action: '/edit/uploadimage',
       allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],    
       sizeLimit: 2000000 // max size (2MB)  
   });

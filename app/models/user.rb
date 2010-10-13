@@ -4,6 +4,7 @@ class User < CouchRest::ExtendedDocument
   property :name
   property :email  
   property :date_created
+  property :activated, :default => false
 
   def set_password(password)
     self.salt = 64.times.map{|l|('a'..'z').to_a[rand(25)]}.join

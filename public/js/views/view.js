@@ -65,6 +65,17 @@ $(document).ready(function(){
   $(window).resize(function(){
     resizeSlides();
   });
+  
+  
+  var holder = $("div").filter(function() {
+          return this.id.match(/jtv_embed_.+/);
+      });
+  var swf = $("object").filter(function() {
+          return this.id.match(/live_embed_.+/);
+      });
+  holder.css("width", "100%").css("height", "100%");
+  swf.css("width", "100%").css("height", "100%");
+  
 });
 
 function toggleLights(){
@@ -82,13 +93,15 @@ function toggleLights(){
 
 function resizeSlides(){
   var width = $(window).width();
-  width = width - 200;
+  width = width - (width*0.3);
   if ($("#frame").is(":visible")){
     if ($(window).height() < width*0.5625) width = ($(window).height())*1.77;
   } else{
     if ($(window).height() < width*0.5625*0.952) width = ($(window).height())*1.77*1.05;
   }
   width = width - 100;
+  
+  //slide viewer
   $(".page").css("width", (width+80));
   slide_width = (width+80)+1.5;
   slide = $(".slide")
@@ -96,6 +109,16 @@ function resizeSlides(){
   slide.css("width", (width)+'px');
   slide.css("height", (width*0.5625)+'px');
 
+  //video viewer
+  var justintv = $(".justintv");
+  var jwidth = (width/2.5 + 75);
+  justintv.css("width", jwidth + "px");
+  justintv.css("height", jwidth*0.75 + "px");
+  justintv.css("left", ($(".page").offset().left - (jwidth))+"px");
+
+  
+  
+  
   //update slide location
   position = slide_width * current_slide * -1;
   $('#slideshow').css('left', position+"px");

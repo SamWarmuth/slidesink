@@ -39,8 +39,10 @@
             %a{:href => "/user/"+user.name.gsub(" ","")}= user.name
       
       %br
-      %a.awesome.green.large{:href => "/new", :style => "margin-left: 50px"} Create a New Presentation
-      
+      -if @user
+        %a.awesome.green.large{:href => "/new", :style => "margin-left: 50px"} Create a New Presentation
+      -else
+        %a.awesome.green.large{:href => "/signup", :style => "margin-left: 50px"} Sign Up to Create Your Own
       %br
       %br
       

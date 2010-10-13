@@ -95,7 +95,7 @@ class Main
     
     data = request.env['rack.input']
     File.open(image.file_path, 'w') {|f| f.write(data.read)}
-    return '{"success":true}'
+    return '{"success":true, "div":"<div class="image-frame" style="display: inline-block; width: 100px; border: 1px solid #999; text-align: center; padding: 5px;"> <div class="image-id" id="#{image.id}" style="display: none"></div> <img src="#{image.url}" style="width: 80px; max-height: 150px;"> <br> #{image.name}</div>"}'
   end
   
   
@@ -149,7 +149,22 @@ class Main
     return refresh
   end
 
+  get "/signup" do
+    haml :signup, :layout => false
+  end
   
+  post "/signup" do
+    redirect "/signup" if (params[:name].empty? || params[:email].empty? || params[:pass1].empty? || params[:pass2].empty? || (params[:pass1] != params[:pass2]))
+    
+    user = User.new
+    user.name = params[:name]
+    user.email = params[:email]
+    user.set_password(params[:pass1])
+    user.date_created = Time.now.to_s
+    user.save
+    
+    redirect "/"
+  end
   
   get "/login" do
     redirect "/user/#{@user.name.gsub(' ','')}" if @user

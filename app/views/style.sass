@@ -2,6 +2,10 @@
   font-family: Arial
   
 
+html, body 
+  height: 95%
+  
+  
 a:active, a:focus
   outline: 0
 
@@ -450,8 +454,22 @@ code
 
 
 
-html, body 
-  height: 95%
+.signup-label
+  display: inline-block
+  width: 180px
+  text-align: left
+  padding-left: 50px
+  
+.signup-textfield
+  width: 290px
+  height: 30px
+  font-size: 14px
+  padding-left: 10px
+  padding-right: 10px
+  &.valid-input
+    background: url("/images/valid.png") no-repeat right center
+  &.invalid-input
+    background: url("/images/invalid.png") no-repeat right center
 
 
 .humanMsg 

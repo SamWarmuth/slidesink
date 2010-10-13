@@ -21,12 +21,12 @@
 %body.body{:style => "margin: 0; padding: 0; background: #ddd; position: relative;"}
   = haml :frame
   - if @presenting
-    .justintv{:style => "position: absolute; top: 45px; left: 5px;"}
+    .justintv{:style => "position: absolute; top: 45px; left: 5px; background: #aaa;"}
       #{@producer_embed}
   - if @following
-    .justintv{:style => "position: absolute; top: 45px; left: 5px;"}
+    .justintv{:style => "position: absolute; top: 45px; left: 5px; background: #aaa; width: 20%; height: 30%"}
       #{@viewer_embed}
-  .page{:style => "width: 880px; white-space: nowrap; overflow: hidden; margin: 5px auto 0 auto; position: relative; left: 100px;"}
+  .page{:style => "width: 880px; white-space: nowrap; overflow: hidden; margin: 5px auto 0 auto; position: relative; left: 15%;"}
     #slideshow{:style => "position: relative; top: 0; left: 0; width: 5000000px; font-size: 1.25em; white-space: normal; "}
       = haml :show
       
