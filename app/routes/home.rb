@@ -101,9 +101,9 @@ class Main
   
   
   post "/save-show" do
-    return false unless @user
+    return "user not found" unless @user
     show_info = params[:info]
-    return false if (show_info[:title].empty? || show_info[:url].empty?)
+    return "no title/url" if (show_info[:title].empty? || show_info[:url].empty?)
     refresh = ""
     if show_info[:show_id].empty?
       @show = Slideshow.new
