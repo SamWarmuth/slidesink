@@ -95,7 +95,8 @@ class Main
     
     data = request.env['rack.input']
     File.open(image.file_path, 'w') {|f| f.write(data.read)}
-    return '{"success":true, "div":"<div class="image-frame" style="display: inline-block; width: 100px; border: 1px solid #999; text-align: center; padding: 5px;"> <div class="image-id" id="#{image.id}" style="display: none"></div> <img src="#{image.url}" style="width: 80px; max-height: 150px;"> <br> #{image.name}</div>"}'
+    return '{"success":true}'
+    #"div":"<div class="image-frame" style="display: inline-block; width: 100px; border: 1px solid #999; text-align: center; padding: 5px;"> <div class="image-id" id="#{image.id}" style="display: none"></div> <img src="#{image.url}" style="width: 80px; max-height: 150px;"> <br> #{image.name}</div>"
   end
   
   
