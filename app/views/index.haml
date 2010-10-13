@@ -18,9 +18,15 @@
     %title SlideMirror. Through the looking glass.
   -else
     %title SlideMirror - #{@show.title}
-%body.body{:style => "margin: 0; padding: 0; background: #ddd;"}
+%body.body{:style => "margin: 0; padding: 0; background: #ddd; position: relative;"}
   = haml :frame
-  .page{:style => "width: 880px; white-space: nowrap; overflow: hidden; margin: 5px auto 0 auto;"}
+  - if @presenting
+    .justintv{:style => "position: absolute; top: 45px; left: 5px;"}
+      #{@producer_embed}
+  - if @following
+    .justintv{:style => "position: absolute; top: 45px; left: 5px;"}
+      #{@viewer_embed}
+  .page{:style => "width: 880px; white-space: nowrap; overflow: hidden; margin: 5px auto 0 auto; position: relative; left: 100px;"}
     #slideshow{:style => "position: relative; top: 0; left: 0; width: 5000000px; font-size: 1.25em; white-space: normal; "}
       = haml :show
       

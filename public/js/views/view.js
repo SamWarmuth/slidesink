@@ -82,6 +82,7 @@ function toggleLights(){
 
 function resizeSlides(){
   var width = $(window).width();
+  width = width - 200;
   if ($("#frame").is(":visible")){
     if ($(window).height() < width*0.5625) width = ($(window).height())*1.77;
   } else{

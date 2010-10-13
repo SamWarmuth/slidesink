@@ -3,14 +3,8 @@ class Main
     logged_in?
   end
   get "/" do
-    jtv_client = JtvClient.new
-    response = jtv_client.get("/user/show/apidemo.xml")
-    @jtv = "nothing. :("
-    if response.is_a?(Net::HTTPOK)
-      @jtv = response.body
-      j = Nokogiri::XML(@jtv)
-      puts j.xpath("//embed_code").children.first.inspect
-    end
+    #response = jtv_client.get("/user/show/apidemo.xml")
+    @stream_key = nil
     haml :welcome
   end
   get "/style.css" do
@@ -37,6 +31,9 @@ class Main
   get "/show/:show_url/follow" do
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?
+    jtv_client = JtvClient.new 
+    
+    @viewer_embed = jtv_client.get("/channel/namespace_embed/#{@show.id}?namespace=sldmrr&height=180&width=240").body
     @presenting = false
     @following = true
     haml :index
@@ -46,6 +43,9 @@ class Main
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?
     redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
+    jtv_client = JtvClient.new 
+    
+    @producer_embed = jtv_client.get("/channel/namespace_publisher_embed.html?channel=#{@show.id}&height=180&width=240").body
     @presenting = true
     @following = false
     haml :index

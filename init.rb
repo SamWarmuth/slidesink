@@ -17,6 +17,7 @@ require "nokogiri"
 require "kramdown"
 require "pusher"
 require "oauth"
+require 'cgi'
 
 
 class Main < Monk::Glue

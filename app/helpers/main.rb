@@ -51,8 +51,8 @@ class JtvClient
   # consumer_secret is a string of your API secret
   def initialize
     @consumer = OAuth::Consumer.new(
-      "s3RHcpt0FPdGCugQnq2w", #consumer key
-      "zRmn6ptNCrv1z5J6TJbuGXhizKraYkbTlbKpquBeMjo", #consumer secret
+      "VSXp1AZzG9XHYXtpcSaZ0A", #consumer key
+      "9RBWEBeyRQswuRktfIfUGK1OjgwyHvhyIVSCIRH4s", #consumer secret
       :site => "http://api.justin.tv",
       :http_method => :get
     )
