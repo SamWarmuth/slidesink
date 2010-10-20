@@ -30,12 +30,12 @@
     
 %body{:style => 'background: #222'}
   .menubar{:style => "margin: 35px auto 0 auto; width: 960px; position: relative;"}
-    %a.awesome.blue.large{:href => "/new", :style => "display: inline-block; width: 75px; -webkit-box-shadow: none; border-radius: 5px 0 0 0; text-align: center;"} New Show
-    %a.awesome.blue.large{:href => "/show/#{@show.url}", :style => "display: inline-block; width: 75px; margin-left: -3px; -webkit-box-shadow: none; border-radius: 0 5px 0 0; text-align: center;"} Open Show  
-    .awesome.large.gray{:style => "border-radius: 0 5px 5px 0; margin: 0 1px;float: right; position: relative; top: -25px"} Account Settings
-    .awesome.large.gray{:style => "border-radius: 0; margin: 0 0 0 1px;float: right; position: relative; top: -25px"} Presentations
-    .awesome.large.green{:style => "border-radius: 0; margin: 0 0 0 1px;float: right; position: relative; top: -25px"} Slideshows
-    .awesome.large.gray{:style => "border-radius: 5px 0 0 5px; float: right; position: relative; top: -25px"} Dashboard
+    %a.awesome.blue.large.editor-tab.left{:href => "/new"} New Show
+    %a.awesome.blue.large.editor-tab.right{:href => "/show/#{@show.url}"} Open Show  
+    .awesome.large.gray.header.left Account Settings
+    .awesome.large.gray.header.center Presentations
+    .awesome.large.green.header.center Slideshows
+    .awesome.large.gray.header.right Dashboard
   %form#basics{:action => "/edit", :method => "post", :style => 'width: 938px; margin: 0 auto; background: white; padding: 10px; border: 1px solid #aaa; border-radius: 0 5px 0 0; position: relative;'}
     .button-box.no-select{:style => "position: absolute;"}
       #add-slide.add-object.add-slide{:title => "Add a Slide to This Show"}
@@ -51,21 +51,21 @@
     %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; -webkit-box-shadow: none; text-align: center; position: relative; top: -4px; font-weight: bold"} Save
     
     .template-chooser
-      .tiny-slide-demo{:style => "float: left;"}
+      .tiny-slide-demo
         %input{:style => "display: none;",  :type => "radio", :name => "template", :value => "basic", :checked => (@show.template == "basic")}
-        %b{:style => "font-size: 5em; display: block; margin-top: 20%;"} Basic
-      .tiny-slide-demo.tmplt-blue{:style => "float: left;"}
+        %b.demo-style Basic
+      .tiny-slide-demo.tmplt-blue
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "blue", :checked => (@show.template == "blue")}
-        %b{:style => "font-size: 5em; display: block; margin-top: 20%"} Blue
-      .tiny-slide-demo.tmplt-red{:style => "float: left;"}
+        %b.demo-style Blue
+      .tiny-slide-demo.tmplt-red
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "red", :checked => (@show.template == "red")}
-        %b{:style => "font-size: 5em; display: block; margin-top: 20%;"} Red
-      .tiny-slide-demo.tmplt-orange-gradient{:style => "float: left;"}
+        %b.demo-style Red
+      .tiny-slide-demo.tmplt-orange-gradient
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "orange-gradient", :checked => (@show.template == "orange-gradient")}
-        %b{:style => "font-size: 5em; display: block; margin-top: 7%;"} Orange Gradient
-      .tiny-slide-demo.tmplt-green-stripes{:style => "float: left;"}
+        %b.demo-style{:style => "margin-top: 8%"} Orange Gradient
+      .tiny-slide-demo.tmplt-green-stripes
         %input{:style => "display: none;", :type => "radio", :name => "template", :value => "green-stripes", :checked => (@show.template == "green-stripes")}
-        %b{:style => "font-size: 5em; display: block; margin-top: 7%;"} Green Stripes
+        %b.demo-style{:style => "margin-top: 8%"} Green Stripes
       .clear{:style => "clear: both"}
   
   .guiedit{:style => "margin: 0 auto; width: 960px; position: relative;"}

@@ -115,6 +115,29 @@ li
 code
   font-family: monospace
 
+.editor-tab
+  display: inline-block
+  width: 75px
+  -webkit-box-shadow: none
+  text-align: center
+  &.left
+    border-radius: 5px 0 0 0
+  &.right
+    margin-left: -3px
+    border-radius: 0 5px 0 0
+  
+.header
+  margin: 0 0 0 1px
+  float: right
+  position: relative
+  top: -25px
+  &.left
+    border-radius: 0 5px 5px 0
+  &.center
+    border-radius: 0
+  &.right
+    border-radius: 5px 0 0 5px
+
 
 .slide
   float: left
@@ -140,6 +163,13 @@ code
     font-size: 0.8em
     text-align: center
 
+.demo-style
+  font-size: 5em
+  display: block
+  margin-top: 20%
+
+.tiny-slide-demo
+  float: left
 
 .tiny-slide, .tiny-slide-demo
   width: 120px
@@ -306,14 +336,19 @@ code
       background: #ccc url("/images/icons/photo.png") no-repeat 3px 3px
   &.youtube
     background: #fff url("/images/icons/youtube.png") no-repeat 3px 3px
+    opacity: 0.5
   &.map
     background: #fff url("/images/icons/map.png") no-repeat 3px 3px
+    opacity: 0.5
   &.graph
     background: #fff url("/images/icons/graph.png") no-repeat 3px 3px
+    opacity: 0.5
   &.html
     background: #fff url("/images/icons/html.png") no-repeat 3px 3px
+    opacity: 0.5
   &.poll
     background: #fff url("/images/icons/rainbow.png") no-repeat 3px 3px
+    opacity: 0.5
   &.add-slide
     background: #fff url("/images/icons/slide_add.png") no-repeat 3px 3px
   &.play
