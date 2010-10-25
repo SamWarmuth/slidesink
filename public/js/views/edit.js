@@ -10,7 +10,7 @@ $(function(){
       }
     });
   });
-  $('.no-select').disableTextSelect();//No text selection on elements with a class of 'noSelect'
+  $('.no-select').disableTextSelect();//No text selection on elements with a class of 'noSelect'  
 });
 
 (function ($) {

@@ -1,7 +1,6 @@
 !!!
 %head
   -@show = Slideshow.new if @show.nil?
-  -@show.slides ||= []
   
   %script{:src => "/js/jquery-1.4.2.min.js", :type => "text/javascript"}  
   %script{:src => "/js/jquery-ui-1.8.4.custom.min.js", :type => "text/javascript"}
@@ -10,11 +9,11 @@
   %script{:src => "/js/farbtastic.js", :type => "text/javascript"}
   %script{:src => "/js/fileuploader.js", :type => "text/javascript"}
   
-  
   %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
   %link{:href => "/css/jqui/jquery-ui-1.8.5.custom.css", :rel => "stylesheet", :type => "text/css"}
-  
   %link{:href => "/templates.css", :rel => "stylesheet", :type => "text/css"}
+  
+  
   -@show.slides << Slide.new if @show.slides.empty?
   :javascript
     var slideCount = #{@show.slides.count};
@@ -22,7 +21,6 @@
     var showTemplate = '#{@show.template || "basic"}';
     var showData = #{@show.custom_json};
   %script{:src => "/js/views/edit.js", :type => "text/javascript"}
-  
   -if @show.new_document?
     %title SlideMirror - New Show
   -else
@@ -31,11 +29,11 @@
 %body{:style => 'background: #222'}
   .menubar{:style => "margin: 35px auto 0 auto; width: 960px; position: relative;"}
     %a.awesome.blue.large.editor-tab.left{:href => "/new"} New Show
-    %a.awesome.blue.large.editor-tab.right{:href => "/show/#{@show.url}"} Open Show  
-    .awesome.large.gray.header.left Account Settings
-    .awesome.large.gray.header.center Presentations
-    .awesome.large.green.header.center Slideshows
-    .awesome.large.gray.header.right Dashboard
+    %a.awesome.blue.large.editor-tab.right{:href => "/show/#{@show.url}"} Open Show
+    .button-bar
+      %a.awesome.large.gray.header.left{:href => "/recordings/"} Recordings
+      %a.awesome.large.green.header.center{:href => "/decks/"} Slide Decks
+      %a.awesome.large.gray.header.right{:href => "/settings/"} Account Settings
   %form#basics{:action => "/edit", :method => "post", :style => 'width: 938px; margin: 0 auto; background: white; padding: 10px; border: 1px solid #aaa; border-radius: 0 5px 0 0; position: relative;'}
     .button-box.no-select{:style => "position: absolute;"}
       #add-slide.add-object.add-slide{:title => "Add a Slide to This Show"}
@@ -113,7 +111,7 @@
           .awesome.red.medium.cancel-image-change{:style => 'display: inline-block; text-align: center;margin: auto; width: 100px'} Cancel
       .edit-overlay.no-select
       .colorpicker
-      #active-slide.slide{:style => "margin: 7px 36px", :class => "tmplt-" + @show.template.to_s}
+      #active-slide.slide{:style => "margin: 50px 36px", :class => "tmplt-" + @show.template.to_s}
       
     
     #slide-up.no-select.awesome.large{:style => "display: none;width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0; text-align: center;"} &#9650; 

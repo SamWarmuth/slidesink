@@ -26,7 +26,7 @@ class Main
     redirect "/404" if @show.nil?
     @presenting = false
     @following = false
-    haml :index
+    haml :view
   end
   get "/show/:show_url/follow" do
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
@@ -36,7 +36,7 @@ class Main
     @viewer_embed = jtv_client.get("/channel/namespace_embed/#{@show.id}?namespace=sldmrr&height=180&width=240").body
     @presenting = false
     @following = true
-    haml :index
+    haml :view
   end
   get "/show/:show_url/present" do
     redirect "/login" unless @user
@@ -48,7 +48,7 @@ class Main
     @producer_embed = jtv_client.get("/channel/namespace_publisher_embed.html?channel=#{@show.id}&height=180&width=240").body
     @presenting = true
     @following = false
-    haml :index
+    haml :view
   end
   get "/show/:show_id/present/slide-change" do
     redirect "/login" unless @user
@@ -60,11 +60,25 @@ class Main
   end
   get "/user/:user_name" do
     @selected_user = User.all.find{|u| u.name.gsub(" ", "") == params[:user_name]}
-    @shows = Slideshow.all.find_all{|s| s.user_id == @selected_user.id}
+    @shows = @selected_user.shows
     redirect "/" if @selected_user.nil?
     haml :user
   end
 
+
+  get "/settings/?" do
+    redirect "/login" unless @user
+    haml :settings
+  end
+  get "/recordings/?" do
+    redirect "/login" unless @user
+    haml :recordings
+  end
+  get "/decks/?" do
+    redirect "/login" unless @user
+    haml :decks
+  end
+  
   get "/new" do
     redirect "/login" unless @user
     haml :edit

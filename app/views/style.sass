@@ -1,9 +1,14 @@
 *
   font-family: Arial
+  padding: 0
+  margin: 0
   
 
 html, body 
   height: 95%
+  
+hr
+  margin: 10px 5px
   
   
 a:active, a:focus
@@ -114,6 +119,32 @@ li
 
 code
   font-family: monospace
+.page-content
+  width: 865px
+  margin: auto
+  padding-top: 20px
+  
+.graybox
+  padding: 30px
+  width: 800px
+  margin: 5px 0
+  background: #eee
+  border: 1px solid #ccc
+  border-radius: 10px 10px 0 0
+  &.l50
+    display: inline-block
+    width: 366px
+    margin: 0 0 2px 0
+    border-radius: 0 0 0 10px
+    vertical-align: text-top
+  &.r50
+    display: inline-block
+    width: 366px
+    margin: 0 0 0 2px
+    border-radius: 0 0 10px 0
+    vertical-align: text-top
+  &.bottom
+    border-radius: 0 0 10px 10px
 
 .editor-tab
   display: inline-block
@@ -125,31 +156,35 @@ code
   &.right
     margin-left: -3px
     border-radius: 0 5px 0 0
-  
-.header
-  margin: 0 0 0 1px
+
+.button-bar
   float: right
   position: relative
   top: -25px
+  
+.header
+  margin: 0 0 0 -3px
+  -webkit-box-shadow: none
+  -moz-box-shadow: none
   &.left
-    border-radius: 0 5px 5px 0
+    border-radius: 5px 0 0 5px
   &.center
     border-radius: 0
   &.right
-    border-radius: 5px 0 0 5px
+    border-radius: 0 5px 5px 0
 
 
 .slide
-  float: left
+  display: block
   width: 720px
   height: 405px
   background: #fff
   border: 1px solid #bbb
   border-radius: 3px
-  margin: 0 40px
+  margin: 10px
   padding: 0
   font-size: 1.5em
-  position: relative
+  position: absolute
   overflow: hidden
   img
     width: 35%

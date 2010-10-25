@@ -2,9 +2,12 @@ class User < CouchRest::ExtendedDocument
   use_database COUCHDB_SERVER
   
   property :name
-  property :email  
+  property :email
   property :date_created
   property :activated, :default => false
+  
+  property :website
+  property :about
 
   def set_password(password)
     self.salt = 64.times.map{|l|('a'..'z').to_a[rand(25)]}.join
@@ -18,6 +21,11 @@ class User < CouchRest::ExtendedDocument
   property :password_hash
   property :salt
   property :challenges
+  
+  def shows
+    #inefficient. Optimize later.
+    return Slideshow.all.find_all{|s| s.user_id == self.id}
+  end
   
   property :image_ids, :default => []
 end

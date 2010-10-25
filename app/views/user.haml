@@ -10,16 +10,14 @@
     .graybox{:style => 'padding: 30px; width: 800px; margin: 5px 0; background: #eee; border: 1px solid #ccc; border-radius: 10px 10px 0 0'}
       %h1{:style => "display: block; padding: 10px; text-align: center; font-size: 3em; margin: auto"}
         %img{:src => "/images/slidesink-small.png", :style => 'vertical-align: middle; width: 64px; height: 64px; padding-right: 25px'}
-        Sam Warmuth
+        = @selected_user.name
     .graybox.50{:style => 'display: inline-block; padding: 30px; width: 365px; background: #eee; border: 1px solid #ccc; margin: 0; border-radius: 0 0 0 10px; vertical-align: text-top;'}
       %h3 Name: #{@selected_user.name}
-      %h3 Email: 
-      %h3 Website: www.SamWarmuth.com
+      %h3 Website: #{@selected_user.website || "none"}
       %br
       %h3 About Me:
       
-      .indent{:style => "margin-left: 25px"}
-        There's nothing I enjoy more than long walks on the beach. Some of my other hobbies include watching the sunset from a picturesque grassy knoll, indulging in fine wine with a scrumptious foie gras dinner, and candlelight conversations on French film.
+      .indent{:style => "margin-left: 25px"}= @selected_user.about || "None"
       
     .graybox.50{:style => 'display: inline-block; padding: 30px; width: 365px; margin: 0; margin-left: 4px; background: #eee; border: 1px solid #ccc; border-radius: 0 0 10px 0; vertical-align: text-top;'}
       #{@selected_user.name}'s Recent Presentations:
