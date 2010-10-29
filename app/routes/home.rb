@@ -3,7 +3,6 @@ class Main
     logged_in?
   end
   get "/" do
-    #response = jtv_client.get("/user/show/apidemo.xml")
     @stream_key = nil
     haml :welcome
   end
@@ -46,6 +45,7 @@ class Main
     jtv_client = JtvClient.new 
     
     @producer_embed = jtv_client.get("/channel/namespace_publisher_embed.html?channel=#{@show.id}&height=180&width=240").body
+    puts jtv_client.get("http://api.justin.tv/api/stream/list_namespace_callbacks.xml").inspect
     @presenting = true
     @following = false
     haml :view

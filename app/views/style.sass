@@ -4,8 +4,12 @@
   margin: 0
   
 
-html, body 
-  height: 95%
+html
+  height: 90%
+  
+body
+  height: 100%
+
   
 hr
   margin: 10px 5px
@@ -81,6 +85,11 @@ a:active, a:focus
   background-color: #888
 .gray.awesome:hover, .grey.awesome:hover
   background-color: #777
+.black.awesome, .black.awesome:visited
+  background-color: #333
+.black.awesome:hover
+  background-color: #111
+
 
   
 .disabled.awesome
@@ -181,7 +190,7 @@ code
   background: #fff
   border: 1px solid #bbb
   border-radius: 3px
-  margin: 10px
+  margin: 5px
   padding: 0
   font-size: 1.5em
   position: absolute
@@ -285,8 +294,8 @@ code
   width: 270px
   background: rgba(0,0,0, 0.8)
   position: absolute
-  top: 35px
-  left: 40px
+  top: 85px
+  left: 85px
   border: 2px solid #DDD
   z-index: 1000
   text-align: center
@@ -341,9 +350,9 @@ code
   outline: none
   display: inline-block
   float: right
-  width: 785px
-  height: 25px
-  padding: 6px
+  width: 792px
+  height: 60px
+  padding: 2px
   margin: 0 0 5px 0
   text-align: center
   
@@ -355,52 +364,51 @@ code
     
 .add-object
   display: inline-block
-  border: 1px solid #ccc
-  width: 16px
-  height: 16px
-  padding: 3px
-  border-radius: 3px
+  width: 55px
+  height: 15px
+  padding: 55px 5px 0 5px 
+  border-radius: 5px
+  font-size: 10px
+  text-align: center
   cursor: pointer
-  border-style: outset
   position: relative
+  margin: 0 2px
+  text-decoration: none
+  background-repeat: no-repeat
+  background-position: 9px 5px
   &.text
-    background: #fff url("/images/icons/text.png") no-repeat 3px 3px
+    background-image: url("/images/icons/text_a.png")
   &.image
-    background: #fff url("/images/icons/photo.png") no-repeat 3px 3px
-    &:active
-      background: #ccc url("/images/icons/photo.png") no-repeat 3px 3px
+    background-image: url("/images/icons/photo.png")
   &.youtube
-    background: #fff url("/images/icons/youtube.png") no-repeat 3px 3px
-    opacity: 0.5
+    background-image: url("/images/icons/youtube.png")
   &.map
-    background: #fff url("/images/icons/map.png") no-repeat 3px 3px
-    opacity: 0.5
+    background-image: url("/images/icons/map.png")
   &.graph
-    background: #fff url("/images/icons/graph.png") no-repeat 3px 3px
-    opacity: 0.5
+    background-image: url("/images/icons/graph.png")
   &.html
-    background: #fff url("/images/icons/html.png") no-repeat 3px 3px
-    opacity: 0.5
+    background-image: url("/images/icons/html.png")
   &.poll
-    background: #fff url("/images/icons/rainbow.png") no-repeat 3px 3px
-    opacity: 0.5
+    background-image: url("/images/icons/poll.png")
   &.add-slide
-    background: #fff url("/images/icons/slide_add.png") no-repeat 3px 3px
+    background-position: 9px 3px
+    background-image: url("/images/icons/slide_add.png")
   &.play
-    background: #fff url("/images/icons/play.png") no-repeat 3px 3px
-    &:hover
-      background: #ccF url("/images/icons/play_blue.png") no-repeat 3px 3px
+    background-image: url("/images/icons/present.png")
   &.themes
-    background: #fff url("/images/icons/themes.png") no-repeat 3px 3px
-    &:hover
-      background-color: #FF7
-      
+    background-image: url("/images/icons/themes.png")
   &:hover
-    background-color: #CF7
+    background-color: #eee
   &:active
     top: 1px
-    background-color: #9DC425  
-    
+    background-color: #9DC425
+
+.vertical-line
+  height: 50px
+  width: 2px
+  margin: 10px
+  background: #BBB
+  display: inline-block
 .nav-button
   display: inline-block
   width: 150px
@@ -511,6 +519,15 @@ code
     background-color: #888
   &:active
     background-color: #111
+    
+.justintv
+  position: absolute
+  top: 45px
+  left: 5px
+  background: #aaa
+  width: 20%
+  height: 30%
+  z-index: 300
   
   
   

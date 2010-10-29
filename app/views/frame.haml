@@ -1,29 +1,28 @@
-#frame{:style => " height: 20px; background: #eee; font-family: Arial; font-size: 15px; padding: 3px 10px 15px 0px; overflow: hidden; border: 1px solid #ccc;"}
+#frame{:style => " height: 20px; background: #eee; font-size: 15px; padding: 3px 10px 15px 0px; overflow: hidden; border: 1px solid #ccc;"}
 
   %a{:href => "/"}
     %img{:src => "/images/slidesink-tiny.png", :style => 'display: block-inline; width: 32px; height: 32px; margin-left: 5px; position: relative; top: -2px;'}
-  -# .window_height{:style => 'display: inline-block'} 1234
-  -if @show
-    -if @presenting
-      .live_box{:style => "margin-right: 10px; color: #E11; font-size: 1.5em; display: inline-block; position: relative; top: -9px; left: 3px;"} Presenting
-    -elsif @following
-      .live_box{:style => "margin-right: 10px; color: #Ff8600; font-size: 1.5em; display: inline-block; position: relative; top: -9px; left: 3px;"} Attending
-    -else
-      .live_box{:style => "margin-right: 10px; color: #333; font-size: 1.5em; display: inline-block; position: relative; top: -9px; left: 3px;"} Browsing
-      .controls{:style => "display: inline-block; position: relative; top: -13px; left: -3px"}
-        .button{:style => "display: inline-block; position: relative;"}
-          - if @user && (@user.id == @show.user_id)
-            %a.awesome.medium.green{:href => "/show/#{@show.url}/present"} Present
-          %a.awesome.medium.yellow{:href => "/show/#{@show.url}/follow"} Attend
-          .button{:style => "display: inline-block; position: relative; top: 4px;"}
-            .awesome.medium.yellow.lights{:href => "", :style => "color: #A70; text-shadow: 2px 2px 3px white; padding: 4px;"}
-              %img{:src => "/images/icons/lightbulb_off.png"}
+    
+  -if @presenting
+    .live_box{:style => "margin-right: 2em; color: #E11; font-size: 1.5em; display: inline-block; position: relative; top: -9px; left: 3px;"} Presenting
+  -elsif @following
+    .live_box{:style => "margin-right: 2em; color: #Ff8600; font-size: 1.5em; display: inline-block; position: relative; top: -9px; left: 3px;"} Attending
+  -else
+    .live_box{:style => "margin-right: 2em; color: #333; font-size: 1.5em; display: inline-block; position: relative; top: -9px; left: 3px;"} Browsing
+    .controls{:style => "display: inline-block; position: relative; top: -13px; left: -3px"}
+      .button{:style => "display: inline-block; position: relative;"}
+        - if @user && (@user.id == @show.user_id)
+          %a.awesome.medium.green{:href => "/show/#{@show.url}/present"} Present
+        %a.awesome.medium.yellow{:href => "/show/#{@show.url}/follow"} Attend
+        .button{:style => "display: inline-block; position: relative; top: 4px;"}
+          .awesome.medium.yellow.lights{:href => "", :style => "color: #A70; text-shadow: 2px 2px 3px white; padding: 4px;"}
+            %img{:src => "/images/icons/lightbulb_off.png", :style => "width: 1.1em; height: 1.1em;"}
 
     .status{:style => "display: inline-block; position: relative; top: -10px; left: 3px;"}
       -if @presenting || @following
         .button{:style => "display: inline-block; position: relative; top: -3px"}
           %a.awesome.small.black{:href => "/show/#{@show.url}", :style => "margin-left: 0px; padding: 2px 5px"} #{@presenting ? "End Presentation" : "Leave Audience"}
-      %h3{:style => "display: inline-block; margin-left: 50px; margin-right: 10px"}
+      %h3{:style => "display: inline-block; margin-left: 2em; margin-right: 1em;"}
         - creator = User.get(@show.user_id)
         - if creator
           %a{:href => "/user/" + creator.name.gsub(" ", "")} #{creator.name}

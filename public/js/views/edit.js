@@ -303,6 +303,10 @@ $(document).ready(function(){
       $("#show-link").attr("href", ("http://www.SlideMirror.com/show/" + $('#url').val()));
     }
   });
+  $(".play").click(function(){
+    save();
+    return true;
+  })
   $("#url").keyup(function(){
     customUrl = true;
     $("#url-preview").text($(this).val());
@@ -555,8 +559,14 @@ function showEditOverlay(uiObject){
 function repositionOverlay(uiObject){
   var position = $(uiObject).position();
   var overlay = $(".edit-overlay");
-  overlay.css('left', (position.left+ 38)+"px");
-  overlay.css('top', (position.top + $(uiObject).height() + 60)+"px");
+  if (position.top > 200){
+    overlay.css('left', (position.left + 38)+"px");
+    overlay.css('top', (position.top - overlay.height())+"px");
+  }else{
+    overlay.css('left', (position.left + 38)+"px");
+    overlay.css('top', (position.top + $(uiObject).height() + 30)+"px");
+  }
+  
 }
 
 function updateObject(uiObject, classIfNew){

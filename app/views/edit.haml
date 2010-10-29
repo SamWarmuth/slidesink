@@ -34,19 +34,34 @@
       %a.awesome.large.gray.header.left{:href => "/recordings/"} Recordings
       %a.awesome.large.green.header.center{:href => "/decks/"} Slide Decks
       %a.awesome.large.gray.header.right{:href => "/settings/"} Account Settings
-  %form#basics{:action => "/edit", :method => "post", :style => 'width: 938px; margin: 0 auto; background: white; padding: 10px; border: 1px solid #aaa; border-radius: 0 5px 0 0; position: relative;'}
-    .button-box.no-select{:style => "position: absolute;"}
-      #add-slide.add-object.add-slide{:title => "Add a Slide to This Show"}
-      .add-object.themes.show-templates{:title => "Change the Show Theme"}
-      %a#show-link.add-object.play{:href => "http://#{request.env["HTTP_HOST"]}/show/#{@show.url}", :target => "_blank", :style => "margin-left: 10px;", :title => "Start Slideshow in a New Window"}
+  %form#basics{:action => "/edit", :method => "post", :style => 'width: 938px; margin: 0 auto; background: #ddd; padding:  10px; border: 1px solid #aaa; border-radius: 0 5px 0 0; position: relative;'}
+    #add-slide.add-object.add-slide.awesome.blue{:title => "Add a Slide to This Show"}
+      Add Slide
+    .add-object.themes.show-templates.awesome.black{:title => "Change the Show Theme"}
+      Themes
+    %a#show-link.add-object.play.awesome.green{:href => "http://#{request.env["HTTP_HOST"]}/show/#{@show.url}", :target => "_blank", :title => "Start Slideshow in a New Window", :style => "margin-left: 37px"}
+      Present
+    .add-object.text.awesome.blue{:title => "Add a Text Box to This Slide", :style => "margin-left: 110px"}
+      Text Box
+    .add-object.image.awesome.blue{:title => "Add an Image to This Slide"}
+      Image
+    .add-object.youtube.awesome.blue{:title => "Add a YouTube Video to This Slide"}
+      YouTube
+    //.add-object.map{:title => "Add a Google Map to This Slide"}
+    .add-object.graph.awesome.blue{:title => "Add a Graph to This Slide"}
+      Graph
+    //.add-object.html{:title => "Add an HTML snippet to This Slide"}
+    .add-object.poll.awesome.blue{:title => "Add a Poll to This Slide"}
+      Poll
       
     
     %input{:name => "show_id", :value => @show.id, :type => "hidden"}
-    %label{:for => "title", :style => 'margin-right: 3px; margin-left: 285px'} Title
-    %input#title.textfield{:name => "title", :type => "text", :value => @show.title, :style => "width: 150px"}
-    %label{:for => "url", :style => "margin-left: 25px; margin-right: 3px"} URL
-    %input#url.textfield{:name => "url", :type => "text", :value => @show.url, :style => "width: 150px"}
-    %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 50px; -webkit-box-shadow: none; text-align: center; position: relative; top: -4px; font-weight: bold"} Save
+    //%label{:for => "title", :style => 'margin-right: 3px; margin-left: 50px'} Title
+    %input#title.textfield{:name => "title", :type => "hidden", :value => @show.title, :style => "width: 150px"}
+    //%label{:for => "url", :style => "margin-left: 25px; margin-right: 3px"} URL
+    %input#url.textfield{:name => "url", :type => "hidden", :value => @show.url, :style => "width: 150px"}
+    %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 80px; height: 35px; padding-top: 25px; -webkit-box-shadow: none; text-align: center; position: relative; top: -4px; font-weight: bold"} Save
+    .clear{:style => "clear: both;"}
     
     .template-chooser
       .tiny-slide-demo
@@ -68,15 +83,7 @@
   
   .guiedit{:style => "margin: 0 auto; width: 960px; position: relative;"}
     
-    .slide-viewer{:style => "float: right; width: 797px; height: 474px; position: relative; padding: 0; background: #ddd; border: 1px solid #999; border-top: none; border-left: none; border-radius: 0 0 5px 0;"}
-      .toolbar.no-select
-        .add-object.text{:title => "Add a Text Box to This Slide"}
-        .add-object.image{:title => "Add an Image to This Slide"}
-        .add-object.youtube{:title => "Add a YouTube Video to This Slide"}
-        .add-object.map{:title => "Add a Google Map to This Slide"}
-        .add-object.graph{:title => "Add a Graph to This Slide"}
-        .add-object.html{:title => "Add an HTML snippet to This Slide"}
-        .add-object.poll{:title => "Add a Poll to This Slide"}
+    .slide-viewer{:style => "float: right; width: 797px; height: 460px; position: relative; padding: 0; background: #999; border: 1px solid #999; border-top: none; border-left: none; border-radius: 0 0 5px 0;"}
       .image-chooser
         %b{:style => "font-size: 2em"} Edit Image Source
         .library
@@ -111,11 +118,13 @@
           .awesome.red.medium.cancel-image-change{:style => 'display: inline-block; text-align: center;margin: auto; width: 100px'} Cancel
       .edit-overlay.no-select
       .colorpicker
-      #active-slide.slide{:style => "margin: 50px 36px", :class => "tmplt-" + @show.template.to_s}
+      #active-slide.slide{:style => "margin: 25px 36px", :class => "tmplt-" + @show.template.to_s}
+      
+      #jtv-box{:style => "width: 235px; height: 105px; padding-top: 70px; border: 2px solid #AAA; background: #ccc; opacity: 0.75; position: absolute; left: 519px; top: 252px; z-index: 300; text-align: center; color: #555; font-size: 2em;"} Video Feed
       
     
     #slide-up.no-select.awesome.large{:style => "display: none;width: 202px; height: 36px; padding: 0; -webkit-box-shadow: none; font-size: 2em; float: left; border-radius: 0; text-align: center;"} &#9650; 
-    #list-container{:style => "overflow: auto; padding: 0; margin: 0; float: left; width: 130px; height: 463px; background: #BBB; padding: 5px 20px 5px 10px;  border: 1px solid #AAA; clear: left;  border-radius: 0 0 0 5px;"}
+    #list-container{:style => "overflow: auto; padding: 0; margin: 0; float: left; width: 130px; height: 449px; background: #BBB; padding: 5px 20px 5px 10px;  border: 1px solid #AAA; clear: left;  border-radius: 0 0 0 5px;"}
       %ul#slide-list{:style => "position: relative; margin: 0px; padding: 0px; top: 0;"}
         -@show.slides.each_with_index do |slide, i|
           %li.slide-group{:style => "display: inline-block; position: relative; margin: 0;"}

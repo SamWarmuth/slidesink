@@ -15,16 +15,17 @@
   
   -if @following
     %script{:src => "http://js.pusherapp.com/1.6/pusher.min.js", :type => "text/javascript"}
-%body.body{:style => "margin: 0; padding: 0; background: #ddd; position: relative;"}
+%body{:style => "margin: 0; padding: 0; background: #ddd; position: relative;"}
   = haml :frame
-  - if false
-    - if @presenting
-      .justintv{:style => "position: absolute; top: 45px; left: 5px; background: #aaa;"}
-        #{@producer_embed}
-    - if @following
-      .justintv{:style => "position: absolute; top: 45px; left: 5px; background: #aaa; width: 20%; height: 30%"}
-        #{@viewer_embed}
+  - if @presenting
+    .justintv
+      #{@producer_embed}
+      =@callbacks
+  - if @following
+    .justintv
+      #{@viewer_embed}
   #showcontainer{:style => "width: 100%; height: 97%; margin: 0 auto; overflow: hidden; position: relative;"}
     -@show.slides.each_with_index do |slide, index|
       .slide{:class => "tmplt-#{@show.template}", :style => (index == 0 ? "" : "display: none"), :id => "slide#{index}"}!= slide.html
+  .clear{:style => "clear: both;"}
           
