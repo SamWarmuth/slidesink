@@ -32,9 +32,9 @@
     %a.awesome.blue.large.editor-tab.right{:href => "/show/#{@show.url}"} Open Show
     .button-bar
       %a.awesome.large.gray.header.left{:href => "/recordings/"} Recordings
-      %a.awesome.large.green.header.center{:href => "/decks/"} Slide Decks
+      %a.awesome.large.gray.header.center{:href => "/decks/"} Slide Decks
       %a.awesome.large.gray.header.right{:href => "/settings/"} Account Settings
-  %form#basics{:action => "/edit", :method => "post", :style => 'width: 938px; margin: 0 auto; background: #ddd; padding:  10px; border: 1px solid #aaa; border-radius: 0 5px 0 0; position: relative;'}
+  %form#basics.no-select{:action => "/edit", :method => "post", :style => 'width: 938px; margin: 0 auto; background: #ddd; padding:  10px; border: 1px solid #aaa; border-radius: 0 5px 0 0; position: relative;'}
     #add-slide.add-object.add-slide.awesome.blue{:title => "Add a Slide to This Show"}
       Add Slide
     .add-object.themes.show-templates.awesome.black{:title => "Change the Show Theme"}

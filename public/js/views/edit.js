@@ -245,7 +245,7 @@ $(".tiny-slide").live('click', function(){
      content.hide();
      $(this).css("border-color","red");
    
-     $(this).append($("<textarea class='text-edit' style='width: 100%; position: relative; top: -3px; left: -3px;'></input>").text(currentObject.data.contents).css('height', $(this).height()).css("font-size", content.css('font-size')));
+     $(this).append($("<textarea class='text-edit' style='width: 100%; position: relative; top: -3px; left: -3px;'></input>").text(currentObject.data.contents).css('height', $(this).height()).css("font-size", content.css('font-size')).css("text-align", content.css('text-align')));
      $(this).find(".text-edit").focus();
      return false;
    }
