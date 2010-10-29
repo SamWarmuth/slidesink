@@ -56,8 +56,7 @@ class Main
   get "/show/:show_id/present/slide-change" do
     redirect "/login" unless @user
     @show = Slideshow.get(params[:show_id])
-    return "" if @show.nil?
-    redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
+    return "" if @show.nil? || @user.id != @show.user_id
     Thread.new{Pusher[@show.id].trigger('slideChange', params[:slide].to_s)}
     return ""
   end
