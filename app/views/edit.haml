@@ -26,7 +26,7 @@
   -else
     %title SlideMirror - Edit #{@show.title}
     
-%body{:style => 'background: #222'}
+%body{:style => 'background: #222 url("/images/dark-noise.png")'}
   .menubar{:style => "margin: 35px auto 0 auto; width: 960px; position: relative;"}
     %a.awesome.blue.large.editor-tab.left{:href => "/new"} New Show
     %a.awesome.blue.large.editor-tab.right{:href => "/show/#{@show.url}"} Open Show
@@ -41,13 +41,14 @@
       Themes
     %a#show-link.add-object.play.awesome.green{:href => "http://#{request.env["HTTP_HOST"]}/show/#{@show.url}", :target => "_blank", :title => "Start Slideshow in a New Window", :style => "margin-left: 37px"}
       Present
-    .add-object.text.awesome.blue{:title => "Add a Text Box to This Slide", :style => "margin-left: 110px"}
+    .add-object.text.awesome.blue{:title => "Add a Text Box to This Slide", :style => "margin-left: 75px"}
       Text Box
     .add-object.image.awesome.blue{:title => "Add an Image to This Slide"}
       Image
     .add-object.youtube.awesome.blue{:title => "Add a YouTube Video to This Slide"}
       YouTube
-    //.add-object.map{:title => "Add a Google Map to This Slide"}
+    .add-object.map.awesome.blue{:title => "Add a Map to This Slide"}
+      Map
     .add-object.graph.awesome.blue{:title => "Add a Graph to This Slide"}
       Graph
     //.add-object.html{:title => "Add an HTML snippet to This Slide"}
@@ -60,7 +61,7 @@
     %input#title.textfield{:name => "title", :type => "hidden", :value => @show.title, :style => "width: 150px"}
     //%label{:for => "url", :style => "margin-left: 25px; margin-right: 3px"} URL
     %input#url.textfield{:name => "url", :type => "hidden", :value => @show.url, :style => "width: 150px"}
-    %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 80px; height: 35px; padding-top: 25px; -webkit-box-shadow: none; text-align: center; position: relative; top: -4px; font-weight: bold"} Save
+    %a#post-save.awesome.green.large{:href => "save", :style => "float: right; width: 80px; height: 15px; -webkit-box-shadow: none; text-align: center; font-weight: bold"} Save
     .clear{:style => "clear: both;"}
     
     .template-chooser
@@ -83,7 +84,7 @@
   
   .guiedit{:style => "margin: 0 auto; width: 960px; position: relative;"}
     
-    .slide-viewer{:style => "float: right; width: 797px; height: 460px; position: relative; padding: 0; background: #999; border: 1px solid #999; border-top: none; border-left: none; border-radius: 0 0 5px 0;"}
+    #slide-viewer{:style => "float: right; width: 797px; height: 460px; position: relative; padding: 0; background: #999; border: 1px solid #999; border-top: none; border-left: none; border-radius: 0 0 5px 0;"}
       .image-chooser
         %b{:style => "font-size: 2em"} Edit Image Source
         .library

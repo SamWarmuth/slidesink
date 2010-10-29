@@ -296,7 +296,6 @@ code
   position: absolute
   top: 85px
   left: 85px
-  border: 2px solid #DDD
   z-index: 1000
   text-align: center
   -moz-box-shadow: 0 0 20px rgba(0,0,0,0.5)
@@ -346,21 +345,6 @@ code
   color: white
   white-space: normal
 
-.toolbar
-  outline: none
-  display: inline-block
-  float: right
-  width: 792px
-  height: 60px
-  padding: 2px
-  margin: 0 0 5px 0
-  text-align: center
-  
-  background: #CCCCCC
-  background: -moz-linear-gradient(top, #CCCCCC 0%, #7F7F7F 100%)
-
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6f8f9), color-stop(50%,#e5ebee), color-stop(51%,#d7dee3), color-stop(100%,#f5f7f9))
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#CCCCCC', endColorstr='#7F7F7F',GradientType=0 )
     
 .add-object
   display: inline-block
@@ -389,6 +373,9 @@ code
   &.poll
     background-image: url("/images/icons/poll.png")
     opacity: 0.6
+  &.map
+    background-image: url("/images/icons/map.png")
+    opacity: 0.6
   &.add-slide
     background-position: 9px 3px
     background-image: url("/images/icons/slide_add.png")
@@ -398,8 +385,7 @@ code
     background-image: url("/images/icons/themes.png")
   &.html
     background-image: url("/images/icons/html.png")
-  &.map
-    background-image: url("/images/icons/map.png")
+  
   &:hover
     background-color: #eee
   &:active
@@ -567,7 +553,7 @@ code
   letter-spacing: -1px
   position: fixed
   top: 135px
-  left: 47.5%
+  left: 43.5%
   width: 250px
   color: white
   background-color: black

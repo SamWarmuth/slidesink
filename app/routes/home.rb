@@ -8,7 +8,7 @@ class Main
   end
   get "/style.css" do
     content_type 'text/css', :charset => 'utf-8'
-    
+    return sass :style
     #really kludgy cache
     $style = sass :style if $style.nil?
     $style

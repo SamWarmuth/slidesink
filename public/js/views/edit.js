@@ -391,8 +391,8 @@ $(document).ready(function(){
     return false;
   });
   
-  $("#active-slide").click(function(e){
-    if (e.target.id == "active-slide"){
+  $("#slide-viewer").click(function(e){
+    if ((e.target.id == "active-slide")  || (e.target.id == "slide-viewer")){
       if (currentlyEditing) commitObjectChanges();
       $("#active-slide .slide-object.selected").removeClass("selected");
       $(".edit-overlay").fadeOut(100);
