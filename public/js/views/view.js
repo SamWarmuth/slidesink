@@ -9,8 +9,8 @@ $(document).ready(function(){
     goToSlide(parseInt((window.location.hash).slice(1)));
   }
   
-  $("#showcontainer").click(function(){
-    goToSlide(currentSlide + 1);
+  $("#showcontainer").click(function(e){
+    if (e.target.id == "slide") goToSlide(currentSlide + 1);
   });
   
   $(document).bind('keydown', function(e) {

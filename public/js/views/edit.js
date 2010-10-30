@@ -193,10 +193,6 @@ $(".ico-text.arrange.front").live("click", function(){
   updateObject(obj);
 });
 
-$(".delete-current-object").live("click", function(){
-  deleteCurrentObject();
-  return false;
-});
 
 function deleteCurrentObject(){
   var obj = $("#active-slide .slide-object.selected");
@@ -338,6 +334,15 @@ $(document).ready(function(){
     $(".tiny-slide.selected").append(defaultHTML);
     $("#active-slide").html($(".tiny-slide.selected").html());
     updateObject(defaultHTML, "SOImage");
+    return false;
+  });
+  
+  $(".add-object.youtube").click(function(){
+    var zIndex = Object.keys(showData[currentSlideIndex]).length;
+    var defaultHTML = $("<div class='slide-object' id='4715635774' style='display: block; position: absolute; left: 0; top: 0; opacity: 1.0; width: 212px; height: 172px; z-index: 1; background-color: #ccc'> <object class='vidobject' width='100%' height='100%'><param name='movie'  value='http://www.youtube.com/v/24s5PjG1X2o?fs=1&amp;hl=en_US'></param><param name='allowFullScreen' value='true'></param><param name='allowscriptaccess' value='always'></param><embed src='http://www.youtube.com/v/24s5PjG1X2o?fs=1&amp;hl=en_US' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true' width='100%' height='100%'></embed></object></div>").attr("id", ((new Date).getTime()%100000000 + ""));
+    $(".tiny-slide.selected").append(defaultHTML);
+    $("#active-slide").html($(".tiny-slide.selected").html());
+    updateObject(defaultHTML, "SOYoutube");
     return false;
   });
   
@@ -539,6 +544,9 @@ function showEditOverlay(uiObject){
     } else if (currentObject.o_class == "SOImage"){
       overlay.append("<div class='awesome medium green edit-image-src'>Change Image Source</div><br/>");
       overlay.append(objFormat);
+    } else if (currentObject.o_class == "SOYoutube"){
+      overlay.append("<div class='awesome medium green edit-video-src'>Change Video Source</div><br/>");
+      overlay.append(objFormat);
       
     } else{
       overlay.append("Unsupported object type\n");
@@ -582,6 +590,8 @@ function updateObject(uiObject, classIfNew){
   objData.width = (100.0*uiObject.width()/slideWidth)+"%";
   objData.height = (100.0*uiObject.height()/slideHeight)+"%";
   objData.z_index = uiObject.css("z-index");
+  objData.background_color = uiObject.css("background-color");
+  
   
   objData.left = (100.0*uiObject.position().left/slideWidth)+"%";
   objData.top = (100.0*uiObject.position().top/slideHeight)+"%";
@@ -600,7 +610,10 @@ function updateObject(uiObject, classIfNew){
 
   } else if (currentObject.o_class == "SOImage"){
     objData.src = uiObject.children("img").attr("src");
-
+    
+  } else if (currentObject.o_class == "SOYoutube"){
+    objData.youtube_url = uiObject.children(".vidobject").children().first().attr("value")
+  
   } else{
     overlay.append("Unsupported object type\n");
   }

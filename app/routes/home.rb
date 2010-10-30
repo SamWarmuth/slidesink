@@ -13,6 +13,9 @@ class Main
     $style = sass :style if $style.nil?
     $style
   end
+  get "/reset" do
+    $style = nil
+  end
   get "/templates.css" do
     content_type 'text/css', :charset => 'utf-8'
     sass :templates

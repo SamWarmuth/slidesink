@@ -5,8 +5,9 @@ class SlideObject < Hash
   property :top, :default => 0
   property :opacity, :default => 1.0
   property :width, :default => "20%"
-  property :height, :default => ""
+  property :height, :default => "15%"
   property :z_index, :default => 1
+  property :background_color, :default => "transparent"
   property :o_id, :default => Proc.new{((Time.now.to_f*10000)%10000000000).to_i} #gross hack to get semi-unique IDs
   
   def custom_json
@@ -14,7 +15,7 @@ class SlideObject < Hash
   end
   
   def basic_style
-    return "display: block; position: absolute; left: #{self.left}; top: #{self.top}; opacity: #{self.opacity}; width: #{self.width}; height: #{self.height}; z-index: #{self.z_index}"
+    return "display: block; position: absolute; left: #{self.left}; top: #{self.top}; opacity: #{self.opacity}; width: #{self.width}; height: #{self.height}; z-index: #{self.z_index}; background-color: #{self.background_color}"
   end
   
 end
@@ -52,7 +53,7 @@ class SOYoutube < SlideObject
   property :youtube_url
   
   def to_html
-    return "<div class='slide-object' id='#{self.o_id}' style='#{self.basic_style};'> YouTube Not Implemented Yet.</div>"
+    return "<div class='slide-object' id='#{self.o_id}' style='#{self.basic_style};'> <object class='vidobject' width='100%' height='100%'><param name='movie' value='#{self.youtube_url}'></param><param name='allowFullScreen' value='true'></param><param name='allowscriptaccess' value='always'></param><embed src='#{self.youtube_url}' type='application/x-shockwave-flash' allowscriptaccess='always' allowfullscreen='true' width='100%' height='100%'></embed></object></div>"
     
   end
 end
