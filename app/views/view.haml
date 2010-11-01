@@ -17,7 +17,7 @@
     %script{:src => "http://js.pusherapp.com/1.6/pusher.min.js", :type => "text/javascript"}
 %body{:style => "margin: 0; padding: 0; background: #ddd; position: relative;"}
   = haml :frame
-  - if @presenting
+  - if @presenting && @producer_embed
     .justintv
       #{@producer_embed}
       =@callbacks

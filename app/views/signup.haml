@@ -5,12 +5,12 @@
   %script{:src => "/js/jquery-ui-1.8.4.custom.min.js", :type => "text/javascript"}
   %title SlideMirror. Through the looking glass.
   %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
-%body
+%body{:style => "background: #444 url('/images/dark-noise.png')"}
   .content
     .secondary_pages_content{:style => "padding-top: 30px;"}
-      .title{:style => 'text-align: center; padding: 0'}
-        %h1{:style => "font-weight: bold;font-size: 2.1em;"} Sign Up for Slide Mirror
-      %form{:action => "/signup", :method => "post", :style => "font-size: 14px;  width: 600px; margin: 30px auto; padding: 0 50px; border: 1px solid #ddd;text-align: center; box-shadow: #aaa 0 0 10px; -webkit-box-shadow: #aaa 0 0 10px; -moz-box-shadow: #aaa 0 0 10px;"}
+      %form{:action => "/signup", :method => "post", :style => "font-size: 14px;  width: 600px; margin: 30px auto; padding: 50px 50px; border: 1px solid #ddd;text-align: center; box-shadow: #aaa 0 0 10px; -webkit-box-shadow: #aaa 0 0 10px; -moz-box-shadow: #aaa 0 0 10px; background: #fff; border-radius: 2px;"}
+        .title{:style => 'text-align: center; padding: 0; margin-bottom: 50px'}
+          %h1{:style => "font-weight: bold;font-size: 2.1em;"} Sign Up for Slide Mirror
         .indent{:style => "text-align: center"}
           %p
             %label.signup-label{:for => "name"} Name
@@ -26,9 +26,6 @@
             %input.signup-textfield#password.any_text{:type => "password", :name => "pass2"}
         
         %input.awesome.green.giant{:type => "submit", :value => "Create Your Account", :style => "text-align: center; margin: 20px; margin-left: 53px; padding: 15px 25px; font-weight: bold; font-size: 2.5em"}
-        %br
-        %br
-        %br
         
         
           

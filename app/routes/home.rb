@@ -8,6 +8,7 @@ class Main
   end
   get "/style.css" do
     content_type 'text/css', :charset => 'utf-8'
+    return sass :style
     #really kludgy cache
     $style = sass :style if $style.nil?
     $style
@@ -42,19 +43,34 @@ class Main
     @following = true
     haml :view
   end
+  
+  get "/show/:show_url/new" do
+    redirect "/login" unless @user
+    @show = Slideshow.all.find{|s| s.url == params[:show_url]}
+    redirect "/404" if @show.nil?
+    redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
+    
+    
+    
+    haml :new_presentation
+  end
+  
   get "/show/:show_url/present" do
     redirect "/login" unless @user
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?
     redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
-    jtv_client = JtvClient.new 
-    
-    @producer_embed = jtv_client.get("/channel/namespace_publisher_embed.html?channel=#{@show.id}&height=180&width=240").body
-    puts jtv_client.get("http://api.justin.tv/api/stream/list_namespace_callbacks.xml").inspect
+    begin
+      jtv_client = JtvClient.new 
+      @producer_embed = jtv_client.get("/channel/namespace_publisher_embed.html?channel=#{@show.id}&height=180&width=240").body
+    rescue
+      puts "jtv not available"
+    end
     @presenting = true
     @following = false
     haml :view
   end
+  
   get "/show/:show_id/present/slide-change" do
     redirect "/login" unless @user
     @show = Slideshow.get(params[:show_id])

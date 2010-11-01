@@ -1,0 +1,22 @@
+!!!
+%head
+  %title New Presentation
+  %script{:src => "/js/jquery-1.4.2.min.js", :type => "text/javascript"}  
+  %script{:src => "/js/jquery-ui-1.8.4.custom.min.js", :type => "text/javascript"}
+  %script{:src => "/js/showdown.js", :type => "text/javascript"}
+  %script{:src => "/js/humanmsg.js", :type => "text/javascript"}
+  
+  %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
+  %link{:href => "/css/jqui/jquery-ui-1.8.5.custom.css", :rel => "stylesheet", :type => "text/css"}
+  %link{:href => "/templates.css", :rel => "stylesheet", :type => "text/css"}
+%body{:style => 'background: #444 url("/images/dark-noise.png");'}
+  .page-content
+    .graybox{:style => 'border-radius: 10px;'}
+      .center-title New Presentation
+      .a Live Show / Recording
+      .b Public / Private
+      .c Audio? (live?)
+      .d Video? (live?)
+      
+      %a{:href => "present"} Go!
+      

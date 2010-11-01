@@ -37,6 +37,9 @@ function save(){
     if (data != "") window.location = data;
     else humanMsg.displayMsg('<strong>Show Saved</strong>');
   });
+  var date = new Date
+  
+  $(".save-note").text("Saved at " + date.getHours() + ":" + date.getMinutes());
 }
 
 function reorderShowSlides(){
@@ -58,7 +61,6 @@ var currentlyEditing = false;
 $("#active-slide .slide-object").liveResizeAndDrag({ handles: 'n, e, s, w, se, sw, ne, nw', containment: "#active-slide"}, {containment: "#active-slide"});
 
 $("#active-slide .slide-object").live("dragstart", function(event, ui) {
-  $(".edit-overlay").fadeOut(100);
   $(".colorpicker").fadeOut(100);
   
   $(".slide-object").removeClass("selected");
@@ -67,11 +69,10 @@ $("#active-slide .slide-object").live("dragstart", function(event, ui) {
 $("#active-slide .slide-object").live("dragstop", function(event, ui) {
   //update tiny-slide
   updateObject(this);
-  showEditOverlay(this);
+  updateEditInspector(this);
 });
 $("#active-slide .slide-object").live("resizestart", function(event, ui) {
   if (currentlyEditing) commitObjectChanges();
-  $(".edit-overlay").fadeOut(100);
   $(".colorpicker").fadeOut(100);
   
   $(".slide-object").removeClass("selected");
@@ -80,7 +81,7 @@ $("#active-slide .slide-object").live("resizestart", function(event, ui) {
 $("#active-slide .slide-object").live("resizestop", function(event, ui) {
   //update tiny-slide
   updateObject(this);
-  showEditOverlay(this);
+  updateEditInspector(this);
 });
 
 $(".ico-fontcolor").live("click", function(){
@@ -88,7 +89,6 @@ $(".ico-fontcolor").live("click", function(){
     $('.colorpicker').fadeOut(200);
     return false;
   }
-  var overlay = $(".edit-overlay");
   $.farbtastic('.colorpicker', function(color){
     if (currentlyEditing) commitObjectChanges();
     var obj = $("#active-slide .slide-object.selected");
@@ -99,15 +99,13 @@ $(".ico-fontcolor").live("click", function(){
     updateObject(obj);
   }).setColor(rgbToHex(currentObject.data.color));
   
-  overlayPosition = overlay.position();
-  $(".colorpicker").css("left", overlayPosition.left + overlay.width() + 25);
-  $(".colorpicker").css("top", overlayPosition.top);
+  $(".colorpicker").css("left", 475);
+  $(".colorpicker").css("top", 50);
   $(".colorpicker").fadeIn(200);
   
 });
 
 $(".edit-image-src").live("click", function(){
-  $(".edit-overlay").fadeOut(150);
   if (currentObject != "") $(".image-chooser").find("input.src-field").val(currentObject.data.src);
   $(".image-chooser").fadeIn(300);
   return false;
@@ -202,7 +200,7 @@ function deleteCurrentObject(){
   currentObject = "";
   var tinyObject = currentSlide.children(".slide-object#"+obj.attr('id'));
   tinyObject.fadeOut(100);
-  $(".edit-overlay").fadeOut(150);
+  $(".inspector").html("");
   return false;
 }
 
@@ -211,7 +209,6 @@ $(".tiny-slide").live('click', function(){
   $(this).addClass("selected");
   currentSlide = $(this);
   currentSlideIndex = $(".tiny-slide.selected").parent().index();
-  $(".edit-overlay").fadeOut(150);
   $(".colorpicker").fadeOut(150);
   
   $("#active-slide").html($(this).html());
@@ -221,14 +218,13 @@ $(".tiny-slide").live('click', function(){
  $("#active-slide .slide-object").live("click", function(){
    $(".colorpicker").fadeOut(100);
    if ($(this).is(".selected")){
-     $(".edit-overlay").fadeIn(100);
      return false;
    }
    if (currentlyEditing) commitObjectChanges();
    
    $(".slide-object").removeClass("selected");
    $(this).addClass("selected");
-   showEditOverlay(this);
+   updateEditInspector(this);
    return false;
  });
  
@@ -247,12 +243,11 @@ $(".tiny-slide").live('click', function(){
    }
  });
  
- $(".edit-overlay input[type=radio]").live("change", function(){
+ $(".inspector input[type=radio]").live("change", function(){
    var obj = $("#active-slide .slide-object.selected");
    obj.css("font-size", $(this).val());
    if (currentlyEditing) commitObjectChanges();
    updateObject(obj);
-   repositionOverlay(obj);
  });
 var jresponse = "";
 $(document).ready(function(){  
@@ -400,7 +395,7 @@ $(document).ready(function(){
     if ((e.target.id == "active-slide")  || (e.target.id == "slide-viewer")){
       if (currentlyEditing) commitObjectChanges();
       $("#active-slide .slide-object.selected").removeClass("selected");
-      $(".edit-overlay").fadeOut(100);
+      $(".inspector").html("");
       $(".colorpicker").fadeOut(100);
     }
   });
@@ -420,7 +415,6 @@ $(".ico-text.align").live("click", function(){
   
   obj.css("text-align", alignment);
   updateObject(obj);
-  repositionOverlay(obj);
 });
 
 $(".ico-text.bold").live("click", function(){
@@ -436,7 +430,6 @@ $(".ico-text.bold").live("click", function(){
     text.css("font-weight", "bold");
   }
   updateObject(obj);
-  repositionOverlay(obj);
 });
 
 $(".ico-text.italic").live("click", function(){
@@ -452,7 +445,6 @@ $(".ico-text.italic").live("click", function(){
     text.css("font-style", "italic");
   }
   updateObject(obj);
-  repositionOverlay(obj);
 });
 
 $(".ico-text.underline").live("click", function(){
@@ -468,7 +460,6 @@ $(".ico-text.underline").live("click", function(){
     text.css("text-decoration", "underline");
   }
   updateObject(obj);
-  repositionOverlay(obj);
 });
 
 function commitObjectChanges(){
@@ -487,94 +478,70 @@ function commitObjectChanges(){
   
 }
 
-function showEditOverlay(uiObject){
+function updateEditInspector(uiObject){
     var position = $(uiObject).position();
-    var overlay = $(".edit-overlay");
+    var inspector = $(".inspector");
     currentObject = showData[currentSlideIndex][$(uiObject).attr('id')];
     
     if (currentObject === undefined) return false;
     
-    var objFormat = "<hr/>" +
-                    "<div class='ico-text arrange back'></div>" +
+    var objFormat = "<div class='ico-text arrange back'></div>" +
                     "<div class='ico-text arrange backwards'></div>" +
                     "<div class='ico-text arrange forwards'></div>" +
-                    "<div class='ico-text arrange front'></div>" +
-                    "<br/><br/>" +
-                    "Stroke" +
-                    "<br/>" +
-                    "Fill " +
-                    "<div class='ico-fillcolor' style='margin: 0; position: relative; top: 5px;'></div>" +
-                    "<br/>";
+                    "<div class='ico-text arrange front'></div>";
     
     var objData = currentObject.data;
-    overlay.text("");
+    inspector.text("");
     if (currentObject.o_class == "SOText"){
-      overlay.append("<div class='ico-text bold'></div>");
-      overlay.append("<div class='ico-text italic'></div>");
-      overlay.append("<div class='ico-text underline'></div>");
+      inspector.append(objFormat);
+      inspector.append("<div class='ico-text bold'></div>");
+      inspector.append("<div class='ico-text italic'></div>");
+      inspector.append("<div class='ico-text underline'></div>");
       
-      overlay.append("<div class='ico-text align left' style='margin-left: 10px'></div>");
-      overlay.append("<div class='ico-text align center'></div>");
-      overlay.append("<div class='ico-text align right'></div>");
+      inspector.append("<div class='ico-text align left' style='margin-left: 10px'></div>");
+      inspector.append("<div class='ico-text align center'></div>");
+      inspector.append("<div class='ico-text align right'></div>");
       
-      overlay.append("<div style='clear: both; margin-top: 5px;'></div>");
-      overlay.append("<span style='font-size: 0.5em;'>A</span>");
-      overlay.append("<input type='radio' name='font-size' value='1em'/>");
-      overlay.append("<input type='radio' name='font-size' value='1.5em'/>");
-      overlay.append("<input type='radio' name='font-size' value='2em'/>");
-      overlay.append("<input type='radio' name='font-size' value='3em'/>");
-      overlay.append("<input type='radio' name='font-size' value='4.5em'/>");
-      overlay.append("<span style='font-size: 1em;'>A</span>");
-      overlay.append("<div class='ico-fontcolor' style='margin-left: 29px; position: relative; top: 5px;'></div>");
-      overlay.append(objFormat);
+      inspector.append("<span style='font-size: 0.5em;'>&nbsp;&nbsp;&nbsp;&nbsp;A</span>");
+      inspector.append("<input type='radio' name='font-size' value='1em'/>");
+      inspector.append("<input type='radio' name='font-size' value='1.5em'/>");
+      inspector.append("<input type='radio' name='font-size' value='2em'/>");
+      inspector.append("<input type='radio' name='font-size' value='3em'/>");
+      inspector.append("<input type='radio' name='font-size' value='4.5em'/>");
+      inspector.append("<span style='font-size: 1em;'>A</span>");
+      inspector.append("<div class='ico-fontcolor' style='margin-left: 29px; position: relative; top: 5px;'></div>");
 
       
            
-      overlay.find("input:radio[name=font-size]").each(function(){
+      inspector.find("input:radio[name=font-size]").each(function(){
         if ($(this).val() == objData.font_size) $(this).attr('checked', 'checked');
       });
-      overlay.find(".ico-text.align").each(function(){
+      inspector.find(".ico-text.align").each(function(){
         if ($(this).hasClass(objData.text_align)) $(this).addClass("selected");
       });
       if (objData.font_weight == "bold") $(".ico-text.bold").addClass("selected");
       if (objData.font_style == "italic") $(".ico-text.italic").addClass("selected");
       if (objData.text_decoration == "underline") $(".ico-text.underline").addClass("selected");
       
-      overlay.append("<br/>");
+      inspector.append("<br/>");
     } else if (currentObject.o_class == "SOImage"){
-      overlay.append("<div class='awesome medium green edit-image-src'>Change Image Source</div><br/>");
-      overlay.append(objFormat);
+      inspector.append(objFormat);
+      inspector.append("<div class='awesome medium green edit-image-src'>Change Image Source</div><br/>");
     } else if (currentObject.o_class == "SOYoutube"){
-      overlay.append("<div class='awesome medium green edit-video-src'>Change Video Source</div><br/>");
-      overlay.append(objFormat);
+      inspector.append(objFormat);
+      inspector.append("<div class='awesome medium green edit-video-src'>Change Video Source</div><br/>");
       
     } else{
-      overlay.append("Unsupported object type\n");
+      inspector.append("Unsupported object type\n");
     }
     /* Basic info for debugging.
-    overlay.append("Height: "+ objData.height + "<br/>");
-    overlay.append("Width: "+ objData.width + "<br/>");
-    overlay.append("x position: "+ objData.left + "<br/>");
-    overlay.append("y position:" + objData.top + "<br/>");
-    overlay.append("centered: " + objData.center + "<br/>");
+    inspector.append("Height: "+ objData.height + "<br/>");
+    inspector.append("Width: "+ objData.width + "<br/>");
+    inspector.append("x position: "+ objData.left + "<br/>");
+    inspector.append("y position:" + objData.top + "<br/>");
+    inspector.append("centered: " + objData.center + "<br/>");
     */
     
-    
-    repositionOverlay(uiObject);
-    if (overlay.not(":visible")) overlay.fadeIn(200);
-}
-
-function repositionOverlay(uiObject){
-  var position = $(uiObject).position();
-  var overlay = $(".edit-overlay");
-  if (position.top > 200){
-    overlay.css('left', (position.left + 38)+"px");
-    overlay.css('top', (position.top - overlay.height())+"px");
-  }else{
-    overlay.css('left', (position.left + 38)+"px");
-    overlay.css('top', (position.top + $(uiObject).height() + 30)+"px");
-  }
-  
 }
 
 function updateObject(uiObject, classIfNew){

@@ -137,7 +137,7 @@ code
   padding: 30px
   width: 800px
   margin: 5px 0
-  background: #eee url("/images/light-noise.png")
+  background: #eee
   border: 1px solid #ccc
   border-radius: 10px 10px 0 0
   &.l50
@@ -348,9 +348,9 @@ code
     
 .add-object
   display: inline-block
-  width: 55px
+  width: 42px
   height: 15px
-  padding: 55px 5px 0 5px 
+  padding: 40px 5px 0 5px 
   border-radius: 5px
   font-size: 10px
   text-align: center
@@ -361,29 +361,27 @@ code
   background-repeat: no-repeat
   background-position: 9px 5px
   &.text
-    background-image: url("/images/icons/text_a.png")
+    background-image: url("/images/icons/text_a32.png")
   &.image
-    background-image: url("/images/icons/photo.png")
+    background-image: url("/images/icons/photo32.png")
   &.youtube
-    background-image: url("/images/icons/youtube.png")
+    background-image: url("/images/icons/youtube32.png")
   &.graph
-    background-image: url("/images/icons/graph.png")
+    background-image: url("/images/icons/graph32.png")
     opacity: 0.6
   &.poll
-    background-image: url("/images/icons/poll.png")
+    background-image: url("/images/icons/poll32.png")
     opacity: 0.6
   &.map
-    background-image: url("/images/icons/map.png")
+    background-image: url("/images/icons/map32.png")
     opacity: 0.6
   &.add-slide
     background-position: 9px 3px
-    background-image: url("/images/icons/slide_add.png")
+    background-image: url("/images/icons/slide_add32.png")
   &.play
-    background-image: url("/images/icons/present.png")
+    background-image: url("/images/icons/present32.png")
   &.themes
-    background-image: url("/images/icons/themes.png")
-  &.html
-    background-image: url("/images/icons/html.png")
+    background-image: url("/images/icons/themes32.png")
   
   &:hover
     background-color: #eee
@@ -428,10 +426,12 @@ code
 
 .ico-text
   display: inline-block
+  vertical-align: middle
   background: #fff
   border: 1px solid #fff
   width: 16px
   height: 16px
+  margin: 5px 0
   padding: 3px
 
   &.align
@@ -448,7 +448,7 @@ code
       border-left: none
   &.arrange
     border-radius: 3px
-    margin: 0 2px
+    margin: 5px 2px
     &.back
       background: #ccc url("/images/icons/move_back.png") no-repeat 3px 3px
     &.backwards
@@ -463,6 +463,8 @@ code
       background-color: #999
     
   &.bold
+    margin-left: 20px
+    
     border-radius: 3px 0 0 3px
     border-right: none
     background: #e5e5e5 url("/images/icons/text_bold.png") no-repeat 3px 3px
@@ -496,7 +498,7 @@ code
 
 .ico-fontcolor
   display: inline-block
-  background: #fff
+  vertical-align: text-bottom
   width: 18px
   height: 18px
   padding: 3px
@@ -541,6 +543,7 @@ code
   font-size: 14px
   padding-left: 10px
   padding-right: 10px
+  margin: 5px
   &.valid-input
     background: url("/images/valid.png") no-repeat right center
   &.invalid-input
@@ -552,7 +555,7 @@ code
   letter-spacing: -1px
   position: fixed
   top: 135px
-  left: 43.5%
+  left: 47.0%
   width: 250px
   color: white
   background-color: black

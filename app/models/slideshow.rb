@@ -15,7 +15,7 @@ class Slideshow < CouchRest::ExtendedDocument
   property :date_created
   property :last_edited
   
-  property :recordings #array: [[ms_from_start, event_type], ...]
+  property :recording_ids, :default => []
   
   save_callback :before, :regenerate_presentation
   
