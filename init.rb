@@ -39,4 +39,4 @@ Dir[root_path("app/**/*.rb")].each do |file|
   require file
 end
 
-Main.run! :port => 80 if Main.run?
+Main.run! :port => 4569 if Main.run?

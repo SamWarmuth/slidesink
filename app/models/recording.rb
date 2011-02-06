@@ -3,7 +3,7 @@ class Recording < CouchRest::ExtendedDocument
   
   property :show_id
   
-  property :date_created, :default => Time.now
+  property :date_created, :default => Time.now.to_s
   property :public, :default => true
   
   property :live

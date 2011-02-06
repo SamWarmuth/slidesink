@@ -5,18 +5,11 @@
 %body{:style => "background: #ccc; text-align: center"}
   %form.table{:action => "login", :method => "post"}
     .login-form{:style => "margin-top: 100px"}
-      %table{:cellspacing => "0"}
-        %tr
-          %th
-            %label{:for => "some1"} Email
-          %td
-            %input#some1.txt{:name => "email", :type => "text"}/
-        %tr
-          %th
-            %label{:for => "some3"} Password
-          %td
-            %input#some3.txt.pwd{:name => "password", :type => "password"}/
-      %br
-      %input.awesome.green.medium{:type => "submit", :value => "Log in", :style => "width: 175px"}
+      .signup-label Email
+      %input.signup-textfield{:name => "email", :type => "text"}
+      .signup-label Password
+      %input.signup-textfield{:name => "password", :type => "password"}
+
+      %input.awesome.green.large{:type => "submit", :value => "Log in", :style => "width: 175px; margin-top: 20px;"}
   %br
   %a{:href => "/", :style => "margin: auto"} Return to SlideMirror home page

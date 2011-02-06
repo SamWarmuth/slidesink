@@ -9,14 +9,26 @@
   %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
   %link{:href => "/css/jqui/jquery-ui-1.8.5.custom.css", :rel => "stylesheet", :type => "text/css"}
   %link{:href => "/templates.css", :rel => "stylesheet", :type => "text/css"}
-%body{:style => 'background: #444 url("/images/dark-noise.png");'}
+%body{:style => 'background: #4f4f4f url("/images/dark-noise.png");'}
   .page-content
     .graybox{:style => 'border-radius: 10px;'}
       .center-title New Presentation
-      .a Live Show / Recording
-      .b Public / Private
-      .c Audio? (live?)
-      .d Video? (live?)
-      
-      %a{:href => "present"} Go!
+      .center-subtitle= @show.title
+      %form{:action => "/show/#{@show.url}/present", :method => "post", :style => "line-height: 2em; width: 200px; margin: auto; font-size: 1.25em; padding: 20px"}
+        %input{:type => "hidden", :name => "show_id", :value => @show.id}
+        %input{:type => "radio", :name => "private", :value => "off", :checked => "checked"}
+        Public
+        &nbsp;&nbsp;&nbsp;
+        %input{:type => "radio", :name => "private", :value => "on"}
+        Private
+        %br
+        %input{:type => "checkbox", :name => "video", :value => false}
+        Live Video
+        %br
+        %input{:type => "checkbox", :name => "audio", :value => false}
+        Live Audio
+        %br
+        %br
+        %br
+        %input.awesome.green.medium{:type => "submit", :value => "Begin Presentation", :style => "display: block; margin: auto;"}
       

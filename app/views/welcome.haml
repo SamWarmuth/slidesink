@@ -5,9 +5,9 @@
   %title SlideMirror. Through the looking glass.
   %link{:href => "/style.css", :rel => "stylesheet", :type => "text/css"}
   
-%body{:style => "margin: 0; padding: 0; background: #444 url('/images/dark-noise.png');"}
+%body{:style => "margin: 0; padding: 0; background: #4f4f4f url('/images/dark-noise.png');"}
   .page-content
-    .login{:style => "font-size: 0.75em; text-align: right; margin-right: 10px"}
+    .login{:style => "font-size: 0.75em; width: 150px; padding: 5px; float: right; margin-right: 20px; background: #eee; border-radius: 5px 5px 0 0; text-align: center;"}
       -if @user.nil?
         %a{:href => "/login"} Log In
       -else

@@ -26,7 +26,7 @@ class Main
   get "/show/?" do
     redirect "/"
   end
-  get "/show/:show_url" do
+  get "/show/:show_url/?" do
     @show = Slideshow.all.find{|s| s.url == params[:show_url]}
     redirect "/404" if @show.nil?
     @presenting = false
@@ -53,6 +53,26 @@ class Main
     
     
     haml :new_presentation
+  end
+  
+  post "/show/:show_url/present" do
+    redirect "/login" unless @user
+    redirect "/404" if params[:show_id].nil?
+    @show = Slideshow.get(params[:show_id])
+    redirect "/404" if @show.nil?
+    redirect "/show/#{params[:show_url]}" unless @user.id == @show.user_id
+    
+
+    recording = Recording.new
+    recording.live = true
+    recording.is_private = (params[:private] == "on")
+    recording.live_video = (params[:video] == "on")
+    recording.live_audio = (params[:audio] == "on")
+
+    recording.save
+    
+    
+    haml :view
   end
   
   get "/show/:show_url/present" do
